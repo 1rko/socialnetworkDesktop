@@ -1,0 +1,8 @@
+.header_wrapper{
+    background-color: #74ffb5;
+    grid-area: H;
+}
+
+.header_logo{
+    width: 30px;
+}

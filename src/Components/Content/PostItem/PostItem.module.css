@@ -1,0 +1,32 @@
+.profile_wrapper {
+    background-color: #de92e7;
+    padding: 10px;
+}
+
+.profileImg {
+    display: block;
+    width: 500px;
+    margin: 0 auto;
+}
+
+.postItem {
+    display: flex;
+    align-items: center;
+    margin:10px;
+}
+
+.postItem_faceAndCount_face {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.postText {
+    padding: 10px;
+    width: 200px;
+}
+
+.postItem_button {
+    margin: 10px;
+    width: 80px;
+}

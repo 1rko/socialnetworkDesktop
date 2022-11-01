@@ -1,0 +1,22 @@
+.navbar_wrapper{
+    background-color: #ffc481;
+    padding: 10px;
+    grid-area: N;
+}
+
+a{
+    text-decoration: none;
+}
+
+.item {
+
+}
+
+.unactive{
+    color: darkslategrey;
+}
+
+.active{
+    color: red;
+    font-size:large;
+}
