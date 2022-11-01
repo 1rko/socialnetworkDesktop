@@ -17,6 +17,11 @@ const postData = [
         id: 3,
         likesCount: 13,
         postText: "How are you"
+    },
+    {
+        id: 4,
+        likesCount: 14,
+        postText: "I am fine"
     }
 ]
 
