@@ -23,6 +23,7 @@ const postData = [
         likesCount: 14,
         postText: "I am fine"
     }
+
 ]
 
 const Profile = () => {
