@@ -6,7 +6,6 @@ import {BrowserRouter} from 'react-router-dom'
 import Content from "./Components/Content/Content";
 
 
-
 function App() {
     return (
         <BrowserRouter>
