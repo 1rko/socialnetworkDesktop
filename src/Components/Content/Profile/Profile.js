@@ -1,33 +1,11 @@
 import React from 'react';
 import styles from './Profile.module.css'
-import PostItem from "../PostItem/PostItem";
+import PostItem from "./PostItem/PostItem";
 
-const postData = [
-    {
-        id: 1,
-        likesCount: 11,
-        postText: "Hi"
-    },
-    {
-        id: 2,
-        likesCount: 12,
-        postText: "My name is"
-    },
-    {
-        id: 3,
-        likesCount: 13,
-        postText: "How are you"
-    },
-    {
-        id: 4,
-        likesCount: 14,
-        postText: "I am fine"
-    }
 
-]
 
-const Profile = () => {
-    const postText = postData.map(postItem => {
+const Profile = (props) => {
+    const postText = props.postData.map(postItem => {
         return <PostItem likesCount={postItem.likesCount} postText={postItem.postText}/>
     })
 

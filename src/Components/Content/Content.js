@@ -5,13 +5,15 @@ import Dialogs from "./Dialogs/Dialogs";
 import Messages from "./Messages/Messages";
 import Profile from "./Profile/Profile";
 
-const Content = () => {
+
+
+const Content = (props) => {
     return (
         <div className={styles.content_wrapper}>
             <Routes>
                 <Route path="/dialogs/*" element={<Dialogs/>}/>
                 <Route path="/messages/*" element={<Messages/>}/>
-                <Route path="/profile/*" element={<Profile/>}/>
+                <Route path="/profile/*" element={<Profile postData={props.postData}/>}/>
             </Routes>
         </div>
     );
