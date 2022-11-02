@@ -4,7 +4,7 @@ import PostItem from "./PostItem/PostItem";
 
 
 
-const Profile = (props) => {
+const Profile = (props ) => {
     const postText = props.postData.map(postItem => {
         return <PostItem likesCount={postItem.likesCount} postText={postItem.postText}/>
     })
