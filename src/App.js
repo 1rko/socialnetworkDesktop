@@ -13,7 +13,7 @@ function App(props) {
                 <div className="app_wrapper">
                     <Header/>
                     <Navbar/>
-                    <Content postData={props.postData}/>
+                    <Content contentData={props.appData}/>
                     <Footer/>
                 </div>
             </div>

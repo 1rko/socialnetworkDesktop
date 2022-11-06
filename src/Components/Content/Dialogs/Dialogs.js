@@ -2,33 +2,29 @@ import React from 'react';
 import styles from './Dialogs.module.css'
 import {NavLink} from "react-router-dom";
 
-const Dialogs = () => {
+const Dialogs = (props) => {
+    const dialogsArray = props.dialogs.map(dialogItem => {
+        return (
+            <div className={styles.item}>
+                <NavLink to={"/dialogs/" + dialogItem.id}
+                         className={navData => navData.isActive ? (styles.active) : styles.unactive}>
+                    {dialogItem.name}
+                </NavLink>
+            </div>
+        )
+    })
+
     return (
         <div className={styles.dialogs_wrapper}>
             <div className={styles.dialog_items}>
-                <div className={styles.item}>
-                    <NavLink to="/dialogs/1" className={navData => navData.isActive ? (styles.active) : styles.unactive}>
-                        Ivan
-                    </NavLink>
-                </div>
 
-                <div className={styles.item}>
-                    <NavLink to="/dialogs/2" className={navData => navData.isActive ? styles.active : styles.unactive}>
-                        Peter
-                    </NavLink>
-                </div>
+                {dialogsArray}
 
-                <div className={styles.item}>
-                    <NavLink to="/dialogs/3" className={navData => navData.isActive ? styles.active : styles.unactive}>
-                        Irina
-                    </NavLink>
-
-                </div>
             </div>
 
             <div className={styles.messages}>
-                <div className={styles.message}>
-                    Hello
+                <div className={styles.messages}>
+                    {props.messages[0].message}
                 </div>
 
                 <div className={styles.message}>
