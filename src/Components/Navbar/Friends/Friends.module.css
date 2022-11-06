@@ -7,19 +7,27 @@
 
 .friendsBar_header {
     grid-area: FH;
+    margin: 0 auto;
 }
 
 .friendsBar_allItems {
     grid-area: AI;
     border: 1px solid blue;
-    height: 200px;
+    height: 80px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-content: space-around;
+    justify-items: center;
 }
 
 .friendsBar_item{
-    width: 25px;
+    width: 30px;
+    height: 30px;
+    line-height: 10px;
     padding: 10px;
+    border-radius: 50%;
+    background-color: #74ffb5;
+    display: flex;
+    align-items: center;
     border: 1px solid red;
 }
