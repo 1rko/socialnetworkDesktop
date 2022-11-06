@@ -1,0 +1,25 @@
+.friendsBar_wrapper {
+    display: grid;
+    grid-template:
+            "FH"
+            "AI";
+}
+
+.friendsBar_header {
+    grid-area: FH;
+}
+
+.friendsBar_allItems {
+    grid-area: AI;
+    border: 1px solid blue;
+    height: 200px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-content: space-around;
+}
+
+.friendsBar_item{
+    width: 25px;
+    padding: 10px;
+    border: 1px solid red;
+}

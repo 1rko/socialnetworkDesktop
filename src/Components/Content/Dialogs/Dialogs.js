@@ -14,6 +14,16 @@ const Dialogs = (props) => {
         )
     })
 
+    const messagesArray = props.messages.map(messageItem =>{
+        return(
+            <div className={styles.messageItem}>
+                {messageItem.message}
+            </div>
+        )
+        }
+
+    )
+
     return (
         <div className={styles.dialogs_wrapper}>
             <div className={styles.dialog_items}>
@@ -23,13 +33,9 @@ const Dialogs = (props) => {
             </div>
 
             <div className={styles.messages}>
-                <div className={styles.messages}>
-                    {props.messages[0].message}
-                </div>
 
-                <div className={styles.message}>
-                    How are you?
-                </div>
+                {messagesArray}
+
             </div>
         </div>
     );
