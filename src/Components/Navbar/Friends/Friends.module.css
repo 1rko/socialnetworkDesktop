@@ -1,8 +1,8 @@
 .friendsBar_wrapper {
     display: grid;
     grid-template:
-            "FH"
-            "AI";
+        "FH"
+        "AI";
 }
 
 .friendsBar_header {
@@ -20,14 +20,15 @@
     justify-items: center;
 }
 
-.friendsBar_item{
-    width: 30px;
-    height: 30px;
-    line-height: 10px;
-    padding: 10px;
+.friendsBar_item a {
+    width: 3vw;
+    height: 3vw;
+    font-size: 1vw;
+    padding: 0.8vw;
     border-radius: 50%;
     background-color: #74ffb5;
-    display: flex;
-    align-items: center;
     border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

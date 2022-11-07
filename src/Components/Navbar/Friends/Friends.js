@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Friends.module.css'
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Friends = () => {
     return (
@@ -9,19 +9,19 @@ const Friends = () => {
             <div className={styles.friendsBar_allItems}>
                 <div className={styles.friendsBar_item}>
                     <NavLink to="AAA" className={navData => navData.isActive ? styles.active : styles.unactive}>
-                        AAA
+                        Ivan
                     </NavLink>
                 </div>
 
                 <div className={styles.friendsBar_item}>
                     <NavLink to="BBB" className={navData => navData.isActive ? styles.active : styles.unactive}>
-                        BBB
+                        Fedor
                     </NavLink>
                 </div>
 
                 <div className={styles.friendsBar_item}>
                     <NavLink to="CCC" className={navData => navData.isActive ? styles.active : styles.unactive}>
-                        CCC
+                        Alexandra Ivanova
                     </NavLink>
                 </div>
             </div>
