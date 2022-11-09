@@ -1,18 +1,22 @@
-.dialogs_wrapper{
+.dialogs_wrapper {
     background-color: #f1d839;
     display: grid;
     grid-template-columns: 50% 50%;
 }
 
-.dialog_items{
+.dialog_items {
     padding: 10px;
 }
 
-.dialog_items .active{
-    color:darkred;
+.dialog_items .active {
+    color: darkred;
 }
 
-.dialog_items .unactive{
-    color:green;
+.dialog_items .unactive {
+    color: green;
 }
 
+.dialogsMessage {
+    width: 300px;
+    height: 70px;
+}
