@@ -50,4 +50,16 @@ const state = {
     ]
 }
 
+export const addPostInDialog = () => {
+    let lastItem = state.postData[state.postData.length - 1]
+    let newPost = {
+        id: lastItem.id + 1,
+        likesCount: lastItem.likesCount + 1,
+        postText: "NewPost"
+    }
+    state.postData.push(newPost)
+    console.log(newPost)
+    console.log(state.postData)
+}
+
 export default state;

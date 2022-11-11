@@ -36,7 +36,7 @@ const Dialogs = (props) => {
 
                 <textarea className={styles.dialogsMessage} ref={newPostElement}></textarea>
                 <button className={styles.buttonNewDialogsMessage} onClick={addNewPost}>Добавить новое сообщение</button>
-
+                <button className={styles.buttonNewDialogsMessage} onClick={props.addPostInDialog}>Добавить новый пост через CAllBack в state</button>
             </div>
 
             <div className={styles.messages}>

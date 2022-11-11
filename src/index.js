@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import state from "./data";
+import state, { addPostInDialog } from "./data";
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <App appData={state}/>
+        <App appData={state} addPostInDialog={addPostInDialog} />
     </React.StrictMode>
 );
 
