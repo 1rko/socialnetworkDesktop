@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from "./render";
+
 const state = {
     postData: [
         {
@@ -50,14 +52,15 @@ const state = {
     ]
 }
 
-export const addPostInDialog = () => {
+export const addProfilePost = (newText) => {
     let lastItem = state.postData[state.postData.length - 1]
     let newPost = {
         id: lastItem.id + 1,
         likesCount: lastItem.likesCount + 1,
-        postText: "NewPost"
+        postText: newText
     }
     state.postData.push(newPost)
+    rerenderEntireTree(state);
     console.log(newPost)
     console.log(state.postData)
 }

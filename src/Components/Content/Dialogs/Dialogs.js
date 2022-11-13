@@ -22,11 +22,6 @@ const Dialogs = (props) => {
         )
     })
 
-    let newPostElement = React.createRef();
-    let addNewPost = () => {
-        let text = newPostElement.current?.value;
-        alert(text);
-    }
 
     return (
         <div className={styles.dialogs_wrapper}>
@@ -34,9 +29,7 @@ const Dialogs = (props) => {
 
                 {dialogsArray}
 
-                <textarea className={styles.dialogsMessage} ref={newPostElement}></textarea>
-                <button className={styles.buttonNewDialogsMessage} onClick={addNewPost}>Добавить новое сообщение</button>
-                <button className={styles.buttonNewDialogsMessage} onClick={props.addPostInDialog}>Добавить новый пост через CAllBack в state</button>
+
             </div>
 
             <div className={styles.messages}>
