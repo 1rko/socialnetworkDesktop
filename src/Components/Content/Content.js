@@ -16,8 +16,9 @@ const Content = (props) => {
                 />}/>
                 <Route path="/messages/*" element={<Messages/>}/>
                 <Route path="/profile/*" element={<Profile
-                    postData={props.contentData.postData}
-                    addProfilePost={props.addProfilePost}/>}/>
+                    profilePage={props.contentData.profilePage}
+                    addProfilePost={props.addProfilePost}
+                    updateNewPostText={props.updateNewPostText}/>}/>
             </Routes>
         </div>
     );

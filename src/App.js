@@ -11,7 +11,10 @@ function App(props) {
                 <div className="app_wrapper">
                     <Header />
                     <Navbar />
-                    <Content contentData={props.appData} addProfilePost={props.addProfilePost} />
+                    <Content
+                        contentData={props.appData}
+                        addProfilePost={props.addProfilePost}
+                        updateNewPostText={props.updateNewPostText}/>
                     <Footer />
                 </div>
             </div>

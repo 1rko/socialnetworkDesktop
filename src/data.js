@@ -1,28 +1,31 @@
 import {rerenderEntireTree} from "./render";
 
 const state = {
-    postData: [
-        {
-            id: 1,
-            likesCount: 11,
-            postText: "Hi"
-        },
-        {
-            id: 2,
-            likesCount: 12,
-            postText: "My name is"
-        },
-        {
-            id: 3,
-            likesCount: 13,
-            postText: "How are you"
-        },
-        {
-            id: 4,
-            likesCount: 14,
-            postText: "I am fine"
-        }
-    ],
+    profilePage: {
+        postData: [
+            {
+                id: 1,
+                likesCount: 11,
+                postText: "Hi"
+            },
+            {
+                id: 2,
+                likesCount: 12,
+                postText: "My name is"
+            },
+            {
+                id: 3,
+                likesCount: 13,
+                postText: "How are you"
+            },
+            {
+                id: 4,
+                likesCount: 14,
+                postText: "I am fine"
+            }
+        ],
+        newPostText:'Новый пост из State'
+    },
     dialogs: [
         {
             id: 1,
@@ -52,17 +55,25 @@ const state = {
     ]
 }
 
+window.state=state
+
 export const addProfilePost = (newText) => {
-    let lastItem = state.postData[state.postData.length - 1]
+    let lastItem = state.profilePage.postData[state.profilePage.postData.length - 1]
     let newPost = {
         id: lastItem.id + 1,
         likesCount: lastItem.likesCount + 1,
         postText: newText
     }
-    state.postData.push(newPost)
+    //updateNewPostText('')
+    state.profilePage.postData.push(newPost)
     rerenderEntireTree(state);
-    console.log(newPost)
-    console.log(state.postData)
+}
+
+export const updateNewPostText = (newText) => {
+    state.profilePage.newPostText=newText
+    console.log("state.profilePage.newPostText "+state.profilePage.newPostText)
+
+    rerenderEntireTree(state);
 }
 
 export default state;
