@@ -5,7 +5,7 @@ import PostItem from "./PostItem/PostItem";
 
 const Profile = (props) => {
     const postText = props.profilePage.postData.map(postItem => {
-        return <PostItem likesCount={postItem.likesCount} postText={postItem.postText}/>
+        return <PostItem likesCount={postItem.likesCount} postText={postItem.postText} />
     })
 
     let newPostElement = React.createRef();
@@ -15,14 +15,14 @@ const Profile = (props) => {
         let newPostText = props.profilePage.newPostText;
         props.addProfilePost(newPostText);
         //newPostElement.current.value="a"
-        props.updateNewPostText("Clear")
+        props.updateNewPostText("")
 
-        console.log("newPostElement.current.value "+newPostElement.current.value)
-        console.log("props.profilePage.newPostText "+props.profilePage.newPostText)
+        console.log("newPostElement.current.value " + newPostElement.current.value)
+        console.log("props.profilePage.newPostText " + props.profilePage.newPostText)
     }
 
     let onPostChange = () => {
-        let text=newPostElement.current.value
+        let text = newPostElement.current.value
         props.updateNewPostText(text)
     }
 
@@ -31,12 +31,13 @@ const Profile = (props) => {
         <div className={styles.profile_wrapper}>
             <img className={styles.profileImg} src="https://thumbs.dreamstime.com/b/drops-floral-
       background-closeup-tranquil-abstract-closeup-art-photography-print-wallpaper-floral-
-      fantasy-design-macro-photo-96994455.jpg" alt="profileImg"/>
+      fantasy-design-macro-photo-96994455.jpg" alt="profileImg" />
 
             <textarea
                 className={styles.dialogsMessage}
                 ref={newPostElement}
-                onChange={onPostChange}/>
+                onChange={onPostChange}
+                value={props.profilePage.newPostText} />
             <button className={styles.buttonNewDialogsMessage} onClick={addPost}>Добавить новый пост через
                 CAllBack из state
             </button>
