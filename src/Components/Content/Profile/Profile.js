@@ -14,7 +14,6 @@ const Profile = (props) => {
     let addPost = () => {
         let newPostText = props.profilePage.newPostText;
         props.addProfilePost(newPostText);
-        //newPostElement.current.value="a"
         props.updateNewPostText("")
 
         console.log("newPostElement.current.value " + newPostElement.current.value)

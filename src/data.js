@@ -1,79 +1,90 @@
-import {rerenderEntireTree} from "./render";
 
-const state = {
-    profilePage: {
-        postData: [
+export const store={
+    _state: {
+        profilePage: {
+            postData: [
+                {
+                    id: 1,
+                    likesCount: 11,
+                    postText: "Hi"
+                },
+                {
+                    id: 2,
+                    likesCount: 12,
+                    postText: "My name is"
+                },
+                {
+                    id: 3,
+                    likesCount: 13,
+                    postText: "How are you"
+                },
+                {
+                    id: 4,
+                    likesCount: 14,
+                    postText: "I am fine"
+                }
+            ],
+            newPostText:'Новый пост из State'
+        },
+        dialogs: [
             {
                 id: 1,
-                likesCount: 11,
-                postText: "Hi"
+                name: "Ivan",
+                age: 20
             },
             {
                 id: 2,
-                likesCount: 12,
-                postText: "My name is"
+                name: "Peter",
+                age: 22
             },
             {
                 id: 3,
-                likesCount: 13,
-                postText: "How are you"
-            },
-            {
-                id: 4,
-                likesCount: 14,
-                postText: "I am fine"
+                name: "Ira",
+                age: 33
             }
         ],
-        newPostText:'Новый пост из State'
+        messages: [
+            {
+                id: 1,
+                message: "Привет"
+            },
+            {
+                id: 2,
+                message: "Меня зовут"
+            },
+        ]
     },
-    dialogs: [
-        {
-            id: 1,
-            name: "Ivan",
-            age: 20
-        },
-        {
-            id: 2,
-            name: "Peter",
-            age: 22
-        },
-        {
-            id: 3,
-            name: "Ira",
-            age: 33
+
+    getState(){
+        return this._state
+    },
+
+    _callSubscriber(){// функция - обработчик подписчика
+
+    },
+
+    addProfilePost: function (newText) {
+        let lastItem = this._state.profilePage.postData[this._state.profilePage.postData.length - 1]
+        let newPost = {
+            id: lastItem.id + 1,
+            likesCount: lastItem.likesCount + 1,
+            postText: newText
         }
-    ],
-    messages: [
-        {
-            id: 1,
-            message: "Привет"
-        },
-        {
-            id: 2,
-            message: "Меня зовут"
-        },
-    ]
-}
+        this._state.profilePage.postData.push(newPost)
+        this._callSubscriber(this);
+    },
 
-window.state=state
+    updateNewPostText: function (newText) {
+        this._state.profilePage.newPostText=newText
+        this._callSubscriber(this);
+    },
 
-export const addProfilePost = (newText) => {
-    let lastItem = state.profilePage.postData[state.profilePage.postData.length - 1]
-    let newPost = {
-        id: lastItem.id + 1,
-        likesCount: lastItem.likesCount + 1,
-        postText: newText
+    subscriber: function (observer){// функция - которой передается обработчик подписчика
+        this._callSubscriber=observer;
     }
-    //updateNewPostText('')
-    state.profilePage.postData.push(newPost)
-    rerenderEntireTree(state);
-}
 
-export const updateNewPostText = (newText) => {
-    state.profilePage.newPostText=newText
-    console.log("state.profilePage.newPostText "+state.profilePage.newPostText)
+};
 
-    rerenderEntireTree(state);
-}
+window.state=store._state
 
-export default state;
+export default store;
