@@ -7,17 +7,17 @@ import Content from "./Components/Content/Content";
 
 function App(props) {
     return (
-            <div className="App">
-                <div className="app_wrapper">
-                    <Header />
-                    <Navbar />
-                    <Content
-                        contentData={props.appData}
-                        addProfilePost={props.addProfilePost}
-                        updateNewPostText={props.updateNewPostText}/>
-                    <Footer />
-                </div>
+        <div className="App">
+            <div className="app_wrapper">
+                <Header />
+                <Navbar />
+                <Content
+                    contentData={props.appData}
+                    dispatch={props.dispatch}
+                />
+                <Footer />
             </div>
+        </div>
     );
 }
 

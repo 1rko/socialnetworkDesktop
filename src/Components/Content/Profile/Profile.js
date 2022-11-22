@@ -13,16 +13,25 @@ const Profile = (props) => {
 
     let addPost = () => {
         let newPostText = props.profilePage.newPostText;
-        props.addProfilePost(newPostText);
-        props.updateNewPostText("")
+        props.dispatch({
+            type: 'ADD-PROFILE-POST',
+            newText: newPostText
+        }
+        );
 
-        console.log("newPostElement.current.value " + newPostElement.current.value)
-        console.log("props.profilePage.newPostText " + props.profilePage.newPostText)
+        props.dispatch({
+            type: 'UPDATE-NEW-POST-TEXT',
+            text: ''
+        })
+
     }
 
     let onPostChange = () => {
         let text = newPostElement.current.value
-        props.updateNewPostText(text)
+        props.dispatch({
+            type: 'UPDATE-NEW-POST-TEXT',
+            text: text
+        })
     }
 
     return (

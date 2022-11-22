@@ -1,5 +1,5 @@
 
-export const store={
+export const store = {
     _state: {
         profilePage: {
             postData: [
@@ -24,7 +24,7 @@ export const store={
                     postText: "I am fine"
                 }
             ],
-            newPostText:'Новый пост из State'
+            newPostText: 'Новый пост из State'
         },
         dialogs: [
             {
@@ -55,12 +55,12 @@ export const store={
         ]
     },
 
-    getState(){
-        return this._state
+    _callSubscriber() {// функция - обработчик подписчика
+
     },
 
-    _callSubscriber(){// функция - обработчик подписчика
-
+    getState() {
+        return this._state
     },
 
     addProfilePost: function (newText) {
@@ -75,16 +75,28 @@ export const store={
     },
 
     updateNewPostText: function (newText) {
-        this._state.profilePage.newPostText=newText
+        this._state.profilePage.newPostText = newText
         this._callSubscriber(this);
     },
 
-    subscriber: function (observer){// функция - которой передается обработчик подписчика
-        this._callSubscriber=observer;
+    subscriber: function (observer) {// функция - которой передается обработчик подписчика
+        this._callSubscriber = observer;
+    },
+
+    dispatch(action) {
+
+        if (action.type === 'ADD-PROFILE-POST') {
+            this.addProfilePost(action.newText)
+        }
+        else {
+            if (action.type === 'UPDATE-NEW-POST-TEXT') {
+                this.updateNewPostText(action.text)
+            }
+        }
     }
 
 };
 
-window.state=store._state
+window.state = store._state
 
 export default store;
