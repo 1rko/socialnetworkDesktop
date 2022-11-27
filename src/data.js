@@ -1,3 +1,5 @@
+const ADD_PROFILE_POST='ADD-PROFILE-POST'
+const UPDATE_NEW_POST_TEXT='UPDATE-NEW-POST-TEXT';
 
 export const store = {
     _state: {
@@ -85,17 +87,30 @@ export const store = {
 
     dispatch(action) {
 
-        if (action.type === 'ADD-PROFILE-POST') {
+        if (action.type === ADD_PROFILE_POST) {
             this.addProfilePost(action.newText)
         }
         else {
-            if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            if (action.type === UPDATE_NEW_POST_TEXT) {
                 this.updateNewPostText(action.text)
             }
         }
     }
 
 };
+
+export const addPostActionCreator = (text) =>
+    ({
+        type: ADD_PROFILE_POST,
+        newText: text
+    })
+
+
+export const updateNewPostTextActionCreator = (newText) =>
+    ({
+        type: UPDATE_NEW_POST_TEXT,
+        text: newText
+    })
 
 window.state = store._state
 
