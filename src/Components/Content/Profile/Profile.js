@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Profile.module.css'
 import PostItem from "./PostItem/PostItem";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../data";
+import {addPostCreator, updateNewPostTextCreator} from "../../../redux/state";
 
 
 
@@ -15,14 +15,14 @@ const Profile = (props) => {
 
     let addPost = () => {
         let newPostText = props.profilePage.newPostText;
-        props.dispatch(addPostActionCreator(newPostText));
-        props.dispatch(updateNewPostTextActionCreator(''))
+        props.dispatch(addPostCreator(newPostText));
+        props.dispatch(updateNewPostTextCreator(''))
 
     }
 
     let onPostChange = () => {
         let text = newPostElement.current.value
-        props.dispatch(updateNewPostTextActionCreator(text))
+        props.dispatch(updateNewPostTextCreator(text))
     }
 
     return (

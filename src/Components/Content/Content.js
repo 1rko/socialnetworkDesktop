@@ -11,8 +11,9 @@ const Content = (props) => {
         <div className={styles.content_wrapper}>
             <Routes>
                 <Route path="/dialogs/*" element={<Dialogs
-                    dialogs={props.contentData.dialogs}
+                    dialogsPage={props.contentData.dialogsPage}
                     messages={props.contentData.messages}
+                    dispatch={props.dispatch}
                 />
                 }
                 />
