@@ -1,8 +1,7 @@
 import React from 'react';
 import styles from './Profile.module.css'
 import PostItem from "./PostItem/PostItem";
-import {addPostCreator, updateNewPostTextCreator} from "../../../redux/state";
-
+import {addPostCreator, updateNewPostTextCreator} from "../../../redux/profileReducer";
 
 
 const Profile = (props) => {
@@ -22,7 +21,6 @@ const Profile = (props) => {
 
     let onPostChange = () => {
         let text = newPostElement.current.value
-        debugger
         props.dispatch(updateNewPostTextCreator(text))
     }
 
@@ -41,12 +39,8 @@ const Profile = (props) => {
             <button className={styles.buttonNewDialogsMessage} onClick={addPost}>Добавить новый пост через
                 CAllBack из state
             </button>
-
             {postText}
-
         </div>
-
-
     );
 }
 

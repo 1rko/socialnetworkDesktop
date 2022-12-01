@@ -5,7 +5,6 @@ const profileReducer = (state, action) => {
     switch (action.type) {
         case ADD_PROFILE_POST:
                 let lastItem = state.postData[state.postData.length - 1]
-            debugger
                 let newPost = {
                     id: lastItem.id + 1,
                     likesCount: lastItem.likesCount + 1,
@@ -16,7 +15,21 @@ const profileReducer = (state, action) => {
         case UPDATE_NEW_POST_TEXT:
             state.newPostText = action.text
             return state;
+        default:
+            return state;
     }
 }
+
+export const addPostCreator = (newText) =>
+    ({
+        type: ADD_PROFILE_POST,
+        newText: newText
+    })
+
+export const updateNewPostTextCreator = (text) =>
+    ({
+        type: UPDATE_NEW_POST_TEXT,
+        text: text
+    })
 
 export default profileReducer
