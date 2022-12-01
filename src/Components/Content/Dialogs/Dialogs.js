@@ -15,7 +15,7 @@ const Dialogs = (props) => {
         )
     })
 
-    const messagesArray = props.messages.map(messageItem => {
+    const messagesArray = props.dialogsPage.messages.map(messageItem => {
         return (
             <div className={styles.messageItem}>
                 {messageItem.message}

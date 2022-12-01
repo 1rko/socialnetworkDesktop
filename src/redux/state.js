@@ -1,3 +1,6 @@
+import profileReducer from "./profileReducer";
+import dialogsReducer from "./dialogsReducer";
+
 const ADD_PROFILE_POST = 'ADD-PROFILE-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const UPDATE_NEW_MESSAGE = 'UPDATE_NEW_MESSAGE'
@@ -51,18 +54,18 @@ export const store = {
                     messages: ['Good morning', 'My name is Ira']
                 }
             ],
-            newMessageText: ''
+            newMessageText: '',
+            messages: [
+                {
+                    id: 1,
+                    message: "Привет"
+                },
+                {
+                    id: 2,
+                    message: "Меня зовут"
+                },
+            ]
         },
-        messages: [
-            {
-                id: 1,
-                message: "Привет"
-            },
-            {
-                id: 2,
-                message: "Меня зовут"
-            },
-        ]
     },
 
     _callSubscriber() {// функция - обработчик подписчика
@@ -73,7 +76,7 @@ export const store = {
         return this._state
     },
 
-    addProfilePost: function (newText) {
+    /*addProfilePost: function (newText) {
         let lastItem = this._state.profilePage.postData[this._state.profilePage.postData.length - 1]
         let newPost = {
             id: lastItem.id + 1,
@@ -105,31 +108,16 @@ export const store = {
         console.log("newText - "+newText)
         console.log("this._state.dialogsPage.newMessageText - "+this._state.dialogsPage.newMessageText)
 
-    },
+    },*/
 
     subscriber: function (observer) {// функция - которой передается обработчик подписчика
         this._callSubscriber = observer;
     },
 
     dispatch(action) {
-
-        if (action.type === ADD_PROFILE_POST) {
-            this.addProfilePost(action.newText)
-        } else {
-            if (action.type === UPDATE_NEW_POST_TEXT) {
-                this.updateNewPostText(action.text)
-            }
-            else {
-                if (action.type === UPDATE_NEW_MESSAGE) {
-                    this.updateNewMessage(action.text)
-                }
-                else {
-                    if (action.type === ADD_NEW_MESSAGE) {
-                        this.addMessage(action.newText)
-                    }
-                }
-            }
-        }
+        this._state.profilePage=profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage=dialogsReducer(this._state.dialogsPage, action)
+        this._callSubscriber(this);
     }
 
 };

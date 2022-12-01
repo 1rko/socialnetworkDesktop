@@ -22,6 +22,7 @@ const Profile = (props) => {
 
     let onPostChange = () => {
         let text = newPostElement.current.value
+        debugger
         props.dispatch(updateNewPostTextCreator(text))
     }
 
