@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import store from "./redux/state";
+import store from "./redux/reduxStore";
 import { BrowserRouter } from "react-router-dom";
 
 import './index.css';
@@ -13,8 +13,8 @@ export let rerenderEntireTree = (state) => {
         <React.StrictMode>
             <BrowserRouter>
                 <App
-                    appData={state.getState()}
-                    dispatch={state.dispatch.bind(state)}
+                    appData={state}
+                    dispatch={store.dispatch.bind(store)}
                 //updateNewPostText={state.updateNewPostText.bind(state)}
                 />
             </BrowserRouter>
@@ -22,6 +22,6 @@ export let rerenderEntireTree = (state) => {
     );
 }
 
-rerenderEntireTree(store);
+rerenderEntireTree(store.getState());
 
-store.subscriber(rerenderEntireTree)
+store.subscribe(() => { rerenderEntireTree(store.getState())})
