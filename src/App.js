@@ -14,6 +14,7 @@ function App(props) {
                 <Content
                     contentData={props.appData}
                     dispatch={props.dispatch}
+                    store={props.store}
                 />
                 <Footer />
             </div>

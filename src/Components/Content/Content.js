@@ -3,7 +3,7 @@ import styles from './Content.module.css'
 import { Routes, Route } from 'react-router-dom'
 import Dialogs from "./Dialogs/Dialogs";
 import Messages from "./Messages/Messages";
-import Profile from "./Profile/Profile";
+import ProfileContainer from "./Profile/ProfileContainer";
 
 
 const Content = (props) => {
@@ -18,9 +18,8 @@ const Content = (props) => {
                 }
                 />
                 <Route path="/messages/*" element={<Messages />} />
-                <Route path="/profile/*" element={<Profile
-                    profilePage={props.contentData.profilePage}
-                    dispatch={props.dispatch}
+                <Route path="/profile/*" element={<ProfileContainer
+                    store={props.store}
                 />
                 }
                 />

@@ -1,27 +1,23 @@
 import React from 'react';
 import styles from './Profile.module.css'
 import PostItem from "./PostItem/PostItem";
-import {addPostCreator, updateNewPostTextCreator} from "../../../redux/profileReducer";
-
 
 const Profile = (props) => {
-    const postText = props.profilePage.postData.map(postItem => {
+    const postText = props.postData.map(postItem => {
         return <PostItem likesCount={postItem.likesCount} postText={postItem.postText}/>
     })
 
     let newPostElement = React.createRef();
 
-
-    let addPost = () => {
-        let newPostText = props.profilePage.newPostText;
-        props.dispatch(addPostCreator(newPostText));
-        props.dispatch(updateNewPostTextCreator(''))
-
+    let onAddPost = () => {
+        let newPostText = props.newPostText;
+        props.addPost(newPostText)
+        props.updateNewPostText('')
     }
 
     let onPostChange = () => {
         let text = newPostElement.current.value
-        props.dispatch(updateNewPostTextCreator(text))
+        props.updateNewPostText(text)
     }
 
     return (
@@ -35,8 +31,9 @@ const Profile = (props) => {
                 className={styles.dialogsMessage}
                 ref={newPostElement}
                 onChange={onPostChange}
-                value={props.profilePage.newPostText}/>
-            <button className={styles.buttonNewDialogsMessage} onClick={addPost}>Добавить новый пост через
+                value={props.newPostText}
+                placeholder='Enter new post text'/>
+            <button className={styles.buttonNewDialogsMessage} onClick={onAddPost}>Добавить новый пост через
                 CAllBack из state
             </button>
             {postText}

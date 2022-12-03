@@ -15,6 +15,7 @@ export let rerenderEntireTree = (state) => {
                 <App
                     appData={state}
                     dispatch={store.dispatch.bind(store)}
+                    store={store}
                 //updateNewPostText={state.updateNewPostText.bind(state)}
                 />
             </BrowserRouter>
@@ -24,4 +25,6 @@ export let rerenderEntireTree = (state) => {
 
 rerenderEntireTree(store.getState());
 
-store.subscribe(() => { rerenderEntireTree(store.getState())})
+let state = store.getState()
+
+store.subscribe(() => { rerenderEntireTree(state)})

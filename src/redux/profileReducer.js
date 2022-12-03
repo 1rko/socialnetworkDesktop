@@ -24,7 +24,7 @@ let initialState = {
             postText: "I am fine"
         }
     ],
-    newPostText: 'Новый пост из State'
+    newPostText: ''
 }
 
 const profileReducer = (state = initialState, action) => {
