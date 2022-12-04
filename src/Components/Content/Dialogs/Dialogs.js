@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import {addMessageCreator, updateNewMessageCreator} from "../../../redux/dialogsReducer";
 
 const Dialogs = (props) => {
-    const dialogsArray = props.dialogsPage.dialogsData.map(dialogItem => {
+    const dialogsArray = props.dialogsData.map(dialogItem => {
         return (
             <div className={styles.item}>
                 <NavLink to={"/dialogs/" + dialogItem.id}
@@ -15,7 +15,7 @@ const Dialogs = (props) => {
         )
     })
 
-    const messagesArray = props.dialogsPage.messages.map(messageItem => {
+    const messagesArray = props.messages.map(messageItem => {
         return (
             <div className={styles.messageItem}>
                 {messageItem.message}
@@ -23,15 +23,17 @@ const Dialogs = (props) => {
         )
     })
 
-    let addMessage = () => {
-        let newMessageText = props.dialogsPage.newMessageText;
-        props.dispatch(addMessageCreator(newMessageText));
-        props.dispatch(updateNewMessageCreator(''))
+    let onAddMessage = () => {
+        let newMessageText = props.newMessageText;
+        props.addMessage(newMessageText)
+        /*props.dispatch(addMessageCreator(newMessageText));
+        props.dispatch(updateNewMessageCreator(''))*/
     }
 
     let onMessageChange = (e) => {
         let text = e.target.value
-        props.dispatch(updateNewMessageCreator(text))
+        //props.dispatch(updateNewMessageCreator(text))
+        props.messageChange(text);
     }
 
     return (
@@ -47,9 +49,9 @@ const Dialogs = (props) => {
                 <textarea
                     className={styles.dialogsMessage}
                     onChange={onMessageChange}
-                    value={props.dialogsPage.newMessageText}
+                    value={props.newMessageText}
                     placeholder='Enter New Message'/>
-                    <button className={styles.buttonNewDialogsMessage} onClick={addMessage}>Добавить новое сообщение
+                    <button className={styles.buttonNewDialogsMessage} onClick={onAddMessage}>Добавить новое сообщение
                         через
                         CAllBack из state
                     </button>
