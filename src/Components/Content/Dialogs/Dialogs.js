@@ -26,13 +26,10 @@ const Dialogs = (props) => {
     let onAddMessage = () => {
         let newMessageText = props.newMessageText;
         props.addMessage(newMessageText)
-        /*props.dispatch(addMessageCreator(newMessageText));
-        props.dispatch(updateNewMessageCreator(''))*/
     }
 
     let onMessageChange = (e) => {
         let text = e.target.value
-        //props.dispatch(updateNewMessageCreator(text))
         props.messageChange(text);
     }
 

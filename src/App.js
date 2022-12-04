@@ -12,8 +12,6 @@ function App(props) {
                 <Header />
                 <Navbar />
                 <Content
-                    contentData={props.appData}
-                    dispatch={props.dispatch}
                     store={props.store}
                 />
                 <Footer />
