@@ -8,7 +8,7 @@ import {Provider} from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-export let rerenderEntireTree = (state) => {
+//export let rerenderEntireTree = (state) => {
     root.render(
         <React.StrictMode>
             <BrowserRouter>
@@ -18,12 +18,15 @@ export let rerenderEntireTree = (state) => {
             </BrowserRouter>
         </React.StrictMode>
     );
-}
+//}
 
-rerenderEntireTree(store.getState());
+/*rerenderEntireTree(store.getState());
 
 let state = store.getState()
 
 store.subscribe(() => {
     rerenderEntireTree(state)
-})
+})*/
+
+window.state=store.getState() ///просто вывели в глоб переменную, чтоб смотреть state в консоли
+
