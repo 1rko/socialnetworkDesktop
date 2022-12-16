@@ -1,4 +1,4 @@
-import { addPostCreator, updateNewPostTextCreator } from "../../../redux/usersReducer";
+import { followAC, unFollowAC } from "../../../redux/usersReducer";
 import Users from "./Users";
 import { connect } from "react-redux";
 
@@ -10,13 +10,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        /*addPost: (newPostText) => {
-            dispatch(addPostCreator(newPostText));
-            dispatch(updateNewPostTextCreator(''))
+        onFollow: (id) => {
+            dispatch(followAC(id));
         },
-        updateNewPostText: (text) => {
-            dispatch(updateNewPostTextCreator(text))
-        }*/
+        onUnFollow: (id) => {
+            dispatch(unFollowAC(id));
+        }
     }
 }
 
