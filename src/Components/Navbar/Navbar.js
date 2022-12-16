@@ -1,7 +1,7 @@
 import './Navbar.module.css';
 import React from 'react';
 import styles from './Navbar.module.css'
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Friends from './Friends/Friends'
 
 const Navbar = () => {
@@ -25,7 +25,13 @@ const Navbar = () => {
                 </NavLink>
             </div>
 
-            <Friends/>
+            <div className={styles.item}>
+                <NavLink to="users" className={navData => navData.isActive ? styles.active : styles.unactive}>
+                    Users
+                </NavLink>
+            </div>
+
+            <Friends />
 
         </div>
     );

@@ -2,16 +2,16 @@ const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE'
 const UPDATE_NEW_MESSAGE = 'UPDATE_NEW_MESSAGE'
 
 let initialState = {
-    dialogsData: [
+    usersData: [
         {
             id: 1,
-            name: 'Ivan',
+            name: 'IIIIIIIIII',
             age: 20,
             messages: ['Hello', 'My name is Ivan']
         },
         {
             id: 2,
-            name: 'Peter',
+            name: 'PPPPPPP',
             age: 22,
             messages: ['Hi', 'My name is Peter']
         },
@@ -21,21 +21,10 @@ let initialState = {
             age: 33,
             messages: ['Good morning', 'My name is Ira']
         }
-    ],
-    newMessageText: '',
-    messages: [
-        {
-            id: 1,
-            message: "Привет"
-        },
-        {
-            id: 2,
-            message: "Меня зовут"
-        },
     ]
 }
 
-const dialogsReducer = (state = initialState, action) => {
+const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_NEW_MESSAGE: {
             let lastItem = state.messages[state.messages.length - 1]
@@ -70,4 +59,4 @@ export const updateNewMessageCreator = (text) =>
     text: text
 })
 
-export default dialogsReducer
+export default usersReducer
