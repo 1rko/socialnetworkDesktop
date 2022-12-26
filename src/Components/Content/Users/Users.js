@@ -3,6 +3,36 @@ import styles from './Users.module.css'
 import axios from "axios";
 
 class Users extends React.Component {
+
+    componentDidMount() {
+        axios('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            console.log(response.data.items)
+            this.props.setUsers(response.data.items);
+        })
+    }
+
+    render() {
+        const allUsers = this.props.usersData.map(usersItem => {
+            return <div className={styles.user_item}>
+                <img src={usersItem.photos.small} className={styles.ava} alt='Аватар'/>
+                <div>{usersItem.name}</div>
+                <div>{usersItem.status}</div>
+
+                {usersItem.followed ?
+                    <button onClick={() => { this.props.onUnFollow(usersItem.id) }}> 'Unfollow' </button> :
+                    <button onClick={() => { this.props.onFollow(usersItem.id) }}>'Follow' </button>
+                }
+            </div>
+        })
+
+        return (
+            <div className={styles.users_wrapper}>
+                {allUsers}
+            </div>
+        )    }
+}
+
+/*class Users extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,8 +50,8 @@ class Users extends React.Component {
         let allUsers;
         if (this.state.initFromServer) {
             allUsers = this.state.initFromServer.items.map(usersItem => {
-                let imgSrc=(usersItem.photos.small!==null)?
-                    usersItem.photos.small:
+                let imgSrc = (usersItem.photos.small !== null) ?
+                    usersItem.photos.small :
                     'https://bobbyhadz.com/images/blog/javascript-check-if-variable-is-not-null/banner.webp'
                 return (<div className={styles.user_item}>
                     <img src={imgSrc} className={styles.ava} alt='Аватар'/>:
@@ -44,7 +74,7 @@ class Users extends React.Component {
             </div>
         )
     }
-}
+}*/
 
 /*
 const Users = (props) => {
