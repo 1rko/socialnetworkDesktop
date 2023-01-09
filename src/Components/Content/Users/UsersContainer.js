@@ -1,11 +1,11 @@
 import React from 'react'
 import {
-    followAC,
-    setCurrentPageAC,
-    setTotalCountAC,
-    setUsersAC,
-    toggleIsFetchingAC,
-    unFollowAC,
+    onFollow,
+    setCurrentPage,
+    setTotalCount,
+    setUsers,
+    toggleIsFetching,
+    onUnFollow
 } from "../../../redux/usersReducer";
 import Users from "./Users";
 import {connect} from "react-redux";
@@ -41,7 +41,7 @@ class UsersAPIComponent extends React.Component {
                        currentPage={this.props.currentPage}
                        onPageChanged={this.onPageChanged}
                        onFollow={this.props.onFollow}
-                       onUnFollow={this.props.onFollow}
+                       onUnFollow={this.props.onUnFollow}
                        isFetching={this.props.isFetching}
                        toggleIsFetching={this.props.toggleIsFetching}
                 />
@@ -60,28 +60,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onFollow: (id) => {
-            dispatch(followAC(id));
-        },
-        onUnFollow: (id) => {
-            dispatch(unFollowAC(id));
-        },
-        setUsers: (users) => {
-            dispatch(setUsersAC(users));
-        },
-        setTotalCount: (totalCount) => {
-            dispatch(setTotalCountAC(totalCount));
-        },
-        setCurrentPage: (currentPage) => {
-            dispatch(setCurrentPageAC(currentPage));
-        },
-        toggleIsFetching: (isFetching) => {
-            dispatch(toggleIsFetchingAC(isFetching));
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent)
+export default connect(mapStateToProps,
+    {onFollow, onUnFollow, setUsers, setTotalCount,setCurrentPage,toggleIsFetching})(UsersAPIComponent)
 
