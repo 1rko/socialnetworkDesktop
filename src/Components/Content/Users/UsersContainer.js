@@ -61,5 +61,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    {onFollow, onUnFollow, setUsers, setTotalCount,setCurrentPage,toggleIsFetching})(UsersAPIComponent)
+    {onFollow, onUnFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching})(UsersAPIComponent)
 

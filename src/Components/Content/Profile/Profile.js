@@ -20,12 +20,35 @@ const Profile = (props) => {
         props.updateNewPostText(text)
     }
 
+    let profileData = props.profile
+    let profileItem = null
+
+    if (profileData) {
+        let profileContactsArray = []
+
+        for (let key in profileData.contacts) {
+            if (profileData.contacts[key])
+                profileContactsArray.push(<div className={styles.contact}>{key} : {profileData.contacts[key]}</div>)
+        }
+
+        profileItem = <div className={styles.profileItemWrapper}>
+            <img className={styles.avaImg} src={profileData.photos.small}/>
+            <div>{profileData.fullName}</div>
+            <div>{profileData.aboutMe}</div>
+            {profileContactsArray}
+        </div>
+    } else
+        profileItem = <div>Профиль не загружен</div>
+
     return (
 
         <div className={styles.profile_wrapper}>
+
             <img className={styles.profileImg} src="https://thumbs.dreamstime.com/b/drops-floral-
       background-closeup-tranquil-abstract-closeup-art-photography-print-wallpaper-floral-
       fantasy-design-macro-photo-96994455.jpg" alt="profileImg"/>
+
+            {profileItem}
 
             <textarea
                 className={styles.dialogsMessage}
