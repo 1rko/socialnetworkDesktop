@@ -17,6 +17,7 @@ const ProfileInfo = (props) => {
         profileItem = <div className={styles.profileItemWrapper}>
             <img className={styles.avaImg} src={profileData.photos.small} alt="avaImg"/>
             <div>{profileData.fullName}</div>
+            <div>{profileData.userId}</div>
             <div>{profileData.aboutMe}</div>
             {profileContactsArray}
         </div>
