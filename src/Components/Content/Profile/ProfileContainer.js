@@ -23,11 +23,11 @@ class ProfileAPIContainer extends React.Component {
                 {this.props.isFetching ? <Preloader/>: null}
                 <Profile postData={this.props.postData}
                          newPostText={this.props.newPostText}
-                         isFetching={this.props.isFetching}
-                         toggleIsFetching={this.props.toggleIsFetching}
+                         //isFetching={this.props.isFetching}
+                         //toggleIsFetching={this.props.toggleIsFetching}
                          addPost={this.props.addPost}
                          updateNewPostText={this.props.updateNewPostText}
-                         setProfile={this.props.setProfile}
+                         //setProfile={this.props.setProfile}
                          profile={this.props.profile}
                 />
             </>
