@@ -10,6 +10,7 @@ import React, {useEffect} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom"
 import Preloader from "../../Preloader/Preloader";
+import store from "../../../redux/reduxStore";
 
 let ProfileAPIContainer = (props) => {
 
@@ -18,9 +19,10 @@ let ProfileAPIContainer = (props) => {
 
     useEffect(() => {
         props.toggleIsFetching(true)
+        console.log(store.getState().profilePage.profile)
         axios(`https://social-network.samuraijs.com/api/1.0/profile/${profileId}`).then(response => {
-                //console.log(response.data)
                 props.setProfile(response.data);
+                console.log("после запроса "+store.getState().profilePage.profile)
                 props.toggleIsFetching(false)
             }
         )
