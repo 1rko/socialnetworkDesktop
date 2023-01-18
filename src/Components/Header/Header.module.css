@@ -1,8 +1,12 @@
-.header_wrapper{
+.header_wrapper {
     background-color: #74ffb5;
     grid-area: H;
 }
 
-.header_logo{
+.header_logo {
     width: 30px;
+}
+
+.loginText {
+    float: right;
 }

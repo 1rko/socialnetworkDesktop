@@ -8,7 +8,7 @@ import {
     onUnFollow
 } from "../../../redux/usersReducer";
 import Users from "./Users";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import axios from "axios";
 import Preloader from "../../Preloader/Preloader";
 
@@ -34,18 +34,18 @@ class UsersAPIComponent extends React.Component {
 
     render() {
         return (<>
-                {this.props.isFetching ? <Preloader/> : null}
-                <Users usersData={this.props.usersData}
-                       totalCount={this.props.totalCount}
-                       usersCount={this.props.usersCount}
-                       currentPage={this.props.currentPage}
-                       onPageChanged={this.onPageChanged}
-                       onFollow={this.props.onFollow}
-                       onUnFollow={this.props.onUnFollow}
-                       isFetching={this.props.isFetching}
-                       toggleIsFetching={this.props.toggleIsFetching}
-                />
-            </>
+            {this.props.isFetching ? <Preloader /> : null}
+            <Users usersData={this.props.usersData}
+                totalCount={this.props.totalCount}
+                usersCount={this.props.usersCount}
+                currentPage={this.props.currentPage}
+                onPageChanged={this.onPageChanged}
+                onFollow={this.props.onFollow}
+                onUnFollow={this.props.onUnFollow}
+                isFetching={this.props.isFetching}
+                toggleIsFetching={this.props.toggleIsFetching}
+            />
+        </>
         )
     }
 }
@@ -61,5 +61,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    {onFollow, onUnFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching})(UsersAPIComponent)
+    { onFollow, onUnFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching })(UsersAPIComponent)
 
