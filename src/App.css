@@ -8,6 +8,6 @@
         "H H H H H"
         "N C C C C "
         "F F F F F";
-    grid-template-rows: 40px auto 40px;
+    grid-template-rows: 70px auto 40px;
     grid-template-columns: repeat(5,1fr);
 }

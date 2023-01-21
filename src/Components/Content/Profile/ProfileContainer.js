@@ -19,10 +19,10 @@ let ProfileAPIContainer = (props) => {
 
     useEffect(() => {
         props.toggleIsFetching(true)
-        console.log(store.getState().profilePage.profile)
+        //console.log(store.getState().profilePage.profile)
         axios(`https://social-network.samuraijs.com/api/1.0/profile/${profileId}`).then(response => {
                 props.setProfile(response.data);
-                console.log("после запроса "+store.getState().profilePage.profile)
+                //console.log("после запроса "+store.getState().profilePage.profile)
                 props.toggleIsFetching(false)
             }
         )
