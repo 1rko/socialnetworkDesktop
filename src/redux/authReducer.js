@@ -1,20 +1,27 @@
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA'
+const USER_IS_AUTHORISED = 'USER_IS_AUTHORISED'
+
 
 let initialState = {
     id: null,
     login: null,
     email: null,
-    isFetching: false
+    isAuthorised: false
 }
-
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_AUTH_USER_DATA: {
-            debugger
             return {
                 ...state,
                 ...action.userData
+            };
+        }
+
+        case USER_IS_AUTHORISED: {
+            return {
+                ...state,
+                isAuthorised:action.isAuthorised
             };
         }
 
@@ -27,6 +34,12 @@ export const setAuthUserData = (id, login, email) =>
 ({
     type: SET_AUTH_USER_DATA,
     userData: { id, login, email }
+})
+
+export const userIsAuthorised = (isAuthorised) =>
+({
+    type: USER_IS_AUTHORISED,
+    isAuthorised: isAuthorised
 })
 
 export default authReducer

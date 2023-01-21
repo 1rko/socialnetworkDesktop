@@ -1,16 +1,19 @@
 import React from 'react';
 import styles from './Auth.module.css'
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 const Auth = (props) => {
-    debugger
-  return (
-    <div className={styles.loginText_wrapper}>
-      <NavLink to="/login"> Login </NavLink>
-        <div style={{ color: 'blue'}}> ID: {props.auth.id} Login: {props.auth.login}</div>
-        <div style={{ color: 'green'}}> Login: {props.auth.email} </div>
-    </div>
-  );
+    return (
+        <div className={styles.loginText_wrapper}>
+            {props.auth.isAuthorised ? (
+                    <>
+                        <div className={styles.AuthText}> ID: {props.auth.id} Login: {props.auth.login}</div>
+                        <div className={styles.AuthText}> Login: {props.auth.email} </div>
+                    </>) :
+                <NavLink to="/login"> Login </NavLink>
+            }
+        </div>
+    );
 }
 
 export default Auth;
