@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Users.module.css'
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {usersAPI} from "../../../DAL/Dal";
 
 const Users = (props) => {
 
@@ -52,30 +52,18 @@ const Users = (props) => {
             {
                 usersItem.followed ?
                     <button onClick={() => {
-                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${usersItem.id}`,
-                            {
-                                withCredentials: true,
-                                headers: {
-                                    "API-KEY": "0a4e82f0-3a0f-4f07-bd13-4f0796adfac4"
-                                }
-                            })
-                            .then(response => {
-                                if (response.data.resultCode == 0)
+                        usersAPI.unFollowUser(usersItem.id)
+                            .then(data => {
+                                if (data.resultCode == 0)
                                     props.onUnFollow(usersItem.id)
                             })
                     }}> 'Unfollow' </button> :
 
                     <button onClick={() => {
 
-                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${usersItem.id}`, {},
-                            {
-                                withCredentials: true,
-                                headers: {
-                                    "API-KEY": "0a4e82f0-3a0f-4f07-bd13-4f0796adfac4"
-                                }
-                            })
-                            .then(response => {
-                                if (response.data.resultCode == 0)
+                        usersAPI.followUser(usersItem.id)
+                            .then(  data => {
+                                if (data.resultCode == 0)
                                     props.onFollow(usersItem.id)
                             })
                     }}>'Follow' </button>
