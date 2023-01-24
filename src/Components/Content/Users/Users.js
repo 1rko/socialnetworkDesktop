@@ -52,32 +52,24 @@ const Users = (props) => {
 
             {
                 usersItem.followed ?
-                    <button disabled={props.followingInProgress.some(id => id === usersItem.id)} onClick={() => {
+                    <button disabled={props.followingInProgress.includes(usersItem.id)} onClick={() => {
                         props.toggleFollowingIsFetching(true, usersItem.id)
                         usersAPI.unFollowUser(usersItem.id)
                             .then(data => {
-                                if (data.resultCode == 0)
+                                if (data.resultCode === 0)
                                     props.onUnFollow(usersItem.id)
+                                props.toggleFollowingIsFetching(false, usersItem.id)
                             })
-                        console.log(store.getState().usersPage.followingInProgress);
-                        debugger
-
-                        props.toggleFollowingIsFetching(false, usersItem.id)
-                        console.log(store.getState().usersPage.followingInProgress);
                     }}> 'Unfollow' </button> :
 
                     <button disabled={props.followingInProgress.some(id => id === usersItem.id)} onClick={() => {
                         props.toggleFollowingIsFetching(true, usersItem.id)
                         usersAPI.followUser(usersItem.id)
                             .then(data => {
-                                if (data.resultCode == 0)
+                                if (data.resultCode === 0)
                                     props.onFollow(usersItem.id)
+                                props.toggleFollowingIsFetching(false, usersItem.id)
                             })
-                        console.log(store.getState().usersPage.followingInProgress);
-                        debugger
-                        props.toggleFollowingIsFetching(false, usersItem.id)
-                        console.log(store.getState().usersPage.followingInProgress);
-                        //console.log(store.getState().usersPage.followingInProgress);
                     }}>'Follow' </button>
             }
         </div>
