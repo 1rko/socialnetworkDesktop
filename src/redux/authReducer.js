@@ -23,7 +23,7 @@ const authReducer = (state = initialState, action) => {
         case USER_IS_AUTHORISED: {
             return {
                 ...state,
-                isAuthorised:action.isAuthorised
+                isAuthorised: action.isAuthorised
             };
         }
 
@@ -33,22 +33,24 @@ const authReducer = (state = initialState, action) => {
 }
 
 export const setAuthUserData = (id, login, email) =>
-({
-    type: SET_AUTH_USER_DATA,
-    userData: { id, login, email }
-})
+    ({
+        type: SET_AUTH_USER_DATA,
+        userData: {id, login, email}
+    })
 
 export const userIsAuthorised = (isAuthorised) =>
-({
-    type: USER_IS_AUTHORISED,
-    isAuthorised: isAuthorised
-})
+    ({
+        type: USER_IS_AUTHORISED,
+        isAuthorised: isAuthorised
+    })
 
 export const meThunkCreator = () => (dispatch) => {
     authAPI.getMe().then(data => {
-        let {id, login, email} = data.data
-        dispatch(setAuthUserData(id, login, email))
-        dispatch(userIsAuthorised(true))
+        if (data.resultCode === 0) {
+            let {id, login, email} = data.data
+            dispatch(setAuthUserData(id, login, email))
+            dispatch(userIsAuthorised(true))
+        }
     })
 }
 

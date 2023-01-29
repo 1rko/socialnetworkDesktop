@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Dialogs.module.css'
-import { NavLink } from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import store from '../../../redux/reduxStore';
 
 
@@ -33,6 +33,8 @@ const Dialogs = (props) => {
         let text = e.target.value
         props.messageChange(text);
     }
+
+    if (!props.isAuthorised) return <Navigate to = '/login'/>
 
     return (
         <div className={styles.dialogs_wrapper}>
