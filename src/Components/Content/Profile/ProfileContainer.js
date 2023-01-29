@@ -10,7 +10,7 @@ import React, {useEffect} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom"
 import Preloader from "../../Preloader/Preloader";
-import store from "../../../redux/reduxStore";
+import withAuthRedirect from "../../../HOC/withAuthRedirect";
 
 let ProfileAPIContainer = (props) => {
 
@@ -72,5 +72,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(ProfileAPIContainer)
+let withAuthRedirectProfileAPIContainer = withAuthRedirect (ProfileAPIContainer)
+
+const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(withAuthRedirectProfileAPIContainer)
 export default ProfileContainer;
