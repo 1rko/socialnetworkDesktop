@@ -5,7 +5,11 @@ import {
     setTotalCount,
     setUsers,
     toggleIsFetching,
-    onUnFollow, toggleFollowingIsFetching
+    onUnFollow,
+    toggleFollowingIsFetching,
+    getUsersThunkCreator,
+    onPageChangedThunkCreator,
+    onFollowButtonClickThunkCreator, onUnfollowButtonClickThunkCreator
 } from "../../../redux/usersReducer";
 import Users from "./Users";
 import {connect} from "react-redux";
@@ -15,23 +19,11 @@ import {usersAPI} from "../../../DAL/Dal";
 class UsersAPIComponent extends React.Component {
 
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-        usersAPI.getUsers(this.props.currentPage, this.props.usersCount)
-            .then(data => {
-                this.props.setUsers(data.items);
-                this.props.setTotalCount(data.totalCount)
-                this.props.toggleIsFetching(false)
-            })
+        this.props.getUsers(this.props.currentPage, this.props.usersCount)
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.toggleIsFetching(true)
-        this.props.setCurrentPage(pageNumber)
-        usersAPI.getUsers(pageNumber, this.props.usersCount)
-            .then(data => {
-                this.props.setUsers(data.items);
-                this.props.toggleIsFetching(false)
-            })
+        this.props.onPageChangedInsight(pageNumber, this.props.usersCount);
     }
 
     render() {
@@ -48,6 +40,8 @@ class UsersAPIComponent extends React.Component {
                        toggleIsFetching={this.props.toggleIsFetching}
                        followingInProgress={this.props.followingInProgress}
                        toggleFollowingIsFetching={this.props.toggleFollowingIsFetching}
+                       onFollowButtonClick={this.props.onFollowButtonClick}
+                       onUnfollowButtonClick={this.props.onUnfollowButtonClick}
                 />
             </>
         )
@@ -67,7 +61,9 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps,
     {
-        onFollow, onUnFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching,
-        toggleFollowingIsFetching
+        onFollow, onUnFollow, setUsers,
+        setTotalCount, setCurrentPage, toggleIsFetching,
+        toggleFollowingIsFetching, getUsers: getUsersThunkCreator, onPageChangedInsight: onPageChangedThunkCreator,
+        onFollowButtonClick:onFollowButtonClickThunkCreator, onUnfollowButtonClick:onUnfollowButtonClickThunkCreator
     })(UsersAPIComponent)
 

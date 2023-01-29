@@ -2,18 +2,13 @@ import './Header.module.css';
 import React from 'react';
 import styles from './Header.module.css'
 import Header from './Header';
-import {setAuthUserData, userIsAuthorised} from '../../redux/authReducer'
+import {meThunkCreator, setAuthUserData, userIsAuthorised} from '../../redux/authReducer'
 import {connect} from "react-redux";
 import {authAPI} from "../../DAL/Dal";
 
 class HeaderContainer extends React.Component {
     componentDidMount() {
-        authAPI.getMe().then(data => {
-                let {id, login, email} = data.data;
-                this.props.setAuthUserData(id, login, email);
-                this.props.userIsAuthorised(true)
-            }
-        )
+        this.props.me()
     }
 
     render() {
@@ -27,4 +22,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {setAuthUserData, userIsAuthorised})(HeaderContainer)
+export default connect(mapStateToProps, {setAuthUserData, userIsAuthorised, me: meThunkCreator})(HeaderContainer)

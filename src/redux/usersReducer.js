@@ -1,3 +1,5 @@
+import {usersAPI} from "../DAL/Dal";
+
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
@@ -108,5 +110,52 @@ export const toggleFollowingIsFetching = (isFetching, userId) =>
         isFetching: isFetching,
         userId: userId
     })
+
+export const getUsersThunkCreator = (currentPage, usersCount) =>
+    (dispatch) => {
+        dispatch(toggleIsFetching(true))
+        usersAPI.getUsers(currentPage, usersCount)
+            .then(data => {
+                dispatch(setUsers(data.items));
+                dispatch(setTotalCount(data.totalCount))
+                dispatch(toggleIsFetching(false))
+            })
+    }
+
+export const onPageChangedThunkCreator = (pageNumber, usersCount) =>
+    (dispatch) => {
+        dispatch(toggleIsFetching(true))
+        dispatch(setCurrentPage(pageNumber))
+        usersAPI.getUsers(pageNumber, usersCount)
+            .then(data => {
+                dispatch(setUsers(data.items));
+                dispatch(toggleIsFetching(false))
+            })
+
+    }
+
+export const onFollowButtonClickThunkCreator = (userId) =>
+    (dispatch) => {
+        dispatch(toggleFollowingIsFetching(true, userId))
+        usersAPI.followUser(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(onFollow(userId))
+                }
+                dispatch(toggleFollowingIsFetching(false, userId))
+            })
+    }
+
+export const onUnfollowButtonClickThunkCreator = (userId) =>
+    (dispatch) => {
+        dispatch(toggleFollowingIsFetching(true, userId))
+        usersAPI.unFollowUser(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(onUnFollow(userId))
+                }
+                dispatch(toggleFollowingIsFetching(false, userId))
+            })
+    }
 
 export default usersReducer
