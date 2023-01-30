@@ -11,6 +11,7 @@ import axios from "axios";
 import {useParams} from "react-router-dom"
 import Preloader from "../../Preloader/Preloader";
 import withAuthRedirect from "../../../HOC/withAuthRedirect";
+import {compose} from "redux";
 
 let ProfileAPIContainer = (props) => {
 
@@ -19,10 +20,8 @@ let ProfileAPIContainer = (props) => {
 
     useEffect(() => {
         props.toggleIsFetching(true)
-        //console.log(store.getState().profilePage.profile)
         axios(`https://social-network.samuraijs.com/api/1.0/profile/${profileId}`).then(response => {
                 props.setProfile(response.data);
-                //console.log("после запроса "+store.getState().profilePage.profile)
                 props.toggleIsFetching(false)
             }
         )
@@ -72,7 +71,9 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-let withAuthRedirectProfileAPIContainer = withAuthRedirect (ProfileAPIContainer)
+const ProfileContainer = compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect)
+    (ProfileAPIContainer)
 
-const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(withAuthRedirectProfileAPIContainer)
 export default ProfileContainer;
