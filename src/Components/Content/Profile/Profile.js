@@ -9,9 +9,10 @@ const Profile = (props) => {
 
         <div className={styles.profile_wrapper}>
 
-            <img className={styles.profileImg} src="https://thumbs.dreamstime.com/b/drops-floral-
+         {/*   <img className={styles.profileImg} src="https://thumbs.dreamstime.com/b/drops-floral-
       background-closeup-tranquil-abstract-closeup-art-photography-print-wallpaper-floral-
-      fantasy-design-macro-photo-96994455.jpg" alt="profileImg"/>
+      fantasy-design-macro-photo-96994455.jpg" alt="profileImg"/>*/}
+
 
             <ProfileInfo profile={props.profile}/>
 
