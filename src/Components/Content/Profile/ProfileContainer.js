@@ -12,6 +12,7 @@ import {useParams} from "react-router-dom"
 import Preloader from "../../Preloader/Preloader";
 import withAuthRedirect from "../../../HOC/withAuthRedirect";
 import {compose} from "redux";
+import MyProfileInfo from "./MyProfileInfo/MyProfileInfo";
 
 let ProfileAPIContainer = (props) => {
 
@@ -30,6 +31,9 @@ let ProfileAPIContainer = (props) => {
     return (
         <>
             <h1>Profile</h1>
+
+            <MyProfileInfo/>
+
             {props.isFetching ? <Preloader/> : null}
             <Profile postData={props.postData}
                      newPostText={props.newPostText}

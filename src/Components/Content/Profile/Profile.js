@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Profile.module.css'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import Posts from "./Posts/Posts";
+import MyProfileInfo from "./MyProfileInfo/MyProfileInfo";
 
 const Profile = (props) => {
 
