@@ -13,6 +13,9 @@ import Preloader from "../../Preloader/Preloader";
 import withAuthRedirect from "../../../HOC/withAuthRedirect";
 import {compose} from "redux";
 import MyProfileInfo from "./MyProfileInfo/MyProfileInfo";
+import {profileAPI} from "../../../DAL/Dal";
+import {onUnFollow} from "../../../redux/usersReducer";
+
 
 let ProfileAPIContainer = (props) => {
 
@@ -20,16 +23,18 @@ let ProfileAPIContainer = (props) => {
     const profileId = params.userId;
 
     useEffect(() => {
-        if (profileId) {
-            props.toggleIsFetching(true)
-            axios(`https://social-network.samuraijs.com/api/1.0/profile/${profileId}`).then(response => {
-                    props.setProfile(response.data);
-                    props.toggleIsFetching(false)
-                }
-            )
+            if (profileId) {
+                props.toggleIsFetching(true)
+                profileAPI.getProfile(profileId).then(
+                    data => {
+                        console.log(data);
+                        props.setProfile(data);
+                        props.toggleIsFetching(false)
+                    })
+            }
 
-        }
-    }, [])
+        }, []
+    )
 
     return (
         <>
