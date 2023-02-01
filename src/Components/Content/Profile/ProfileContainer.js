@@ -20,12 +20,15 @@ let ProfileAPIContainer = (props) => {
     const profileId = params.userId;
 
     useEffect(() => {
-        props.toggleIsFetching(true)
-        axios(`https://social-network.samuraijs.com/api/1.0/profile/${profileId}`).then(response => {
-                props.setProfile(response.data);
-                props.toggleIsFetching(false)
-            }
-        )
+        if (profileId) {
+            props.toggleIsFetching(true)
+            axios(`https://social-network.samuraijs.com/api/1.0/profile/${profileId}`).then(response => {
+                    props.setProfile(response.data);
+                    props.toggleIsFetching(false)
+                }
+            )
+
+        }
     }, [])
 
     return (
@@ -78,6 +81,6 @@ const mapDispatchToProps = (dispatch) => {
 const ProfileContainer = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withAuthRedirect)
-    (ProfileAPIContainer)
+(ProfileAPIContainer)
 
 export default ProfileContainer;
