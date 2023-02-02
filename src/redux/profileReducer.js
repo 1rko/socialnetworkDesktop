@@ -1,7 +1,11 @@
+import {profileAPI} from "../DAL/Dal";
+
 const ADD_PROFILE_POST = 'ADD-PROFILE-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_PROFILE = 'SET-PROFILE'
 const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING'
+const SET_STATUS = 'SET_STATUS'
+
 
 let initialState = {
     postData: [
@@ -27,8 +31,9 @@ let initialState = {
         }
     ],
     newPostText: '',
-    profile:null,
-    isFetching:false
+    profile: null,
+    isFetching: false,
+    status: 'initialStatus'
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -63,33 +68,56 @@ const profileReducer = (state = initialState, action) => {
                 isFetching: action.isFetching
             };
         }
+        case SET_STATUS: {
+            return {
+                ...state,
+                status: action.status
+            };
+        }
         default:
             return state;
     }
 }
 
 export const addPost = (newText) =>
-({
-    type: ADD_PROFILE_POST,
-    newText: newText
-})
+    ({
+        type: ADD_PROFILE_POST,
+        newText: newText
+    })
 
 export const updateNewPostText = (text) =>
-({
-    type: UPDATE_NEW_POST_TEXT,
-    text: text
-})
+    ({
+        type: UPDATE_NEW_POST_TEXT,
+        text: text
+    })
 
 export const setProfile = (profile) =>
-({
-    type: SET_PROFILE,
-    profile: profile
-})
+    ({
+        type: SET_PROFILE,
+        profile: profile
+    })
 
 export const toggleIsFetching = (isFetching) =>
-({
-    type: TOGGLE_IS_FETCHING,
-    isFetching: isFetching
+    ({
+        type: TOGGLE_IS_FETCHING,
+        isFetching: isFetching
+    })
+
+export const setStatus = (status) => ({
+    type: SET_STATUS,
+    status: status
 })
+
+export const updateStatusThunkCreator = (status) =>
+    (dispatch) => {
+        profileAPI.updateStatus(status)
+            .then(response => {
+                if (response.resultCode === 0) {
+                    dispatch(setStatus(status))
+                } else {
+                    console.log("Error : " + response.messages)
+                }
+            })
+    }
 
 export default profileReducer

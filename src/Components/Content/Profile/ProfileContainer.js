@@ -2,7 +2,7 @@ import {
     addPost,
     setProfile,
     toggleIsFetching,
-    updateNewPostText
+    updateNewPostText, updateStatusThunkCreator
 } from "../../../redux/profileReducer";
 import Profile from "./Profile";
 import {connect} from "react-redux";
@@ -40,7 +40,7 @@ let ProfileAPIContainer = (props) => {
         <>
             <h1>Profile</h1>
 
-            <MyProfileInfo/>
+            <MyProfileInfo status={props.status} updateStatus={props.updateStatus}/>
 
             {props.isFetching ? <Preloader/> : null}
             <Profile postData={props.postData}
@@ -62,6 +62,7 @@ const mapStateToProps = (state) => {
         newPostText: state.profilePage.newPostText,
         profile: state.profilePage.profile,
         isFetching: state.profilePage.isFetching,
+        status: state.profilePage.status
     }
 }
 
@@ -80,11 +81,12 @@ const mapDispatchToProps = (dispatch) => {
         toggleIsFetching: (isFetching) => {
             dispatch(toggleIsFetching(isFetching))
         }
+
     }
 }
 
 const ProfileContainer = compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, {...mapDispatchToProps,updateStatus: updateStatusThunkCreator}),
     withAuthRedirect)
 (ProfileAPIContainer)
 
