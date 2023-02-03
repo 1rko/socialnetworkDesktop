@@ -1,8 +1,6 @@
 import React from 'react';
 import styles from './Users.module.css'
 import {NavLink} from "react-router-dom";
-import {usersAPI} from "../../../DAL/Dal";
-import store from "../../../redux/reduxStore";
 
 const Users = (props) => {
 

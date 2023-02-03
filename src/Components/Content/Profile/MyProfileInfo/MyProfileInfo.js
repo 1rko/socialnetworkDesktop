@@ -17,18 +17,15 @@ class MyProfileInfo extends React.Component {
         this.props.updateStatus(this.state.localStatus)
     }
 
-    statusInput=React.createRef();
-
-    onChangeInput = () => {
-        let newStatus = this.statusInput.current.value
+    onChangeInput = (e) => {
+        let newStatus = e.target.value
         this.setState({localStatus: newStatus});
     }
 
     render() {
         return <div className={styles.MyProfileInfo}>
             {((!this.state.editMode) && <span onDoubleClick={this.activateEditMode}>{this.props.status}</span>)}
-            {((this.state.editMode) && <input ref={this.statusInput}
-                                              autoFocus={true}
+            {((this.state.editMode) && <input autoFocus={true}
                                               onBlur={this.deActivateEditMode}
                                               value={this.state.localStatus}
                                               onChange={this.onChangeInput}/>)}

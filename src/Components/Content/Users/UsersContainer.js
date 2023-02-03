@@ -14,7 +14,6 @@ import {
 import Users from "./Users";
 import {connect} from "react-redux";
 import Preloader from "../../Preloader/Preloader";
-import {usersAPI} from "../../../DAL/Dal";
 
 class UsersAPIComponent extends React.Component {
 

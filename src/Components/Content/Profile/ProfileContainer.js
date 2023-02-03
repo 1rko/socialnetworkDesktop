@@ -1,20 +1,17 @@
 import {
-    addPost,
-    setProfile,
+    addPostThunkCreator,
+    setProfile, setStatus,
     toggleIsFetching,
     updateNewPostText, updateStatusThunkCreator
 } from "../../../redux/profileReducer";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import React, {useEffect} from "react";
-import axios from "axios";
 import {useParams} from "react-router-dom"
 import Preloader from "../../Preloader/Preloader";
 import withAuthRedirect from "../../../HOC/withAuthRedirect";
 import {compose} from "redux";
-import MyProfileInfo from "./MyProfileInfo/MyProfileInfo";
 import {profileAPI} from "../../../DAL/Dal";
-import {onUnFollow} from "../../../redux/usersReducer";
 
 
 let ProfileAPIContainer = (props) => {
@@ -23,16 +20,21 @@ let ProfileAPIContainer = (props) => {
     const profileId = params.userId;
 
     useEffect(() => {
+            profileAPI.getStatus(2).then(
+                data => {
+                    props.setStatus(data)
+                })
+
             if (profileId) {
                 props.toggleIsFetching(true)
                 profileAPI.getProfile(profileId).then(
                     data => {
+                        debugger
                         console.log(data);
                         props.setProfile(data);
                         props.toggleIsFetching(false)
                     })
             }
-
         }, []
     )
 
@@ -40,17 +42,14 @@ let ProfileAPIContainer = (props) => {
         <>
             <h1>Profile</h1>
 
-            <MyProfileInfo status={props.status} updateStatus={props.updateStatus}/>
-
             {props.isFetching ? <Preloader/> : null}
             <Profile postData={props.postData}
                      newPostText={props.newPostText}
-                //isFetching={this.props.isFetching}
-                //toggleIsFetching={this.props.toggleIsFetching}
                      addPost={props.addPost}
                      updateNewPostText={props.updateNewPostText}
-                //setProfile={this.props.setProfile}
                      profile={props.profile}
+                     status={props.status}
+                     updateStatus={props.updateStatus}
             />
         </>
     )
@@ -66,28 +65,13 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addPost: (newPostText) => {
-            dispatch(addPost(newPostText));
-            dispatch(updateNewPostText(''))
-        },
-        updateNewPostText: (text) => {
-            dispatch(updateNewPostText(text))
-        },
-        setProfile: (profile) => {
-            dispatch(setProfile(profile))
-        },
-        toggleIsFetching: (isFetching) => {
-            dispatch(toggleIsFetching(isFetching))
-        }
-
-    }
-}
-
-const ProfileContainer = compose(
-    connect(mapStateToProps, {...mapDispatchToProps,updateStatus: updateStatusThunkCreator}),
-    withAuthRedirect)
-(ProfileAPIContainer)
+const ProfileContainer =
+    compose(
+        connect(mapStateToProps, {
+            updateNewPostText, setProfile, toggleIsFetching,
+            addPost: addPostThunkCreator, updateStatus: updateStatusThunkCreator, setStatus
+        }),
+        withAuthRedirect)
+    (ProfileAPIContainer)
 
 export default ProfileContainer;

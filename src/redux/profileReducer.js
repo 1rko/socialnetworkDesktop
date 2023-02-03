@@ -108,8 +108,10 @@ export const setStatus = (status) => ({
     status: status
 })
 
+
 export const updateStatusThunkCreator = (status) =>
     (dispatch) => {
+        debugger
         profileAPI.updateStatus(status)
             .then(response => {
                 if (response.resultCode === 0) {
@@ -118,6 +120,12 @@ export const updateStatusThunkCreator = (status) =>
                     console.log("Error : " + response.messages)
                 }
             })
+    }
+
+export const addPostThunkCreator = (newPostText) =>
+    (dispatch) => {
+        dispatch(addPost(newPostText));
+        dispatch(updateNewPostText(''))
     }
 
 export default profileReducer
