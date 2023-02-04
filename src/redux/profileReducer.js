@@ -111,7 +111,6 @@ export const setStatus = (status) => ({
 
 export const updateStatusThunkCreator = (status) =>
     (dispatch) => {
-        debugger
         profileAPI.updateStatus(status)
             .then(response => {
                 if (response.resultCode === 0) {

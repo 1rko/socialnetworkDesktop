@@ -8,6 +8,12 @@ class MyProfileInfo extends React.Component {
         editMode: false
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({localStatus: this.props.status})
+        }
+    }
+
     activateEditMode = () => {
         this.setState({editMode: true})
     }
@@ -29,6 +35,7 @@ class MyProfileInfo extends React.Component {
                                               onBlur={this.deActivateEditMode}
                                               value={this.state.localStatus}
                                               onChange={this.onChangeInput}/>)}
+            {/*<button onClick={()=> this.props.updateStatus("любой статус")}>Установить любой статус Это тестовая кнопака</button>*/}
         </div>
 
 

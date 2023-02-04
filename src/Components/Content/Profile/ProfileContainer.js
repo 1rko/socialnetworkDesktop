@@ -12,6 +12,7 @@ import Preloader from "../../Preloader/Preloader";
 import withAuthRedirect from "../../../HOC/withAuthRedirect";
 import {compose} from "redux";
 import {profileAPI} from "../../../DAL/Dal";
+import store from "../../../redux/reduxStore";
 
 
 let ProfileAPIContainer = (props) => {
@@ -20,22 +21,21 @@ let ProfileAPIContainer = (props) => {
     const profileId = params.userId;
 
     useEffect(() => {
-            profileAPI.getStatus(2).then(
+            profileAPI.getStatus(27573).then(
                 data => {
                     props.setStatus(data)
-                })
+                }).then(
+            )
 
             if (profileId) {
                 props.toggleIsFetching(true)
                 profileAPI.getProfile(profileId).then(
                     data => {
-                        debugger
-                        console.log(data);
                         props.setProfile(data);
                         props.toggleIsFetching(false)
                     })
             }
-        }, []
+        },
     )
 
     return (
