@@ -12,33 +12,35 @@ const Login = (props) => {
     )
 }
 
-/*const LoginForm = (props) => {
-    return (
-        <div>
-            <div>
-                <input placeholder={'Login'} name={'Login'}/>
-            </div>
-            <div>
-                <input placeholder={'Password'} name={'Password'}/>
-            </div>
-            <div>
-                <input type={'checkbox'} name={'RememberMe'} id={'RememberMe'} value={'RememberMe'}/>
-                <label htmlFor="RememberMe">remember me</label>
-            </div>
-            <button>Send form</button>
-        </div>
+const validate = values => {
+    const errors = {};
+    if (!values.login) {
+        errors.login = 'Required';
+    } else if (values.login.length > 15) {
+        errors.login = 'Must be 15 characters or less';
+    }
 
-    )
-}*/
+    if (!values.password) {
+        errors.password = 'Required';
+    }
+
+    if (!values.email) {
+        errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address';
+    }
+
+    return errors;
+};
 
 const LoginForm = () => (
     <div>
         <Formik
             initialValues={{login: "", password: ""}}
-
+            validate={validate}
             onSubmit={(values, {setSubmitting}) => {
                 setTimeout(() => {
-                    alert(JSON.stringify(values.login, null, 2));
+                    alert(JSON.stringify(values, null, 2));
                     setSubmitting(false);
                 }, 400);
             }}
@@ -46,6 +48,7 @@ const LoginForm = () => (
             {({isSubmitting}) => (
                 <Form>
                     <Field type="text" name="login" placeholder ='login'/>
+                    <ErrorMessage name="login" component="div" />
                     <Field type="password" name="password" placeholder ='password'/>
                     <Field type="checkbox" name="rememberMe"/>
                     <label htmlFor="rememberMe">remember me</label>
