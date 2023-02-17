@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from './Dialogs.module.css'
-import {Navigate, NavLink} from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import store from '../../../redux/reduxStore';
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import MyTextArea from '../../../Common/Controls/TextArea';
 
 
 const Dialogs = (props) => {
@@ -24,8 +26,7 @@ const Dialogs = (props) => {
         )
     })
 
-    let onAddMessage = () => {
-        let newMessageText = props.newMessageText;
+    let onAddMessage = (newMessageText) => {
         props.addMessage(newMessageText)
     }
 
@@ -34,7 +35,7 @@ const Dialogs = (props) => {
         props.messageChange(text);
     }
 
-    if (!props.isAuthorised) return <Navigate to = '/login'/>
+    if (!props.isAuthorised) return <Navigate to='/login' />
 
     return (
         <div className={styles.dialogs_wrapper}>
@@ -46,7 +47,8 @@ const Dialogs = (props) => {
                 {messagesArray}
 
                 <div>
-                    <textarea
+                    <AddMessageForm funcAddMessage={onAddMessage} />
+                    {/*<textarea
                         className={styles.dialogsMessage}
                         onChange={onMessageChange}
                         value={props.newMessageText}
@@ -54,11 +56,46 @@ const Dialogs = (props) => {
                     <button className={styles.buttonNewDialogsMessage} onClick={onAddMessage}>Добавить новое сообщение
                         через
                         CAllBack из state
-                    </button>
+    </button>*/}
                 </div>
             </div>
         </div>
     );
 }
+
+const AddMessageForm = (props) => (
+    <div>
+        <Formik
+            initialValues={{
+                newMessage: ""
+            }}
+            validate={values => {
+                const errors = {};
+                if (!values.newMessage) {
+                    errors.newMessage = 'Required';
+                }
+                return errors;
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+                setTimeout(() => {
+                    alert(JSON.stringify(values, null, 2));
+                    props.funcAddMessage(values.newMessage);
+                    console.log(store.getState().dialogsPage.messages)
+                    setSubmitting(false);
+                }, 400);
+            }}
+        >
+            {({ isSubmitting }) => (
+                <Form>
+                    <Field name="newMessage" component={MyTextArea} placeholder="Enter new message text" />
+
+                    <button type="submit" disabled={isSubmitting}>
+                        Submit
+                    </button>
+                </Form>
+            )}
+        </Formik>
+    </div>
+);
 
 export default Dialogs;

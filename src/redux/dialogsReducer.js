@@ -70,4 +70,10 @@ export const updateNewMessageCreator = (text) =>
     text: text
 })
 
+export const addMessageThunkCreator = (newMessageText) =>
+    (dispatch) => {
+        dispatch(addMessageCreator(newMessageText));
+        dispatch(updateNewMessageCreator(''))
+    }
+
 export default dialogsReducer

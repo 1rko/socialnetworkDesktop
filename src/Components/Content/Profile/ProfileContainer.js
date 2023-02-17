@@ -5,13 +5,13 @@ import {
     updateNewPostText, updateStatusThunkCreator
 } from "../../../redux/profileReducer";
 import Profile from "./Profile";
-import {connect} from "react-redux";
-import React, {useEffect} from "react";
-import {useParams} from "react-router-dom"
+import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom"
 import Preloader from "../../Preloader/Preloader";
 import withAuthRedirect from "../../../HOC/withAuthRedirect";
-import {compose} from "redux";
-import {profileAPI} from "../../../DAL/Dal";
+import { compose } from "redux";
+import { profileAPI } from "../../../DAL/Dal";
 import store from "../../../redux/reduxStore";
 
 
@@ -21,35 +21,35 @@ let ProfileAPIContainer = (props) => {
     const profileId = params.userId;
 
     useEffect(() => {
-            profileAPI.getStatus(27573).then(
-                data => {
-                    props.setStatus(data)
-                }).then(
-            )
+        profileAPI.getStatus(27573).then(
+            data => {
+                props.setStatus(data)
+            }).then(
+        )
 
-            if (profileId) {
-                props.toggleIsFetching(true)
-                profileAPI.getProfile(profileId).then(
-                    data => {
-                        props.setProfile(data);
-                        props.toggleIsFetching(false)
-                    })
-            }
-        },
+        if (profileId) {
+            props.toggleIsFetching(true)
+            profileAPI.getProfile(profileId).then(
+                data => {
+                    props.setProfile(data);
+                    props.toggleIsFetching(false)
+                })
+        }
+    },
     )
 
     return (
         <>
             <h1>Profile</h1>
 
-            {props.isFetching ? <Preloader/> : null}
+            {props.isFetching ? <Preloader /> : null}
             <Profile postData={props.postData}
-                     newPostText={props.newPostText}
-                     addPost={props.addPost}
-                     updateNewPostText={props.updateNewPostText}
-                     profile={props.profile}
-                     status={props.status}
-                     updateStatus={props.updateStatus}
+                newPostText={props.newPostText}
+                addPost={props.addPost}
+                updateNewPostText={props.updateNewPostText}
+                profile={props.profile}
+                status={props.status}
+                updateStatus={props.updateStatus}
             />
         </>
     )
@@ -72,6 +72,6 @@ const ProfileContainer =
             addPost: addPostThunkCreator, updateStatus: updateStatusThunkCreator, setStatus
         }),
         withAuthRedirect)
-    (ProfileAPIContainer)
+        (ProfileAPIContainer)
 
 export default ProfileContainer;

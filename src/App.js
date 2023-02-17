@@ -5,7 +5,6 @@ import Navbar from "./Components/Navbar/Navbar";
 import Content from "./Components/Content/Content";
 import HeaderContainer from "./Components/Header/HeaderContainer"
 
-
 function App(props) {
     return (
         <div className="App">

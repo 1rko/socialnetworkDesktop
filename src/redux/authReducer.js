@@ -1,4 +1,4 @@
-import {authAPI} from "../DAL/Dal";
+import { authAPI } from "../DAL/Dal";
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA'
 const USER_IS_AUTHORISED = 'USER_IS_AUTHORISED'
@@ -8,7 +8,7 @@ let initialState = {
     id: null,
     login: null,
     email: null,
-    isAuthorised: false
+    isAuthorised: true
 }
 
 const authReducer = (state = initialState, action) => {
@@ -33,21 +33,21 @@ const authReducer = (state = initialState, action) => {
 }
 
 export const setAuthUserData = (id, login, email) =>
-    ({
-        type: SET_AUTH_USER_DATA,
-        userData: {id, login, email}
-    })
+({
+    type: SET_AUTH_USER_DATA,
+    userData: { id, login, email }
+})
 
 export const userIsAuthorised = (isAuthorised) =>
-    ({
-        type: USER_IS_AUTHORISED,
-        isAuthorised: isAuthorised
-    })
+({
+    type: USER_IS_AUTHORISED,
+    isAuthorised: isAuthorised
+})
 
 export const meThunkCreator = () => (dispatch) => {
     authAPI.getMe().then(data => {
         if (data.resultCode === 0) {
-            let {id, login, email} = data.data
+            let { id, login, email } = data.data
             dispatch(setAuthUserData(id, login, email))
             dispatch(userIsAuthorised(true))
         }
