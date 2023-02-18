@@ -9,6 +9,7 @@ const Auth = (props) => {
                     <>
                         <div className={styles.AuthText}> ID: {props.auth.id} Login: {props.auth.login}</div>
                         <div className={styles.AuthText}> Login: {props.auth.email} </div>
+                        <button onClick={props.logout}>Logout</button>
                     </>) :
                 <NavLink to="/login"> Login </NavLink>
             }

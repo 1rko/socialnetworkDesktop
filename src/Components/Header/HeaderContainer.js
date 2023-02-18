@@ -2,7 +2,7 @@ import './Header.module.css';
 import React from 'react';
 import styles from './Header.module.css'
 import Header from './Header';
-import {meThunkCreator, setAuthUserData, userIsAuthorised} from '../../redux/authReducer'
+import {logoutThunkCreator, meThunkCreator, setAuthUserData, userIsAuthorised} from '../../redux/authReducer'
 import {connect} from "react-redux";
 import {authAPI} from "../../DAL/Dal";
 
@@ -12,7 +12,7 @@ class HeaderContainer extends React.Component {
     }
 
     render() {
-        return <Header auth={this.props.auth}/>
+        return <Header auth={this.props.auth} logout={this.props.logout}/>
     }
 }
 
@@ -22,4 +22,9 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {setAuthUserData, userIsAuthorised, me: meThunkCreator})(HeaderContainer)
+export default connect(mapStateToProps,
+    {
+        setAuthUserData, userIsAuthorised,
+        me: meThunkCreator, logout: logoutThunkCreator
+    })
+(HeaderContainer)
