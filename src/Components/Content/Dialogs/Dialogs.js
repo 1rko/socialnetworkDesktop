@@ -78,7 +78,7 @@ const AddMessageForm = (props) => (
             }}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
+                    //alert(JSON.stringify(values, null, 2));
                     props.funcAddMessage(values.newMessage);
                     console.log(store.getState().dialogsPage.messages)
                     setSubmitting(false);

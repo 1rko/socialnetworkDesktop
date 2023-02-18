@@ -3,6 +3,10 @@
     float: right
 }
 
-.AuthText{
-    color:blue;
+.AuthText {
+    color: blue;
+}
+
+.login_form {
+    width: 300px;
 }

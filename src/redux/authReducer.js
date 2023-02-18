@@ -8,7 +8,7 @@ let initialState = {
     id: null,
     login: null,
     email: null,
-    isAuthorised: true
+    isAuthorised: false
 }
 
 const authReducer = (state = initialState, action) => {
@@ -50,6 +50,14 @@ export const meThunkCreator = () => (dispatch) => {
             let { id, login, email } = data.data
             dispatch(setAuthUserData(id, login, email))
             dispatch(userIsAuthorised(true))
+        }
+    })
+}
+
+export const loginThunkCreator = (email, password, rememberMe) => (dispatch) => {
+    authAPI.login(email, password, rememberMe).then(data => {
+        if (data.resultCode === 0) {
+            dispatch(meThunkCreator())
         }
     })
 }

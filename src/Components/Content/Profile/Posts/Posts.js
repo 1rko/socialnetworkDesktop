@@ -28,17 +28,6 @@ const Posts = (props) => {
 
             <PostForm funcAddPost={onAddPost} />
 
-//Это не нужно
-            <textarea
-                className={styles.dialogsMessage}
-                ref={newPostElement}
-                onChange={onPostChange}
-                value={props.newPostText}
-                placeholder='Enter new post text' />
-            <button className={styles.buttonNewDialogsMessage} onClick={onAddPost}>Добавить новый пост через
-                CAllBack из state
-            </button>
-///
             {postText}
         </div>
     );
@@ -59,7 +48,7 @@ const PostForm = (props) => (
             }}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
+                    //alert(JSON.stringify(values, null, 2));
                     props.funcAddPost(values.newPost);
                     setSubmitting(false);
                 }, 400);

@@ -1,90 +1,60 @@
 import React from 'react';
 import styles from './Login.module.css'
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { loginThunkCreator } from '../../redux/authReducer';
+import { connect } from 'react-redux'
 
 
 const Login = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <LoginForm />
+            <LoginForm login={props.login} />
         </div>
     )
 }
 
 const validate = values => {
     const errors = {};
-    if (!values.login) {
-        errors.login = 'Required';
+    if (!values.email) {
+        errors.email = 'Required';
     }
     return errors;
 };
 
-const LoginForm = () => (
-    <div>
+const LoginForm = (props) => (
+    <div className={styles.login_form}>
         <Formik
-            initialValues={{
-                login: "", password: "",
-                color: "", firstName: "",
-                secondName: ""
-            }}
+            initialValues={{ email: "", password: "" }}
             validate={validate}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
                     alert(JSON.stringify(values, null, 2));
+                    props.login(values.email, values.password, values.rememberMe = false);
                     setSubmitting(false);
                 }, 400);
             }}
         >
             {({ isSubmitting }) => (
                 <Form>
-                    <Field type="text" name="login" placeholder='login' />
-                    <ErrorMessage name="login" component="div" />
+                    <Field type="text" name="email" placeholder='email' />
+                    <ErrorMessage name="email" component="div" />
 
                     <Field type="password" name="password" placeholder='password' />
                     <ErrorMessage name="password" component="div" />
 
                     <Field type="checkbox" name="rememberMe" /><label htmlFor="rememberMe">remember me</label>
 
-                    <Field name="color" component="select">
-                        <option value="red">Red</option>
-                        <option value="green">Green</option>
-                        <option value="blue">Blue</option>
-                    </Field>
-
-                    <Field name="firstName">
-                        {({ field, form, meta }) => (
-                            <div>
-                                <input type="text" {...field} placeholder="first Name" />
-                                {meta.touched &&
-                                    meta.error && <div className="error">{meta.error}</div>}
-                            </div>
-                        )}
-                    </Field>
-
-                    <Field name="secondName" component={CustomInputComponent} placeholder="Second Name" />
-
                     <button type="submit" disabled={isSubmitting}>
                         Submit
                     </button>
+
                 </Form>
             )}
         </Formik>
     </div>
 );
 
-const CustomInputComponent = ({
-    field, // { name, value, onChange, onBlur }
-    form: { touched, errors, dirty }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-    ...props
-}) => (
-    <div>
-        <input type="text" {...field} {...props} onClick={() => console.log(dirty)} />
-        {touched[field.name] &&
-            errors[field.name] && <div className="error">{errors[field.name]}</div>}
-    </div>
-);
-
-export default Login;
+export default connect(null, { login: loginThunkCreator })(Login);
 
 
