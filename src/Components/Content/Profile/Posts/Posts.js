@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Posts.module.css'
 import PostItem from "../PostItem/PostItem";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import MyTextArea from '../../../../Common/Controls/TextArea';
+import MyTextArea from '../../../../Common/Controls/MyTextArea/MyTextArea';
 
 const Posts = (props) => {
 

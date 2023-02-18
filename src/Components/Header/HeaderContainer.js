@@ -4,7 +4,6 @@ import styles from './Header.module.css'
 import Header from './Header';
 import {logoutThunkCreator, meThunkCreator, setAuthUserData, userIsAuthorised} from '../../redux/authReducer'
 import {connect} from "react-redux";
-import {authAPI} from "../../DAL/Dal";
 
 class HeaderContainer extends React.Component {
     componentDidMount() {

@@ -3,6 +3,7 @@ import styles from './Login.module.css'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { loginThunkCreator } from '../../redux/authReducer';
 import { connect } from 'react-redux'
+import MyInput from "../../Common/Controls/MyInput/MyInput";
 
 
 const Login = (props) => {
@@ -19,6 +20,7 @@ const validate = values => {
     if (!values.email) {
         errors.email = 'Required';
     }
+
     return errors;
 };
 
@@ -37,8 +39,8 @@ const LoginForm = (props) => (
         >
             {({ isSubmitting }) => (
                 <Form>
-                    <Field type="text" name="email" placeholder='email' />
-                    <ErrorMessage name="email" component="div" />
+                    <Field component={MyInput} name="email" placeholder='email' />
+                    {/*<ErrorMessage name="email" component="div" />*/}
 
                     <Field type="password" name="password" placeholder='password' />
                     <ErrorMessage name="password" component="div" />

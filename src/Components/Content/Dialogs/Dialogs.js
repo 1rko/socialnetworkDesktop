@@ -3,7 +3,7 @@ import styles from './Dialogs.module.css'
 import { Navigate, NavLink } from "react-router-dom";
 import store from '../../../redux/reduxStore';
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import MyTextArea from '../../../Common/Controls/TextArea';
+import MyTextArea from '../../../Common/Controls/MyTextArea/MyTextArea';
 
 
 const Dialogs = (props) => {
@@ -47,16 +47,9 @@ const Dialogs = (props) => {
                 {messagesArray}
 
                 <div>
+
                     <AddMessageForm funcAddMessage={onAddMessage} />
-                    {/*<textarea
-                        className={styles.dialogsMessage}
-                        onChange={onMessageChange}
-                        value={props.newMessageText}
-                        placeholder='Enter New Message' />
-                    <button className={styles.buttonNewDialogsMessage} onClick={onAddMessage}>Добавить новое сообщение
-                        через
-                        CAllBack из state
-    </button>*/}
+
                 </div>
             </div>
         </div>
@@ -78,7 +71,6 @@ const AddMessageForm = (props) => (
             }}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
-                    //alert(JSON.stringify(values, null, 2));
                     props.funcAddMessage(values.newMessage);
                     console.log(store.getState().dialogsPage.messages)
                     setSubmitting(false);
