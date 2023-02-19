@@ -32,10 +32,10 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthUserData = (id, login, email) =>
+export const setAuthUserData = (id, login, email, isAuthorised) =>
 ({
     type: SET_AUTH_USER_DATA,
-    userData: { id, login, email }
+    userData: { id, login, email, isAuthorised }
 })
 
 export const userIsAuthorised = (isAuthorised) =>
@@ -48,8 +48,8 @@ export const meThunkCreator = () => (dispatch) => {
     authAPI.getMe().then(data => {
         if (data.resultCode === 0) {
             let { id, login, email } = data.data
-            dispatch(setAuthUserData(id, login, email))
-            dispatch(userIsAuthorised(true))
+            dispatch(setAuthUserData(id, login, email, true))
+            //dispatch(userIsAuthorised(true))
         }
     })
 }
@@ -66,7 +66,8 @@ export const loginThunkCreator = (email, password, rememberMe) => (dispatch) => 
 export const logoutThunkCreator = () => (dispatch) => {
     authAPI.logout().then(data => {
         if (data.resultCode === 0) {
-            dispatch(userIsAuthorised(false))
+            dispatch(setAuthUserData(null, null, null, false))
+            //dispatch(userIsAuthorised(false))
         }
         else alert (data.messages)
     })

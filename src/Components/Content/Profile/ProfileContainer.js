@@ -35,8 +35,7 @@ let ProfileAPIContainer = (props) => {
                     props.toggleIsFetching(false)
                 })
         }
-    },
-    )
+    }, [])
 
     return (
         <>
