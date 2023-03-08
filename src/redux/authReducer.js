@@ -44,7 +44,7 @@ export const userIsAuthorised = (isAuthorised) =>
     isAuthorised: isAuthorised
 })
 
-export const meThunkCreator = () => (dispatch) => {
+export const getAuthUserDataThunkCreator = () => (dispatch) => {
     authAPI.getMe().then(data => {
         if (data.resultCode === 0) {
             let { id, login, email } = data.data
@@ -57,7 +57,7 @@ export const meThunkCreator = () => (dispatch) => {
 export const loginThunkCreator = (email, password, rememberMe) => (dispatch) => {
     authAPI.login(email, password, rememberMe).then(data => {
         if (data.resultCode === 0) {
-            dispatch(meThunkCreator())
+            dispatch(getAuthUserDataThunkCreator())
         }
         else alert (data.messages)
     })

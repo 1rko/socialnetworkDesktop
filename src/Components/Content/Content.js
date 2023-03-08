@@ -4,7 +4,6 @@ import {Routes, Route} from 'react-router-dom'
 import Messages from "./Messages/Messages";
 import ProfileContainer from "./Profile/ProfileContainer";
 import DialogsContainer from "./Dialogs/DialogsContainer";
-//import Users from './Users/Users';
 import UsersContainer from './Users/UsersContainer';
 import LoginPage from "../Login/Login";
 

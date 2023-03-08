@@ -35,8 +35,6 @@ const Dialogs = (props) => {
         props.messageChange(text);
     }
 
-    if (!props.isAuthorised) return <Navigate to='/login' />
-
     return (
         <div className={styles.dialogs_wrapper}>
             <div className={styles.dialog_items}>
