@@ -8,14 +8,19 @@ import {connect} from "react-redux";
 import {getAuthUserDataThunkCreator, logoutThunkCreator, setAuthUserData, userIsAuthorised} from "./redux/authReducer";
 import {withRouter} from "./HOC/withRouter";
 import {compose} from "redux";
+import Preloader from "./Components/Preloader/Preloader";
+import {initializeApp} from "./redux/appReducer";
 
 class App extends Component {
     componentDidMount() {
-        this.props.getAuthUserData()
-        debugger
+        this.props.initializeApp()
     }
 
     render() {
+        if (!this.props.initialized) {
+            return <Preloader/>
+        }
+
         return (
             <div className="App">
                 <div className="app_wrapper">
@@ -31,9 +36,13 @@ class App extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    initialized: state.app.initialized
+})
+
 export default compose(
     withRouter,
     connect(
-    null,{getAuthUserData: getAuthUserDataThunkCreator }))(App)
+        mapStateToProps, {initializeApp}))(App)
 
 

@@ -14,18 +14,6 @@ let mapStateToProps = (state) => {
     }
 }
 
-/*let mapDispatchToProps = (dispatch) => {
-    return {
-        addMessage: (newMessageText) => {
-            dispatch(addMessageCreator(newMessageText));
-            dispatch(updateNewMessageCreator(''))
-        },
-        messageChange: (text) => {
-            dispatch(updateNewMessageCreator(text))
-        }
-    }
-}*/
-
 const DialogsContainer =
     compose(
         withRouter,

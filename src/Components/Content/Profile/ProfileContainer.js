@@ -21,7 +21,6 @@ let ProfileAPIContainer = (props) => {
     let profileId = props.router.params.userId;
 
     useEffect(() => {
-
         profileId = profileId ? profileId : props.authorizedUserId
 
         props.toggleIsFetching(true)
@@ -31,6 +30,10 @@ let ProfileAPIContainer = (props) => {
                 props.toggleIsFetching(false)
             })
 
+        profileAPI.getStatus(props.authorizedUserId). then(
+            data => {
+                props.setStatus(data)
+            })
     }, [])
 
     return (

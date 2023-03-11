@@ -45,11 +45,10 @@ export const userIsAuthorised = (isAuthorised) =>
 })
 
 export const getAuthUserDataThunkCreator = () => (dispatch) => {
-    authAPI.getMe().then(data => {
+    return authAPI.getMe().then(data => {
         if (data.resultCode === 0) {
             let { id, login, email } = data.data
             dispatch(setAuthUserData(id, login, email, true))
-            //dispatch(userIsAuthorised(true))
         }
     })
 }
