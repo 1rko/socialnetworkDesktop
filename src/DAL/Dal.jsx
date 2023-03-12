@@ -1,12 +1,12 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-    withCredentials: true,
-    headers: {
-        "API-KEY": "0a4e82f0-3a0f-4f07-bd13-4f0796adfac4"
+        baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+        withCredentials: true,
+        headers: {
+            "API-KEY": "0a4e82f0-3a0f-4f07-bd13-4f0796adfac4"
+        }
     }
-}
 )
 
 export const usersAPI = {
@@ -24,8 +24,6 @@ export const usersAPI = {
         return instance.delete(`follow/${userID}`)
             .then(response => response.data)
     }
-
-
 }
 
 export const authAPI = {
@@ -35,7 +33,7 @@ export const authAPI = {
     },
 
     login(email, password, rememberMe) {
-        return instance.post(`auth/login`, { email, password, rememberMe })
+        return instance.post(`auth/login`, {email, password, rememberMe})
             .then(response => response.data)
     },
 
@@ -58,7 +56,7 @@ export const profileAPI = {
     },
 
     updateStatus(status) {
-        return instance.put(`profile/status/`, { status: status })
+        return instance.put(`profile/status/`, {status: status})
             .then(response => response.data)
     }
 }

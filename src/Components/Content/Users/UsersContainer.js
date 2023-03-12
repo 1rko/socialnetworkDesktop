@@ -18,8 +18,7 @@ import {
     getCurrentPage, getFollowingInProgress,
     getIsFetching,
     getTotalCount,
-    getUsersCount,
-    getuUsersData
+    getUsersCount, getUsersData, getUsersDataSuperSelector
 } from "../../../redux/usersSelectors";
 
 class UsersAPIComponent extends React.Component {
@@ -56,7 +55,7 @@ class UsersAPIComponent extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        usersData: getuUsersData(state),
+        usersData: getUsersDataSuperSelector(state),
         currentPage: getCurrentPage(state),
         usersCount: getUsersCount(state),
         totalCount: getTotalCount(state),
@@ -70,6 +69,6 @@ export default connect(mapStateToProps,
         onFollow, onUnFollow, setUsers,
         setTotalCount, setCurrentPage, toggleIsFetching,
         toggleFollowingIsFetching, getUsers: getUsersThunkCreator, onPageChangedInsight: onPageChangedThunkCreator,
-        onFollowButtonClick:onFollowButtonClickThunkCreator, onUnfollowButtonClick:onUnfollowButtonClickThunkCreator
+        onFollowButtonClick: onFollowButtonClickThunkCreator, onUnfollowButtonClick: onUnfollowButtonClickThunkCreator
     })(UsersAPIComponent)
 

@@ -2,7 +2,6 @@ import {getAuthUserDataThunkCreator} from "./authReducer";
 
 const INICIALIZED_SUCCESS = 'INICIALIZED_SUCCESS'
 
-
 let initialState = {
     initialized: false
 }
@@ -28,9 +27,8 @@ export const initialisedSuccess = () =>
 
 export const initializeApp = () => (dispatch) => {
    let promise=dispatch (getAuthUserDataThunkCreator())
-    Promise.all([promise]).
-    then(()=>dispatch(initialisedSuccess()))
-
+    Promise.all([promise]).then(()=>
+        dispatch(initialisedSuccess()))
 }
 
-export default appReducer
+export default appReducer;
