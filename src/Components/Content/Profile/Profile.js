@@ -3,6 +3,7 @@ import styles from './Profile.module.css'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import Posts from "./Posts/Posts";
 import MyProfileInfo from "./MyProfileInfo/MyProfileInfo";
+import MyProfileInfoWithHooks from "./MyProfileInfo/MyProfileInfoWithHooks";
 
 const Profile = (props) => {
 
@@ -12,6 +13,7 @@ const Profile = (props) => {
                 ------Мой профиль-----
                 <MyProfileInfo status={props.status} updateStatus={props.updateStatus}/>
                 ----------------------
+                <MyProfileInfoWithHooks status={props.status} updateStatus={props.updateStatus}/>
             </div>
 
             <div className={styles.profile_wrapper}>
