@@ -11,7 +11,7 @@ let reducers = combineReducers({
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     auth: authReducer,
-    app:appReducer
+    app: appReducer
 })
 
 let store = legacy_createStore(reducers, applyMiddleware(thunkMiddleWare));

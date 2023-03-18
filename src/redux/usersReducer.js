@@ -1,4 +1,4 @@
-import {usersAPI} from "../DAL/Dal";
+import { usersAPI } from "../DAL/Dal";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -24,7 +24,7 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 usersData: state.usersData.map(u => {
                     if (u.id === action.userId) {
-                        return {...u, followed: true}
+                        return { ...u, followed: true }
                     }
                     return u
                 })
@@ -35,7 +35,7 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 usersData: state.usersData.map(u => {
                     if (u.id === action.userId) {
-                        return {...u, followed: false}
+                        return { ...u, followed: false }
                     }
                     return u
                 })
@@ -69,47 +69,47 @@ const usersReducer = (state = initialState, action) => {
 }
 
 export const onFollow = (id) =>
-    ({
-        type: FOLLOW,
-        userId: id
-    })
+({
+    type: FOLLOW,
+    userId: id
+})
 
 export const onUnFollow = (id) =>
-    ({
-        type: UNFOLLOW,
-        userId: id
-    })
+({
+    type: UNFOLLOW,
+    userId: id
+})
 
 export const setUsers = (users) =>
-    ({
-        type: SET_USERS,
-        usersData: users
-    })
+({
+    type: SET_USERS,
+    usersData: users
+})
 
 export const setTotalCount = (totalCount) =>
-    ({
-        type: SET_TOTAL_COUNT,
-        totalCount: totalCount
-    })
+({
+    type: SET_TOTAL_COUNT,
+    totalCount: totalCount
+})
 
 export const setCurrentPage = (currentPage) =>
-    ({
-        type: SET_CURRENT_PAGE,
-        currentPage: currentPage
-    })
+({
+    type: SET_CURRENT_PAGE,
+    currentPage: currentPage
+})
 
 export const toggleIsFetching = (isFetching) =>
-    ({
-        type: TOGGLE_IS_FETCHING,
-        isFetching: isFetching
-    })
+({
+    type: TOGGLE_IS_FETCHING,
+    isFetching: isFetching
+})
 
 export const toggleFollowingIsFetching = (isFetching, userId) =>
-    ({
-        type: TOGGLE_FOLLOWING_IN_PROGRESS,
-        isFetching: isFetching,
-        userId: userId
-    })
+({
+    type: TOGGLE_FOLLOWING_IN_PROGRESS,
+    isFetching: isFetching,
+    userId: userId
+})
 
 export const getUsersThunkCreator = (currentPage, usersCount) =>
     (dispatch) => {

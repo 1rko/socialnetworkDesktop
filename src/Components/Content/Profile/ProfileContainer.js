@@ -5,15 +5,17 @@ import {
     updateNewPostText, updateStatusThunkCreator
 } from "../../../redux/profileReducer";
 import Profile from "./Profile";
-import {connect} from "react-redux";
-import React, {useEffect} from "react";
-import {useParams} from "react-router-dom"
+import { connect } from "react-redux";
+import React, { useEffect } from "react";
 import Preloader from "../../Preloader/Preloader";
 import withAuthRedirect from "../../../HOC/withAuthRedirect";
-import {compose} from "redux";
-import {profileAPI} from "../../../DAL/Dal";
-import store from "../../../redux/reduxStore";
-import {withRouter} from "../../../HOC/withRouter";
+import { compose } from "redux";
+import { profileAPI } from "../../../DAL/Dal";
+import { withRouter } from "../../../HOC/withRouter";
+import {
+    getPostData, getNewPostText, getProfile,
+    getIsFetching, getStatus
+} from "../../../redux/profileSelectors";
 
 
 let ProfileAPIContainer = (props) => {
@@ -30,7 +32,7 @@ let ProfileAPIContainer = (props) => {
                 props.toggleIsFetching(false)
             })
 
-        profileAPI.getStatus(props.authorizedUserId). then(
+        profileAPI.getStatus(props.authorizedUserId).then(
             data => {
                 props.setStatus(data)
             })
@@ -40,14 +42,14 @@ let ProfileAPIContainer = (props) => {
         <>
             <h1>Profile</h1>
 
-            {props.isFetching ? <Preloader/> : null}
+            {props.isFetching ? <Preloader /> : null}
             <Profile postData={props.postData}
-                     newPostText={props.newPostText}
-                     addPost={props.addPost}
-                     updateNewPostText={props.updateNewPostText}
-                     profile={props.profile}
-                     status={props.status}
-                     updateStatus={props.updateStatus}
+                newPostText={props.newPostText}
+                addPost={props.addPost}
+                updateNewPostText={props.updateNewPostText}
+                profile={props.profile}
+                status={props.status}
+                updateStatus={props.updateStatus}
             />
         </>
     )
@@ -55,11 +57,11 @@ let ProfileAPIContainer = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        postData: state.profilePage.postData,
-        newPostText: state.profilePage.newPostText,
-        profile: state.profilePage.profile,
-        isFetching: state.profilePage.isFetching,
-        status: state.profilePage.status,
+        postData: getPostData(state),
+        newPostText: getNewPostText(state),
+        profile: getProfile(state),
+        isFetching: getIsFetching(state),
+        status: getStatus(state),
         authorizedUserId: state.auth.id
     }
 }
@@ -72,6 +74,6 @@ const ProfileContainer =
         }),
         withRouter,
         withAuthRedirect)
-    (ProfileAPIContainer)
+        (ProfileAPIContainer)
 
 export default ProfileContainer;

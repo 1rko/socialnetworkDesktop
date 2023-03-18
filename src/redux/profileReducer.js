@@ -1,4 +1,4 @@
-import {profileAPI} from "../DAL/Dal";
+import { profileAPI } from "../DAL/Dal";
 
 const ADD_PROFILE_POST = 'ADD-PROFILE-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
@@ -80,28 +80,28 @@ const profileReducer = (state = initialState, action) => {
 }
 
 export const addPost = (newText) =>
-    ({
-        type: ADD_PROFILE_POST,
-        newText: newText
-    })
+({
+    type: ADD_PROFILE_POST,
+    newText: newText
+})
 
 export const updateNewPostText = (text) =>
-    ({
-        type: UPDATE_NEW_POST_TEXT,
-        text: text
-    })
+({
+    type: UPDATE_NEW_POST_TEXT,
+    text: text
+})
 
 export const setProfile = (profile) =>
-    ({
-        type: SET_PROFILE,
-        profile: profile
-    })
+({
+    type: SET_PROFILE,
+    profile: profile
+})
 
 export const toggleIsFetching = (isFetching) =>
-    ({
-        type: TOGGLE_IS_FETCHING,
-        isFetching: isFetching
-    })
+({
+    type: TOGGLE_IS_FETCHING,
+    isFetching: isFetching
+})
 
 export const setStatus = (status) => ({
     type: SET_STATUS,
