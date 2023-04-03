@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './MyProfileInfo.module.css'
-import store from "../../../../redux/reduxStore";
 
 class MyProfileInfo extends React.Component {
     state = {
