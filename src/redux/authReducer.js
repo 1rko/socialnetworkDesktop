@@ -58,7 +58,7 @@ export const loginThunkCreator = (email, password, rememberMe) => (dispatch) => 
         if (data.resultCode === 0) {
             dispatch(getAuthUserDataThunkCreator())
         }
-        else alert (data.messages)
+        else alert(data.messages)
     })
 }
 
@@ -68,7 +68,7 @@ export const logoutThunkCreator = () => (dispatch) => {
             dispatch(setAuthUserData(null, null, null, false))
             //dispatch(userIsAuthorised(false))
         }
-        else alert (data.messages)
+        else alert(data.messages)
     })
 }
 
