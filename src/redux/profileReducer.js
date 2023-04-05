@@ -1,11 +1,12 @@
 import { profileAPI } from "../DAL/Dal";
 
-const ADD_PROFILE_POST = 'ADD-PROFILE-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
-const SET_PROFILE = 'SET-PROFILE'
-const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING'
-const SET_STATUS = 'SET_STATUS'
-const DELETE_POST = 'DELETE_POST'
+const UPDATE_NEW_MESSAGE = 'profileReducer/UPDATE_NEW_MESSAGE'
+const ADD_PROFILE_POST = 'profileReducer/ADD-PROFILE-POST'
+const UPDATE_NEW_POST_TEXT = 'profileReducer/UPDATE-NEW-POST-TEXT'
+const SET_PROFILE = 'profileReducer/SET-PROFILE'
+const TOGGLE_IS_FETCHING = 'profileReducer/TOGGLE-IS-FETCHING'
+const SET_STATUS = 'profileReducer/SET_STATUS'
+const DELETE_POST = 'profileReducer/DELETE_POST'
 
 
 let initialState = {
@@ -55,7 +56,7 @@ const profileReducer = (state = initialState, action) => {
         case DELETE_POST: {
             return {
                 ...state,
-                postData: state.postData.filter( p => p.id != action.postId)
+                postData: state.postData.filter(p => p.id != action.postId)
             };
         }
 
@@ -129,15 +130,15 @@ export const setStatus = (status) => ({
 
 
 export const updateStatusThunkCreator = (status) =>
-    (dispatch) => {
-        profileAPI.updateStatus(status)
-            .then(response => {
-                if (response.resultCode === 0) {
-                    dispatch(setStatus(status))
-                } else {
-                    console.log("Error : " + response.messages)
-                }
-            })
+    async (dispatch) => {
+        let response = await profileAPI.updateStatus(status)
+
+        if (response.resultCode === 0) {
+            dispatch(setStatus(status))
+        } else {
+            console.log("Error : " + response.messages)
+        }
+
     }
 
 export const addPostThunkCreator = (newPostText) =>
