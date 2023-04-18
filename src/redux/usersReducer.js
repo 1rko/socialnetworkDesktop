@@ -68,6 +68,15 @@ const usersReducer = (state = initialState, action) => {
     }
 }
 
+const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
+    dispatch(toggleFollowingIsFetching(true, userId))
+    let data = await apiMethod(userId)
+    if (data.resultCode === 0) {
+        dispatch(actionCreator(userId))
+    }
+    dispatch(toggleFollowingIsFetching(false, userId))
+}
+
 export const onFollow = (id) =>
 ({
     type: FOLLOW,
@@ -136,26 +145,12 @@ export const onPageChangedThunkCreator = (pageNumber, usersCount) =>
 
 export const onFollowButtonClickThunkCreator = (userId) =>
     (dispatch) => {
-        dispatch(toggleFollowingIsFetching(true, userId))
-        usersAPI.followUser(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(onFollow(userId))
-                }
-                dispatch(toggleFollowingIsFetching(false, userId))
-            })
+        followUnfollowFlow(dispatch, userId, usersAPI.followUser.bind(usersAPI), onFollow)
     }
 
 export const onUnfollowButtonClickThunkCreator = (userId) =>
     (dispatch) => {
-        dispatch(toggleFollowingIsFetching(true, userId))
-        usersAPI.unFollowUser(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(onUnFollow(userId))
-                }
-                dispatch(toggleFollowingIsFetching(false, userId))
-            })
+        followUnfollowFlow(dispatch, userId, usersAPI.unFollowUser.bind(usersAPI), onUnFollow)
     }
 
 export default usersReducer

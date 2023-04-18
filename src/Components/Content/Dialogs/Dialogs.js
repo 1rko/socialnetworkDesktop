@@ -6,7 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import MyTextArea from '../../../Common/Controls/MyTextArea/MyTextArea';
 
 
-const Dialogs = (props) => {
+const Dialogs = ({ messages, ...props }) => {
     const dialogsArray = props.dialogsData.map(dialogItem => {
         return (
             <div className={styles.item}>
@@ -18,7 +18,7 @@ const Dialogs = (props) => {
         )
     })
 
-    const messagesArray = props.messages.map(messageItem => {
+    const messagesArray = messages.map(messageItem => {
         return (
             <div className={styles.messageItem}>
                 {messageItem.message}
