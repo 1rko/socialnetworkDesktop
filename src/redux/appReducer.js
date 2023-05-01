@@ -1,4 +1,4 @@
-import {getAuthUserDataThunkCreator} from "./authReducer";
+import { getAuthUserDataThunkCreator } from "./authReducer";
 
 const INICIALIZED_SUCCESS = 'INICIALIZED_SUCCESS'
 
@@ -11,7 +11,7 @@ const appReducer = (state = initialState, action) => {
         case INICIALIZED_SUCCESS: {
             return {
                 ...state,
-                initialized:true
+                initialized: true
             };
         }
 
@@ -25,10 +25,10 @@ export const initialisedSuccess = () =>
     type: INICIALIZED_SUCCESS
 })
 
-export const initializeApp = () => (dispatch) => {
-   let promise=dispatch (getAuthUserDataThunkCreator())
-    Promise.all([promise]).then(()=>
-        dispatch(initialisedSuccess()))
+export const initializeApp = () => async (dispatch) => {
+    let promise = dispatch(getAuthUserDataThunkCreator())
+    await Promise.all([promise])
+    dispatch(initialisedSuccess())
 }
 
 export default appReducer;

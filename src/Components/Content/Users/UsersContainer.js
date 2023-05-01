@@ -24,11 +24,13 @@ import {
 class UsersAPIComponent extends React.Component {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.usersCount)
+        const { currentPage, usersCount } = this.props
+        this.props.getUsers(currentPage, usersCount)
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.onPageChangedInsight(pageNumber, this.props.usersCount);
+        const { usersCount } = this.props.usersCount
+        this.props.onPageChangedInsight(pageNumber, usersCount);
     }
 
     render() {

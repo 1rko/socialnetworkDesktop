@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styles from './MyProfileInfo.module.css'
 
 const MyProfileInfoWithHooks = (props) => {
@@ -31,9 +31,9 @@ const MyProfileInfoWithHooks = (props) => {
     return <div className={styles.MyProfileInfo}>
         {((!editMode) && <span onDoubleClick={activateEditMode}>{props.status}</span>)}
         {((editMode) && <input autoFocus={true}
-                               onBlur={deActivateEditMode}
-                               value={status}
-                               onChange={onChangeInput}
+            onBlur={deActivateEditMode}
+            value={status}
+            onChange={onChangeInput}
         />)}
 
     </div>

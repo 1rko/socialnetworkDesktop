@@ -1,7 +1,7 @@
 import { authAPI } from "../DAL/Dal";
 
-const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA'
-const USER_IS_AUTHORISED = 'USER_IS_AUTHORISED'
+const SET_AUTH_USER_DATA = 'authReducer/SET_AUTH_USER_DATA'
+const USER_IS_AUTHORISED = 'authReducer/USER_IS_AUTHORISED'
 
 
 let initialState = {
@@ -44,32 +44,31 @@ export const userIsAuthorised = (isAuthorised) =>
     isAuthorised: isAuthorised
 })
 
-export const getAuthUserDataThunkCreator = () => (dispatch) => {
-    return authAPI.getMe().then(data => {
-        if (data.resultCode === 0) {
-            let { id, login, email } = data.data
-            dispatch(setAuthUserData(id, login, email, true))
-        }
-    })
+export const getAuthUserDataThunkCreator = () => async (dispatch) => {
+    let data = await authAPI.getMe()
+    if (data.resultCode === 0) {
+        let { id, login, email } = data.data
+        dispatch(setAuthUserData(id, login, email, true))
+    }
+
 }
 
-export const loginThunkCreator = (email, password, rememberMe) => (dispatch) => {
-    authAPI.login(email, password, rememberMe).then(data => {
-        if (data.resultCode === 0) {
-            dispatch(getAuthUserDataThunkCreator())
-        }
-        else alert(data.messages)
-    })
+export const loginThunkCreator = (email, password, rememberMe) => async (dispatch) => {
+    let data = await authAPI.login(email, password, rememberMe)
+    if (data.resultCode === 0) {
+        dispatch(getAuthUserDataThunkCreator())
+    }
+    else alert(data.messages)
+
 }
 
-export const logoutThunkCreator = () => (dispatch) => {
-    authAPI.logout().then(data => {
-        if (data.resultCode === 0) {
-            dispatch(setAuthUserData(null, null, null, false))
-            //dispatch(userIsAuthorised(false))
-        }
-        else alert(data.messages)
-    })
+export const logoutThunkCreator = () => async (dispatch) => {
+    let data = await authAPI.logout()
+    if (data.resultCode === 0) {
+        dispatch(setAuthUserData(null, null, null, false))
+    }
+    else alert(data.messages)
+
 }
 
 export default authReducer

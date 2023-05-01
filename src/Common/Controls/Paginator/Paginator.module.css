@@ -1,0 +1,8 @@
+.pageItem {
+    cursor: pointer;
+}
+
+.selectedUsersPage {
+    font-weight: bold;
+    color: blue;
+}
