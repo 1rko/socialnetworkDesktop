@@ -7,8 +7,8 @@ import 'swiper/css';
 const MySwiper = () => {
     return (
         <Swiper
-            spaceBetween={50}
-            slidesPerView={3}
+            spaceBetween={70}
+            slidesPerView={2}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
         >
