@@ -8,7 +8,6 @@ const MyClock = (props) => {
         let minutes = date.getMinutes()
         let seconds = date.getSeconds()
         setTime(hours + " : " + minutes + " : " + seconds)
-        console.log("seconds " + seconds)
     }, 1000)
     return (
         <span> {time}</span>

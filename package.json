@@ -1,7 +1,9 @@
 {
   "name": "socialnetwork",
   "jest": {
-    "transformIgnorePatterns": ["node_modules/(?!axios)/"]
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)/"
+    ]
   },
   "version": "0.1.0",
   "private": true,
@@ -21,6 +23,7 @@
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.2",
     "reselect": "^4.1.7",
+    "swiper": "^9.2.4",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.0"
   },

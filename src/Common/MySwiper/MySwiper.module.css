@@ -1,0 +1,11 @@
+.basicInput {
+    border: 2px solid blue;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+.errorText {
+    color: red;
+}
