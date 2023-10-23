@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/sotialNetwork-deploy/static/css/main.eede2906.css",
-    "main.js": "/sotialNetwork-deploy/static/js/main.61dc25a4.js",
-    "static/css/195.d37ed005.chunk.css": "/sotialNetwork-deploy/static/css/195.d37ed005.chunk.css",
-    "static/js/195.c4e76acd.chunk.js": "/sotialNetwork-deploy/static/js/195.c4e76acd.chunk.js",
-    "static/js/68.76ea3619.chunk.js": "/sotialNetwork-deploy/static/js/68.76ea3619.chunk.js",
-    "static/media/Loading_icon.gif": "/sotialNetwork-deploy/static/media/Loading_icon.1a32f552ee5280e2aef9.gif",
-    "index.html": "/sotialNetwork-deploy/index.html",
-    "main.eede2906.css.map": "/sotialNetwork-deploy/static/css/main.eede2906.css.map",
-    "main.61dc25a4.js.map": "/sotialNetwork-deploy/static/js/main.61dc25a4.js.map",
-    "195.d37ed005.chunk.css.map": "/sotialNetwork-deploy/static/css/195.d37ed005.chunk.css.map",
-    "195.c4e76acd.chunk.js.map": "/sotialNetwork-deploy/static/js/195.c4e76acd.chunk.js.map",
-    "68.76ea3619.chunk.js.map": "/sotialNetwork-deploy/static/js/68.76ea3619.chunk.js.map"
+    "main.css": "/sotialnetworkDesktop/static/css/main.eede2906.css",
+    "main.js": "/sotialnetworkDesktop/static/js/main.a903cb76.js",
+    "static/css/195.d37ed005.chunk.css": "/sotialnetworkDesktop/static/css/195.d37ed005.chunk.css",
+    "static/js/195.c4e76acd.chunk.js": "/sotialnetworkDesktop/static/js/195.c4e76acd.chunk.js",
+    "static/js/68.76ea3619.chunk.js": "/sotialnetworkDesktop/static/js/68.76ea3619.chunk.js",
+    "static/media/Loading_icon.gif": "/sotialnetworkDesktop/static/media/Loading_icon.1a32f552ee5280e2aef9.gif",
+    "index.html": "/sotialnetworkDesktop/index.html",
+    "main.eede2906.css.map": "/sotialnetworkDesktop/static/css/main.eede2906.css.map",
+    "main.a903cb76.js.map": "/sotialnetworkDesktop/static/js/main.a903cb76.js.map",
+    "195.d37ed005.chunk.css.map": "/sotialnetworkDesktop/static/css/195.d37ed005.chunk.css.map",
+    "195.c4e76acd.chunk.js.map": "/sotialnetworkDesktop/static/js/195.c4e76acd.chunk.js.map",
+    "68.76ea3619.chunk.js.map": "/sotialnetworkDesktop/static/js/68.76ea3619.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.eede2906.css",
-    "static/js/main.61dc25a4.js"
+    "static/js/main.a903cb76.js"
   ]
 }
