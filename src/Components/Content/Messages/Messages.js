@@ -5,8 +5,7 @@ import MySwiper from "../../../Common/MySwiper/MySwiper";
 const Messages = () => {
   return (
     <div className={styles.messages_wrapper}>
-      Messages
-
+      Message
         <MySwiper/>
     </div>
   );
