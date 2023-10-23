@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/sotialnetworkDesktop/static/css/main.eede2906.css",
-    "main.js": "/sotialnetworkDesktop/static/js/main.d8c94abc.js",
+    "main.js": "/sotialnetworkDesktop/static/js/main.620412b1.js",
     "static/css/195.d37ed005.chunk.css": "/sotialnetworkDesktop/static/css/195.d37ed005.chunk.css",
     "static/js/195.90745670.chunk.js": "/sotialnetworkDesktop/static/js/195.90745670.chunk.js",
     "static/js/68.76ea3619.chunk.js": "/sotialnetworkDesktop/static/js/68.76ea3619.chunk.js",
     "static/media/Loading_icon.gif": "/sotialnetworkDesktop/static/media/Loading_icon.1a32f552ee5280e2aef9.gif",
     "index.html": "/sotialnetworkDesktop/index.html",
     "main.eede2906.css.map": "/sotialnetworkDesktop/static/css/main.eede2906.css.map",
-    "main.d8c94abc.js.map": "/sotialnetworkDesktop/static/js/main.d8c94abc.js.map",
+    "main.620412b1.js.map": "/sotialnetworkDesktop/static/js/main.620412b1.js.map",
     "195.d37ed005.chunk.css.map": "/sotialnetworkDesktop/static/css/195.d37ed005.chunk.css.map",
     "195.90745670.chunk.js.map": "/sotialnetworkDesktop/static/js/195.90745670.chunk.js.map",
     "68.76ea3619.chunk.js.map": "/sotialnetworkDesktop/static/js/68.76ea3619.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.eede2906.css",
-    "static/js/main.d8c94abc.js"
+    "static/js/main.620412b1.js"
   ]
 }
