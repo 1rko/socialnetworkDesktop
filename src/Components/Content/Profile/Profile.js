@@ -5,25 +5,22 @@ import Posts from "./Posts/Posts";
 import MyProfileInfo from "./MyProfileInfo/MyProfileInfo";
 import MyProfileInfoWithHooks from "./MyProfileInfo/MyProfileInfoWithHooks";
 
-const Profile = (props) => {
 
+const Profile = (props) => {
     return (
         <>
             <div>
                 ------Мой профиль-----
-                <MyProfileInfo status={props.status} updateStatus={props.updateStatus}/>
+                <MyProfileInfo status={props.status} updateStatus={props.updateStatus} img={''}/>
                 ----------------------
                 <MyProfileInfoWithHooks status={props.status} updateStatus={props.updateStatus}/>
             </div>
 
             <div className={styles.profile_wrapper}>
-
-                {/*   <img className={styles.profileImg} src="https://thumbs.dreamstime.com/b/drops-floral-
-      background-closeup-tranquil-abstract-closeup-art-photography-print-wallpaper-floral-
-      fantasy-design-macro-photo-96994455.jpg" alt="profileImg"/>*/}
-
-
-                <ProfileInfo profile={props.profile}/>
+                <ProfileInfo profile={props.profile}
+                             isOwner={props.isOwner}
+                             savePhoto={props.savePhoto}
+                />
 
                 <Posts postData={props.postData}
                        newPostText={props.newPostText}

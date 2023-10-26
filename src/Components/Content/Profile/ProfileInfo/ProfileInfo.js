@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './ProfileInfo.module.css'
+import defaultImgSrc from './../../../../Common/Img/AvaForAll.png'
 
 const ProfileInfo = (props) => {
 
@@ -14,8 +15,15 @@ const ProfileInfo = (props) => {
                 className={styles.contact}>{key} : {profileData.contacts[key]}</div>)
         }
 
+        const onMainPhotoSelected = (e) =>{
+            if (e.target.files.length) {
+                props.savePhoto(e.target.files[0])
+            }
+        }
+
         profileItem = <div className={styles.profileItemWrapper}>
-            <img className={styles.avaImg} src={profileData.photos.small} alt="avaImg" />
+            <img className={styles.avaImg} src={profileData.photos.large || defaultImgSrc} alt="avaImg" />
+            {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
             <div>{profileData.fullName}</div>
             <div>{profileData.userId}</div>
             <div>{profileData.aboutMe}</div>

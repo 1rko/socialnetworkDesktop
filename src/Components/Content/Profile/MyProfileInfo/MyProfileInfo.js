@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './MyProfileInfo.module.css'
+import defaultImgSrc from './../../../../Common/Img/AvaForAll.png'
 
 class MyProfileInfo extends React.Component {
     state = {
@@ -29,6 +30,13 @@ class MyProfileInfo extends React.Component {
 
     render() {
         return <div className={styles.MyProfileInfo}>
+
+
+            <div>
+                <img src={this.props.img || defaultImgSrc} alt={'Моя аватарка'} className={styles.myAva}/>
+
+
+            </div>
             {((!this.state.editMode) && <span onDoubleClick={this.activateEditMode}>{this.props.status}</span>)}
             {((this.state.editMode) && <input autoFocus={true}
                                               onBlur={this.deActivateEditMode}

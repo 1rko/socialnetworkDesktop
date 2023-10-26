@@ -1,4 +1,4 @@
-import { profileAPI } from "../DAL/Dal";
+import {profileAPI} from "../DAL/Dal";
 
 const UPDATE_NEW_MESSAGE = 'profileReducer/UPDATE_NEW_MESSAGE'
 const ADD_PROFILE_POST = 'profileReducer/ADD-PROFILE-POST'
@@ -7,6 +7,7 @@ const SET_PROFILE = 'profileReducer/SET-PROFILE'
 const TOGGLE_IS_FETCHING = 'profileReducer/TOGGLE-IS-FETCHING'
 const SET_STATUS = 'profileReducer/SET_STATUS'
 const DELETE_POST = 'profileReducer/DELETE_POST'
+const SAVE_PHOTO_SUCCESS = 'profileReducer/SAVE_PHOTO_SUCCESS'
 
 
 let initialState = {
@@ -88,44 +89,56 @@ const profileReducer = (state = initialState, action) => {
             };
         }
 
+        case SAVE_PHOTO_SUCCESS: {
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos}
+            };
+        }
+
         default:
             return state;
     }
 }
 
 export const addPost = (newText) =>
-({
-    type: ADD_PROFILE_POST,
-    newText: newText
-})
+    ({
+        type: ADD_PROFILE_POST,
+        newText: newText
+    })
 
 export const deletePost = (postId) =>
-({
-    type: DELETE_POST,
-    postId: postId
-})
+    ({
+        type: DELETE_POST,
+        postId: postId
+    })
 
 export const updateNewPostText = (text) =>
-({
-    type: UPDATE_NEW_POST_TEXT,
-    text: text
-})
+    ({
+        type: UPDATE_NEW_POST_TEXT,
+        text: text
+    })
 
 export const setProfile = (profile) =>
-({
-    type: SET_PROFILE,
-    profile: profile
-})
+    ({
+        type: SET_PROFILE,
+        profile: profile
+    })
 
 export const toggleIsFetching = (isFetching) =>
-({
-    type: TOGGLE_IS_FETCHING,
-    isFetching: isFetching
-})
+    ({
+        type: TOGGLE_IS_FETCHING,
+        isFetching: isFetching
+    })
 
 export const setStatus = (status) => ({
     type: SET_STATUS,
     status: status
+})
+
+export const SavePhotoSuccess = (photos) => ({
+    type: SAVE_PHOTO_SUCCESS,
+    photos: photos
 })
 
 
@@ -146,5 +159,16 @@ export const addPostThunkCreator = (newPostText) =>
         dispatch(addPost(newPostText));
         dispatch(updateNewPostText(''))
     }
+
+export const savePhotoThunkCreator = (fileName) =>
+    async (dispatch) => {
+        let response = await profileAPI.savePhoto(fileName)
+        if (response.resultCode === 0) {
+            dispatch(SavePhotoSuccess(response.data.photos))
+        } else {
+            console.log("Error : " + response.messages)
+        }
+    }
+
 
 export default profileReducer
