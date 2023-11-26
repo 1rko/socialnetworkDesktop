@@ -2,7 +2,7 @@ import React from "react";
 import styles from './MyInput.module.css'
 
 const MyInput = ({
-    field, // { name, value, onChange, onBlur }
+    field,// { name, value, onChange, onBlur }
     form: { touched, errors, dirty }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
     ...props
 }) => {

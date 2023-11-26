@@ -170,5 +170,4 @@ export const savePhotoThunkCreator = (fileName) =>
         }
     }
 
-
 export default profileReducer

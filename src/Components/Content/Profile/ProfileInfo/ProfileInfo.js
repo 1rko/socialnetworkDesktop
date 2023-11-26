@@ -1,33 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './ProfileInfo.module.css'
 import defaultImgSrc from './../../../../Common/Img/AvaForAll.png'
+import ProfileDataForm from "./ProfileDataForm";
 
 const ProfileInfo = (props) => {
+
+    let [editMode, setEditMode] = useState(false)
 
     let profileData = props.profile
     let profileItem = null
 
     if (profileData) {
-        let profileContactsArray = []
 
-        for (let key in profileData.contacts) {
-            if (profileData.contacts[key]) profileContactsArray.push(<div
-                className={styles.contact}>{key} : {profileData.contacts[key]}</div>)
-        }
-
-        const onMainPhotoSelected = (e) =>{
+        const onMainPhotoSelected = (e) => {
             if (e.target.files.length) {
                 props.savePhoto(e.target.files[0])
             }
         }
 
         profileItem = <div className={styles.profileItemWrapper}>
-            <img className={styles.avaImg} src={profileData.photos.large || defaultImgSrc} alt="avaImg" />
+            <img className={styles.avaImg} src={profileData.photos.large || defaultImgSrc} alt="avaImg"/>
             {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
-            <div>{profileData.fullName}</div>
-            <div>{profileData.userId}</div>
-            <div>{profileData.aboutMe}</div>
-            {profileContactsArray}
+            {editMode ? <ProfileDataForm profile={profileData}/> :
+                <ProfileData profile={profileData}
+                             isOwner={props.isOwner}
+                             goToEditMode={() => setEditMode(true)}
+                />}
         </div>
     } else profileItem = <div>Профиль не загружен</div>
 
@@ -36,6 +34,32 @@ const ProfileInfo = (props) => {
         {profileItem}
 
     </div>);
+}
+
+const ProfileData = ({profile, isOwner, goToEditMode}) => {
+    return <>
+        {isOwner && <div>
+            <button onClick={goToEditMode}>edit</button>
+        </div>}
+        <div>
+            <b>Full name: </b>{profile.fullName}
+        </div>
+        <div>
+            <b>userId: </b>{profile.userId}
+        </div>
+        <div>
+            <b>lookingForAJob: </b>{profile.lookingForAJob}
+        </div>
+        <div>
+            <b>My professional skills: </b>{profile.lookingForAJobDescription}
+        </div>
+        <div>
+            <b>Contacts: </b>
+            {Object.keys(profile.contacts).map(key => {
+                return <div key={key} className={styles.contacts}> {key} : {profile.contacts[key]} </div>
+            })}
+        </div>
+    </>
 }
 
 export default ProfileInfo;
