@@ -14,10 +14,10 @@ const ProfileDataForm = ({profile, ...props}) => {
             contacts: {...profile.contacts}             //вложеность всех контактов
         }}
                 onSubmit={(values, {setSubmitting}) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
+                    alert(JSON.stringify(values, null, 2));
+                    props.saveProfile(values)
+                    setSubmitting(false);
+                    props.finishEditMode();
                 }}>
             {({values, errors, isSubmitting}) => {
                 console.log('Errors '+ errors);
@@ -27,9 +27,9 @@ const ProfileDataForm = ({profile, ...props}) => {
                         <Field component={MyInput} name="fullName" placeholder='fullName'/>
                         <ErrorMessage name="fullName" component="div"/>
 
-                        <div className={styles.editLabel}> User Id</div>
-                        <Field component={MyInput} name="userId" placeholder='userId'/>
-                        <ErrorMessage name="userId" component="div"/>
+                        <div className={styles.editLabel}> About me</div>
+                        <Field component={MyInput} name="aboutMe" placeholder='aboutMe'/>
+                        <ErrorMessage name="aboutMe" component="div"/>
 
                         <label>
                             <div className={styles.editLabel}> Looking for a job</div>

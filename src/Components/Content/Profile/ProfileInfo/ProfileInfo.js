@@ -21,7 +21,8 @@ const ProfileInfo = (props) => {
         profileItem = <div className={styles.profileItemWrapper}>
             <img className={styles.avaImg} src={profileData.photos.large || defaultImgSrc} alt="avaImg"/>
             {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
-            {editMode ? <ProfileDataForm profile={profileData}/> :
+            {editMode ? <ProfileDataForm profile={profileData} saveProfile={props.saveProfile}
+                                         finishEditMode={() => setEditMode(false)}/> :
                 <ProfileData profile={profileData}
                              isOwner={props.isOwner}
                              goToEditMode={() => setEditMode(true)}
@@ -46,6 +47,9 @@ const ProfileData = ({profile, isOwner, goToEditMode}) => {
         </div>
         <div>
             <b>userId: </b>{profile.userId}
+        </div>
+        <div>
+            <b>About me: </b>{profile.aboutMe}
         </div>
         <div>
             <b>lookingForAJob: </b>{profile.lookingForAJob}

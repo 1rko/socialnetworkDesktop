@@ -4,7 +4,7 @@ import {
     toggleIsFetching,
     updateNewPostText,
     updateStatusThunkCreator,
-    savePhotoThunkCreator
+    savePhotoThunkCreator, saveProfileThunkCreator
 } from "../../../redux/profileReducer";
 import Profile from "./Profile";
 import {connect} from "react-redux";
@@ -44,7 +44,7 @@ let ProfileAPIContainer = (props) => {
                     props.setStatus(data)
                 })
         }
-    }, )
+    },)
 
     return (
         <>
@@ -55,11 +55,12 @@ let ProfileAPIContainer = (props) => {
                      newPostText={props.newPostText}
                      addPost={props.addPost}
                      updateNewPostText={props.updateNewPostText}
-                     isOwner = {!props.router.params.userId}//если нет параметра (т.е. это Я)
+                     isOwner={!props.router.params.userId}//если нет параметра (т.е. это Я)
                      profile={props.profile}
                      status={props.status}
                      updateStatus={props.updateStatus}
-                     savePhoto = {props.savePhoto}
+                     savePhoto={props.savePhoto}
+                     saveProfile={props.saveProfile}
             />
         </>
     )
@@ -79,8 +80,13 @@ const mapStateToProps = (state) => {
 const ProfileContainer =
     compose(
         connect(mapStateToProps, {
-            updateNewPostText, setProfile, toggleIsFetching,
-            addPost: addPostThunkCreator, updateStatus: updateStatusThunkCreator, savePhoto: savePhotoThunkCreator,
+            updateNewPostText,
+            setProfile,
+            toggleIsFetching,
+            addPost: addPostThunkCreator,
+            updateStatus: updateStatusThunkCreator,
+            savePhoto: savePhotoThunkCreator,
+            saveProfile: saveProfileThunkCreator,
             setStatus
         }),
         withRouter,

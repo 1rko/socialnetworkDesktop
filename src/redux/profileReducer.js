@@ -170,4 +170,15 @@ export const savePhotoThunkCreator = (fileName) =>
         }
     }
 
+export const saveProfileThunkCreator = (profile) =>
+    async (dispatch) => {
+        let response = await profileAPI.saveProfile(profile)
+        debugger
+        if (response.resultCode === 0) {
+            //dispatch(SavePhotoSuccess(response.data.photos))
+        } else {
+            console.log("Error : " + response.messages)
+        }
+    }
+
 export default profileReducer

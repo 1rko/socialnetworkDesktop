@@ -20,6 +20,7 @@ const Profile = (props) => {
                 <ProfileInfo profile={props.profile}
                              isOwner={props.isOwner}
                              savePhoto={props.savePhoto}
+                             saveProfile={props.saveProfile}
                 />
 
                 <Posts postData={props.postData}
