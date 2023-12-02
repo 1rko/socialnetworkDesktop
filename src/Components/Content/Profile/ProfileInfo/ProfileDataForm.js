@@ -11,10 +11,11 @@ const ProfileDataForm = ({profile, ...props}) => {
             userId: profile.userId,
             lookingForAJob: profile.lookingForAJob,
             lookingForAJobDescription: profile.lookingForAJobDescription,
+            aboutMe:profile.aboutMe,
             contacts: {...profile.contacts}             //вложеность всех контактов
         }}
                 onSubmit={(values, {setSubmitting}) => {
-                    alert(JSON.stringify(values, null, 2));
+                    //alert(JSON.stringify(values, null, 2));
                     props.saveProfile(values)
                     setSubmitting(false);
                     props.finishEditMode();

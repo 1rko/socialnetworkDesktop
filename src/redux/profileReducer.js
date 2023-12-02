@@ -172,9 +172,13 @@ export const savePhotoThunkCreator = (fileName) =>
 
 export const saveProfileThunkCreator = (profile) =>
     async (dispatch) => {
+
         let response = await profileAPI.saveProfile(profile)
-        debugger
         if (response.resultCode === 0) {
+            profileAPI.getProfile(profile.userId).then(
+                data => {
+                    dispatch(setProfile(data))
+                })
             //dispatch(SavePhotoSuccess(response.data.photos))
         } else {
             console.log("Error : " + response.messages)

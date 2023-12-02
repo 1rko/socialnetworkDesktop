@@ -50,6 +50,8 @@ export const profileAPI = {
             .then(response => response.data)
     },
 
+
+
     getStatus(userID) {
         return instance.get(`profile/status/${userID}`)
             .then(response => response.data)
