@@ -2,26 +2,56 @@ import React from 'react';
 import styles from './ProfileDataForm.module.css'
 import {Formik, Form, Field, ErrorMessage} from "formik";
 import MyInput from "../../../../Common/Controls/MyInput/MyInput";
+import * as Yup from "yup";
 
 const ProfileDataForm = ({profile, ...props}) => {
+    let contactsValidationSchema = {}                   //пробегаем map все контакты и создаем для них ValidationSchema
+    Object.keys(profile.contacts).map(key => {
+            return contactsValidationSchema[key] = Yup.string().matches(
+                /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+                'Enter correct url!'
+            )
+        }
+    )
+
+    const DisplayingErrorMessagesSchema = Yup.object().shape({
+            fullName: Yup.string()
+                .min(2, 'Too Short!')
+                .max(50, 'Too Long!')
+                .required('Required'),
+            aboutMe: Yup.string().required('Required'),
+            contacts: Yup.object().shape(contactsValidationSchema)
+        })
+    ;
 
     return <>
         <Formik initialValues={{
             fullName: profile.fullName,
+            aboutMe: profile.aboutMe,
             userId: profile.userId,
             lookingForAJob: profile.lookingForAJob,
             lookingForAJobDescription: profile.lookingForAJobDescription,
-            aboutMe:profile.aboutMe,
-            contacts: {...profile.contacts}             //вложеность всех контактов
+            contacts: {...profile.contacts}                             //вложеность всех контактов
         }}
+
+                validationSchema={DisplayingErrorMessagesSchema}
+
                 onSubmit={(values, {setSubmitting}) => {
-                    //alert(JSON.stringify(values, null, 2));
-                    props.saveProfile(values)
+                    props.saveProfile(values).then(response => {
+                            if (!response)
+                                props.finishEditMode()
+                            else {
+                                alert(response)
+                            }
+                        }
+                    )
+                    ;
+
                     setSubmitting(false);
-                    props.finishEditMode();
+
                 }}>
             {({values, errors, isSubmitting}) => {
-                console.log('Errors '+ errors);
+
                 return (
                     <Form>
                         <div className={styles.editLabel}> Full name</div>
@@ -63,6 +93,8 @@ const ProfileDataForm = ({profile, ...props}) => {
                                             className={styles.contacts}
                                         >
                                         </Field>
+                                        <ErrorMessage name={'contacts.' + contact} component="div"
+                                                      className={styles.errorMessage}/>
                                     </>
                                 }
                             )

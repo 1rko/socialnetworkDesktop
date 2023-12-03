@@ -7,7 +7,7 @@ import MyTextArea from '../../../../Common/Controls/MyTextArea/MyTextArea';
 const Posts = (props) => {
 
     const postText = props.postData.map(postItem => {
-        return <PostItem likesCount={postItem.likesCount} postText={postItem.postText} />
+        return <PostItem key={postItem.id} likesCount={postItem.likesCount} postText={postItem.postText} />
     })
 
     let newPostElement = React.createRef();

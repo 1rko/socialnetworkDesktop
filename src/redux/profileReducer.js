@@ -179,9 +179,9 @@ export const saveProfileThunkCreator = (profile) =>
                 data => {
                     dispatch(setProfile(data))
                 })
-            //dispatch(SavePhotoSuccess(response.data.photos))
         } else {
             console.log("Error : " + response.messages)
+            return response.messages
         }
     }
 
