@@ -1,4 +1,4 @@
-import { authAPI } from "../DAL/Dal";
+import {authAPI, security} from "../DAL/Dal";
 
 const SET_AUTH_USER_DATA = 'authReducer/SET_AUTH_USER_DATA'
 const USER_IS_AUTHORISED = 'authReducer/USER_IS_AUTHORISED'
@@ -8,7 +8,8 @@ let initialState = {
     id: null,
     login: null,
     email: null,
-    isAuthorised: false
+    isAuthorised: false,
+    captchaUrl:null
 }
 
 const authReducer = (state = initialState, action) => {
@@ -68,7 +69,17 @@ export const logoutThunkCreator = () => async (dispatch) => {
         dispatch(setAuthUserData(null, null, null, false))
     }
     else alert(data.messages)
+}
 
+export const getCaptchaUrlThunkCreator = () => async (dispatch) => {
+    let data = await security.getCaptchaUrl()
+    alert(data.url)
+
+    /*if (data.resultCode === 0) {
+
+        //dispatch(setAuthUserData(null, null, null, false))
+    }
+    else alert(data.messages)*/
 }
 
 export default authReducer

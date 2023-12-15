@@ -18,6 +18,7 @@ import {
     getPostData, getNewPostText, getProfile,
     getIsFetching, getStatus
 } from "../../../redux/profileSelectors";
+import {getCaptchaUrlThunkCreator} from "../../../redux/authReducer";
 
 
 let ProfileAPIContainer = (props) => {

@@ -1,22 +1,22 @@
 import React from 'react';
 import styles from './Login.module.css'
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { loginThunkCreator } from '../../redux/authReducer';
-import { connect } from 'react-redux'
+import {Formik, Form, Field, ErrorMessage} from "formik";
+import {getCaptchaUrlThunkCreator, loginThunkCreator} from '../../redux/authReducer';
+import {connect} from 'react-redux'
 import MyInput from "../../Common/Controls/MyInput/MyInput";
-import { Navigate } from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import * as Yup from 'yup';
 
 
 const Login = (props) => {
     if (props.isAuthorised) {
-        return <Navigate to={'/profile'} />;
+        return <Navigate to={'/profile'}/>;
     }
 
     return (
         <div>
             <h1>Login</h1>
-            <LoginForm login={props.login} />
+            <LoginForm login={props.login} getCaptchaUrl={props.getCaptchaUrl}/>
         </div>
     )
 }
@@ -37,26 +37,27 @@ const SignupSchema = Yup.object().shape({
 const LoginForm = (props) => (
     <div className={styles.login_form}>
         <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{email: "", password: ""}}
             validationSchema={SignupSchema}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values, {setSubmitting}) => {
                 setTimeout(() => {
                     alert(JSON.stringify(values, null, 2));
                     props.login(values.email, values.password, values.rememberMe = false);
+                    props.getCaptchaUrl()
                     setSubmitting(false);
                 }, 400);
             }}
         >
-            {({ errors, isSubmitting }) => {
+            {({errors, isSubmitting}) => {
                 console.log(errors);
                 return (
                     <Form>
-                        <Field component={MyInput} name="email" placeholder='email' />
+                        <Field component={MyInput} name="email" placeholder='email'/>
 
-                        <Field type="password" name="password" placeholder='password' />
-                        <ErrorMessage name="password" component="div" />
+                        <Field type="password" name="password" placeholder='password'/>
+                        <ErrorMessage name="password" component="div"/>
 
-                        <Field type="checkbox" name="rememberMe" /><label htmlFor="rememberMe">remember me</label>
+                        <Field type="checkbox" name="rememberMe"/><label htmlFor="rememberMe">remember me</label>
 
                         <div>{!(Object.keys(errors).length == 0) ? "Some error" : null}</div>
 
@@ -78,6 +79,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { login: loginThunkCreator })(Login);
+export default connect(mapStateToProps, {login: loginThunkCreator, getCaptchaUrl: getCaptchaUrlThunkCreator})(Login);
 
 

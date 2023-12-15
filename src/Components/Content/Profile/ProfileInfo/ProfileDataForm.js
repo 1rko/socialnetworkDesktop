@@ -3,6 +3,7 @@ import styles from './ProfileDataForm.module.css'
 import {Formik, Form, Field, ErrorMessage} from "formik";
 import MyInput from "../../../../Common/Controls/MyInput/MyInput";
 import * as Yup from "yup";
+import {getCaptchaUrlThunkCreator} from "../../../../redux/authReducer";
 
 const ProfileDataForm = ({profile, ...props}) => {
     let contactsValidationSchema = {}                   //пробегаем map все контакты и создаем для них ValidationSchema

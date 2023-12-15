@@ -50,8 +50,6 @@ export const profileAPI = {
             .then(response => response.data)
     },
 
-
-
     getStatus(userID) {
         return instance.get(`profile/status/${userID}`)
             .then(response => response.data)
@@ -75,6 +73,13 @@ export const profileAPI = {
 
     saveProfile(profile) {
         return instance.put(`profile/`, profile)
+            .then(response => response.data)
+    }
+}
+
+export const security = {
+    getCaptchaUrl() {
+        return instance.get(`security/get-captcha-url`)
             .then(response => response.data)
     }
 }
