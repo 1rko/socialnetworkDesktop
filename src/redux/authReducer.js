@@ -2,7 +2,7 @@ import {authAPI, security} from "../DAL/Dal";
 
 const SET_AUTH_USER_DATA = 'authReducer/SET_AUTH_USER_DATA'
 const USER_IS_AUTHORISED = 'authReducer/USER_IS_AUTHORISED'
-const SET_CAPTCHA_URL='SET_CAPTCHA_URL'
+const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL'
 
 
 let initialState = {
@@ -10,7 +10,7 @@ let initialState = {
     login: null,
     email: null,
     isAuthorised: false,
-    captchaUrl:null
+    captchaUrl: null
 }
 
 const authReducer = (state = initialState, action) => {
@@ -41,17 +41,17 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthUserData = (id, login, email, isAuthorised) =>
-({
-    type: SET_AUTH_USER_DATA,
-    userData: { id, login, email, isAuthorised }
-})
+export const setAuthUserData = (id, login, email, isAuthorised, captchaUrl = null) =>
+    ({
+        type: SET_AUTH_USER_DATA,
+        userData: {id, login, email, isAuthorised, captchaUrl}
+    })
 
 export const userIsAuthorised = (isAuthorised) =>
-({
-    type: USER_IS_AUTHORISED,
-    isAuthorised: isAuthorised
-})
+    ({
+        type: USER_IS_AUTHORISED,
+        isAuthorised: isAuthorised
+    })
 
 export const setCaptchaUrl = (url) =>
     ({
@@ -62,7 +62,7 @@ export const setCaptchaUrl = (url) =>
 export const getAuthUserDataThunkCreator = () => async (dispatch) => {
     let data = await authAPI.getMe()
     if (data.resultCode === 0) {
-        let { id, login, email } = data.data
+        let {id, login, email} = data.data
         dispatch(setAuthUserData(id, login, email, true))
     }
 }
@@ -71,20 +71,17 @@ export const loginThunkCreator = (email, password, rememberMe, captcha) => async
     let data = await authAPI.login(email, password, rememberMe, captcha)
     if (data.resultCode === 0) {
         dispatch(getAuthUserDataThunkCreator())
-    }
-    else if (data.resultCode === 10) {
+    } else if (data.resultCode === 10) {
         dispatch(getCaptchaUrlThunkCreator())
     }
-        //alert(data.messages)
-
+    //alert(data.messages)
 }
 
 export const logoutThunkCreator = () => async (dispatch) => {
     let data = await authAPI.logout()
     if (data.resultCode === 0) {
-        dispatch(setAuthUserData(null, null, null, false))
-    }
-    else alert(data.messages)
+        dispatch(setAuthUserData(null, null, null, false, null))
+    } else alert(data.messages)
 }
 
 export const getCaptchaUrlThunkCreator = () => async (dispatch) => {

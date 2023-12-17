@@ -41,7 +41,7 @@ const LoginForm = (props) => (
             validationSchema={SignupSchema}
             onSubmit={(values, {setSubmitting}) => {
                 setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
+                    //alert(JSON.stringify(values, null, 2));
                     props.login(values.email, values.password, values.rememberMe = false, values.captcha);
                     setSubmitting(false);
                 }, 400);
