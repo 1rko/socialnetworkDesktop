@@ -16,7 +16,7 @@ const Login = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <LoginForm login={props.login} getCaptchaUrl={props.getCaptchaUrl}/>
+            <LoginForm login={props.login} getCaptchaUrl={props.getCaptchaUrl} captchaUrl={props.captchaUrl}/>
         </div>
     )
 }
@@ -31,19 +31,18 @@ const validate = values => {
 };
 
 const SignupSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Required'),
+    email: Yup.string().email('Invalid email').required('Required')
 });
 
 const LoginForm = (props) => (
     <div className={styles.login_form}>
         <Formik
-            initialValues={{email: "", password: ""}}
+            initialValues={{email: '', password: '', captcha: ''}}
             validationSchema={SignupSchema}
             onSubmit={(values, {setSubmitting}) => {
                 setTimeout(() => {
                     alert(JSON.stringify(values, null, 2));
-                    props.login(values.email, values.password, values.rememberMe = false);
-                    props.getCaptchaUrl()
+                    props.login(values.email, values.password, values.rememberMe = false, values.captcha);
                     setSubmitting(false);
                 }, 400);
             }}
@@ -58,6 +57,10 @@ const LoginForm = (props) => (
                         <ErrorMessage name="password" component="div"/>
 
                         <Field type="checkbox" name="rememberMe"/><label htmlFor="rememberMe">remember me</label>
+
+                        {props.captchaUrl && <img src={props.captchaUrl} alt={'captcha'}/>}
+                        {props.captchaUrl && <><Field name="captcha" placeholder='captcha'/>
+                            <ErrorMessage name="captcha" component="div"/></>}
 
                         <div>{!(Object.keys(errors).length == 0) ? "Some error" : null}</div>
 
@@ -75,7 +78,8 @@ const LoginForm = (props) => (
 
 const mapStateToProps = (state) => {
     return {
-        isAuthorised: state.auth.isAuthorised
+        isAuthorised: state.auth.isAuthorised,
+        captchaUrl: state.auth.captchaUrl
     }
 }
 

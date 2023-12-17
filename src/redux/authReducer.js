@@ -2,6 +2,7 @@ import {authAPI, security} from "../DAL/Dal";
 
 const SET_AUTH_USER_DATA = 'authReducer/SET_AUTH_USER_DATA'
 const USER_IS_AUTHORISED = 'authReducer/USER_IS_AUTHORISED'
+const SET_CAPTCHA_URL='SET_CAPTCHA_URL'
 
 
 let initialState = {
@@ -28,6 +29,13 @@ const authReducer = (state = initialState, action) => {
             };
         }
 
+        case SET_CAPTCHA_URL: {
+            return {
+                ...state,
+                captchaUrl: action.captchaUrl
+            };
+        }
+
         default:
             return state;
     }
@@ -45,21 +53,29 @@ export const userIsAuthorised = (isAuthorised) =>
     isAuthorised: isAuthorised
 })
 
+export const setCaptchaUrl = (url) =>
+    ({
+        type: SET_CAPTCHA_URL,
+        captchaUrl: url
+    })
+
 export const getAuthUserDataThunkCreator = () => async (dispatch) => {
     let data = await authAPI.getMe()
     if (data.resultCode === 0) {
         let { id, login, email } = data.data
         dispatch(setAuthUserData(id, login, email, true))
     }
-
 }
 
-export const loginThunkCreator = (email, password, rememberMe) => async (dispatch) => {
-    let data = await authAPI.login(email, password, rememberMe)
+export const loginThunkCreator = (email, password, rememberMe, captcha) => async (dispatch) => {
+    let data = await authAPI.login(email, password, rememberMe, captcha)
     if (data.resultCode === 0) {
         dispatch(getAuthUserDataThunkCreator())
     }
-    else alert(data.messages)
+    else if (data.resultCode === 10) {
+        dispatch(getCaptchaUrlThunkCreator())
+    }
+        //alert(data.messages)
 
 }
 
@@ -73,7 +89,7 @@ export const logoutThunkCreator = () => async (dispatch) => {
 
 export const getCaptchaUrlThunkCreator = () => async (dispatch) => {
     let data = await security.getCaptchaUrl()
-    alert(data.url)
+    dispatch(setCaptchaUrl(data.url))
 
     /*if (data.resultCode === 0) {
 
