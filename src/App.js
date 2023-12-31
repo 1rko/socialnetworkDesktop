@@ -9,7 +9,7 @@ import {connect} from "react-redux";
 import {withRouter} from "./HOC/withRouter";
 import {compose} from "redux";
 import Preloader from "./Components/Preloader/Preloader";
-import {initializeApp} from "./redux/appReducer";
+import {initializeApp} from './redux/appReducer.tsx';
 
 class App extends Component {
     componentDidMount() {

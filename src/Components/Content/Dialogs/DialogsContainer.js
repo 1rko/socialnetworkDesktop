@@ -1,4 +1,4 @@
-import { addMessageThunkCreator, updateNewMessageCreator } from "../../../redux/dialogsReducer";
+import { addMessageThunkCreator, updateNewMessageCreator } from "../../../redux/dialogsReducer.tsx";
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
 import { compose } from "redux";

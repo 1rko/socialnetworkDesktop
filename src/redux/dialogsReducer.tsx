@@ -35,7 +35,7 @@ let initialState = {
     ]
 }
 
-const dialogsReducer = (state = initialState, action) => {
+const dialogsReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case ADD_NEW_MESSAGE: {
             let lastItem = state.messages[state.messages.length - 1]
@@ -58,20 +58,20 @@ const dialogsReducer = (state = initialState, action) => {
     }
 }
 
-export const addMessageCreator = (newText) =>
+export const addMessageCreator = (newText: any) =>
 ({
     type: ADD_NEW_MESSAGE,
     newText: newText
 })
 
-export const updateNewMessageCreator = (text) =>
+export const updateNewMessageCreator = (text: any) =>
 ({
     type: UPDATE_NEW_MESSAGE,
     text: text
 })
 
-export const addMessageThunkCreator = (newMessageText) =>
-    (dispatch) => {
+export const addMessageThunkCreator = (newMessageText: any) =>
+    (dispatch: any) => {
         dispatch(addMessageCreator(newMessageText));
         dispatch(updateNewMessageCreator(''))
     }
