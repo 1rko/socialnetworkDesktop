@@ -14,6 +14,7 @@ const Paginator = (props) => {
 
     pages = pages.map(page => {
         return <span
+            key={page}
             className={((props.currentPage === page) && styles.selectedUsersPage) + ' ' + styles.pageItem}
             onClick={() => {
                 props.onPageChanged(page)

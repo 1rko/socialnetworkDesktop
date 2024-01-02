@@ -1,17 +1,17 @@
 import React from 'react';
 import styles from './Dialogs.module.css'
-import { Navigate, NavLink } from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import store from '../../../redux/reduxStore';
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import {Formik, Form, Field, ErrorMessage} from "formik";
 import MyTextArea from '../../../Common/Controls/MyTextArea/MyTextArea';
 
 
-const Dialogs = ({ messages, ...props }) => {
+const Dialogs = ({messages, ...props}) => {
     const dialogsArray = props.dialogsData.map(dialogItem => {
         return (
-            <div className={styles.item}>
+            <div key={dialogItem.id} className={styles.item}>
                 <NavLink to={"/dialogs/" + dialogItem.id}
-                    className={navData => navData.isActive ? (styles.active) : styles.unactive}>
+                         className={navData => navData.isActive ? (styles.active) : styles.unactive}>
                     {dialogItem.name}
                 </NavLink>
             </div>
@@ -20,7 +20,7 @@ const Dialogs = ({ messages, ...props }) => {
 
     const messagesArray = messages.map(messageItem => {
         return (
-            <div className={styles.messageItem}>
+            <div key={messageItem.id} className={styles.messageItem}>
                 {messageItem.message}
             </div>
         )
@@ -46,7 +46,7 @@ const Dialogs = ({ messages, ...props }) => {
 
                 <div>
 
-                    <AddMessageForm funcAddMessage={onAddMessage} />
+                    <AddMessageForm funcAddMessage={onAddMessage}/>
 
                 </div>
             </div>
@@ -67,7 +67,7 @@ const AddMessageForm = (props) => (
                 }
                 return errors;
             }}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values, {setSubmitting}) => {
                 setTimeout(() => {
                     props.funcAddMessage(values.newMessage);
                     console.log(store.getState().dialogsPage.messages)
@@ -75,9 +75,9 @@ const AddMessageForm = (props) => (
                 }, 400);
             }}
         >
-            {({ isSubmitting }) => (
+            {({isSubmitting}) => (
                 <Form>
-                    <Field name="newMessage" component={MyTextArea} placeholder="Enter new message text" />
+                    <Field name="newMessage" component={MyTextArea} placeholder="Enter new message text"/>
 
                     <button type="submit" disabled={isSubmitting}>
                         Submit

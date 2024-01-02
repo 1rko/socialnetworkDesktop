@@ -9,37 +9,28 @@ const SET_STATUS = 'profileReducer/SET_STATUS'
 const DELETE_POST = 'profileReducer/DELETE_POST'
 const SAVE_PHOTO_SUCCESS = 'profileReducer/SAVE_PHOTO_SUCCESS'
 
+type PostDataType = {
+    id: number
+    likesCount: number
+    postText: string
+}
 
 let initialState = {
     postData: [
-        {
-            id: 1,
-            likesCount: 11,
-            postText: "Hi"
-        },
-        {
-            id: 2,
-            likesCount: 12,
-            postText: "My name is"
-        },
-        {
-            id: 3,
-            likesCount: 13,
-            postText: "How are you"
-        },
-        {
-            id: 4,
-            likesCount: 14,
-            postText: "I am fine"
-        }
-    ],
-    newPostText: '',
-    profile: null,
-    isFetching: false,
-    status: 'initialStatus'
+        {id: 1, likesCount: 11, postText: "Hi"},
+        {id: 2, likesCount: 12, postText: "My name is"},
+        {id: 3, likesCount: 13, postText: "How are you"},
+        {id: 4, likesCount: 14, postText: "I am fine"}
+    ] as Array<PostDataType>,
+    newPostText: '' as string | null,
+    profile: null as any,
+    isFetching: false as boolean,
+    status: 'initialStatus' as string
 }
 
-const profileReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState
+
+const profileReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_PROFILE_POST: {
             let lastItem = state.postData[state.postData.length - 1]
@@ -101,49 +92,84 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 
-export const addPost = (newText) =>
+export type AddPostType = {
+    type: typeof ADD_PROFILE_POST,
+    newText: string | null
+}
+
+export const addPost = (newText: string | null): AddPostType =>
     ({
         type: ADD_PROFILE_POST,
         newText: newText
     })
 
-export const deletePost = (postId) =>
+export type DeletePostType = {
+    type: typeof DELETE_POST,
+    postId: number
+}
+
+export const deletePost = (postId: number): DeletePostType =>
     ({
         type: DELETE_POST,
         postId: postId
     })
 
-export const updateNewPostText = (text) =>
+export type UpdateNewPostTextType = {
+    type: typeof UPDATE_NEW_POST_TEXT,
+    text: string | null
+}
+
+export const updateNewPostText = (text: string | null): UpdateNewPostTextType =>
     ({
         type: UPDATE_NEW_POST_TEXT,
         text: text
     })
 
-export const setProfile = (profile) =>
+export type SetProfileType = {
+    type: typeof SET_PROFILE,
+    profile: any
+}
+
+export const setProfile = (profile: any): SetProfileType =>
     ({
         type: SET_PROFILE,
         profile: profile
     })
 
-export const toggleIsFetching = (isFetching) =>
+export type ToggleIsFetchingType = {
+    type: typeof TOGGLE_IS_FETCHING,
+    isFetching: boolean
+}
+
+export const toggleIsFetching = (isFetching: boolean): ToggleIsFetchingType =>
     ({
         type: TOGGLE_IS_FETCHING,
         isFetching: isFetching
     })
 
-export const setStatus = (status) => ({
+export type SetStatusType = {
+    type: typeof SET_STATUS,
+    status: string
+}
+
+export const setStatus = (status:string):SetStatusType => ({
     type: SET_STATUS,
     status: status
 })
 
-export const SavePhotoSuccess = (photos) => ({
+export type SavePhotoSuccessType = {
+    type: typeof SAVE_PHOTO_SUCCESS,
+    photos: any
+}
+
+export const SavePhotoSuccess = (photos: any):SavePhotoSuccessType => ({
     type: SAVE_PHOTO_SUCCESS,
     photos: photos
 })
 
 
-export const updateStatusThunkCreator = (status) =>
-    async (dispatch) => {
+export const updateStatusThunkCreator = (status: string) =>
+    async (dispatch:any) => {
         let response = await profileAPI.updateStatus(status)
 
         if (response.resultCode === 0) {
@@ -154,14 +180,14 @@ export const updateStatusThunkCreator = (status) =>
 
     }
 
-export const addPostThunkCreator = (newPostText) =>
-    (dispatch) => {
+export const addPostThunkCreator = (newPostText: string) =>
+    (dispatch:any) => {
         dispatch(addPost(newPostText));
         dispatch(updateNewPostText(''))
     }
 
-export const savePhotoThunkCreator = (fileName) =>
-    async (dispatch) => {
+export const savePhotoThunkCreator = (fileName: string) =>
+    async (dispatch:any) => {
         let response = await profileAPI.savePhoto(fileName)
         if (response.resultCode === 0) {
             dispatch(SavePhotoSuccess(response.data.photos))
@@ -170,8 +196,8 @@ export const savePhotoThunkCreator = (fileName) =>
         }
     }
 
-export const saveProfileThunkCreator = (profile) =>
-    async (dispatch) => {
+export const saveProfileThunkCreator = (profile: any) =>
+    async (dispatch:any) => {
 
         let response = await profileAPI.saveProfile(profile)
         if (response.resultCode === 0) {

@@ -21,14 +21,14 @@ const Login = (props) => {
     )
 }
 
-const validate = values => {
+/*const validate = values => {
     const errors = {};
     if (!values.email) {
         errors.email = 'Required';
     }
 
     return errors;
-};
+};*/
 
 const SignupSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required')

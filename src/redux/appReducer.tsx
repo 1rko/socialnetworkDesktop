@@ -2,11 +2,11 @@ import {getAuthUserDataThunkCreator} from "./authReducer";
 
 const INICIALIZED_SUCCESS = 'INICIALIZED_SUCCESS'
 
-type InitializedSuccessActionType = {
+ type InitializedSuccessActionType = {
     type: typeof INICIALIZED_SUCCESS
 }
 
-type InitialStateType ={
+export type InitialStateType ={
     initialized: boolean
 }
 

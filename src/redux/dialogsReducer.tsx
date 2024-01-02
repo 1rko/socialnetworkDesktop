@@ -1,7 +1,25 @@
 const ADD_NEW_MESSAGE = 'dialogReducer/ADD_NEW_MESSAGE'
 const UPDATE_NEW_MESSAGE = 'dialogReducer/UPDATE_NEW_MESSAGE'
 
-let initialState = {
+type DialogsDataType = {
+    id: number,
+    name: string,
+    age: number,
+    messages: string []
+}
+
+type Messages = {
+    id: number,
+    message: string
+}
+
+type InitialStateType = {
+    dialogsData: Array<DialogsDataType>
+    newMessageText: string
+    messages: Array<Messages>
+}
+
+let initialState: InitialStateType = {
     dialogsData: [
         {
             id: 1,
@@ -58,17 +76,27 @@ const dialogsReducer = (state = initialState, action: any) => {
     }
 }
 
-export const addMessageCreator = (newText: any) =>
-({
-    type: ADD_NEW_MESSAGE,
-    newText: newText
-})
+export type addMessageCreatorActionType = {
+    type: typeof ADD_NEW_MESSAGE,
+    newText: string
+}
 
-export const updateNewMessageCreator = (text: any) =>
-({
-    type: UPDATE_NEW_MESSAGE,
-    text: text
-})
+export const addMessageCreator = (newText: string): addMessageCreatorActionType =>
+    ({
+        type: ADD_NEW_MESSAGE,
+        newText: newText
+    })
+
+export type UpdateNewMessageCreatorActionType = {
+    type: typeof UPDATE_NEW_MESSAGE,
+    text: string
+}
+
+export const updateNewMessageCreator = (text: string): UpdateNewMessageCreatorActionType =>
+    ({
+        type: UPDATE_NEW_MESSAGE,
+        text: text
+    })
 
 export const addMessageThunkCreator = (newMessageText: any) =>
     (dispatch: any) => {
