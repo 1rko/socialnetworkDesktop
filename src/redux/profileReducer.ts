@@ -1,4 +1,5 @@
 import {profileAPI} from "../DAL/Dal";
+import {PhotosType, PostDataType, ProfileType} from "../Types/types";
 
 const UPDATE_NEW_MESSAGE = 'profileReducer/UPDATE_NEW_MESSAGE'
 const ADD_PROFILE_POST = 'profileReducer/ADD-PROFILE-POST'
@@ -9,12 +10,6 @@ const SET_STATUS = 'profileReducer/SET_STATUS'
 const DELETE_POST = 'profileReducer/DELETE_POST'
 const SAVE_PHOTO_SUCCESS = 'profileReducer/SAVE_PHOTO_SUCCESS'
 
-type PostDataType = {
-    id: number
-    likesCount: number
-    postText: string
-}
-
 let initialState = {
     postData: [
         {id: 1, likesCount: 11, postText: "Hi"},
@@ -23,12 +18,12 @@ let initialState = {
         {id: 4, likesCount: 14, postText: "I am fine"}
     ] as Array<PostDataType>,
     newPostText: '' as string | null,
-    profile: null as any,
+    profile: null as ProfileType | null,
     isFetching: false as boolean,
     status: 'initialStatus' as string
 }
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 const profileReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
@@ -83,7 +78,7 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
         case SAVE_PHOTO_SUCCESS: {
             return {
                 ...state,
-                profile: {...state.profile, photos: action.photos}
+                profile: {...state.profile, photos: action.photos} as ProfileType
             };
         }
 
@@ -127,10 +122,10 @@ export const updateNewPostText = (text: string | null): UpdateNewPostTextType =>
 
 export type SetProfileType = {
     type: typeof SET_PROFILE,
-    profile: any
+    profile: ProfileType
 }
 
-export const setProfile = (profile: any): SetProfileType =>
+export const setProfile = (profile: ProfileType): SetProfileType =>
     ({
         type: SET_PROFILE,
         profile: profile
@@ -152,24 +147,23 @@ export type SetStatusType = {
     status: string
 }
 
-export const setStatus = (status:string):SetStatusType => ({
+export const setStatus = (status: string): SetStatusType => ({
     type: SET_STATUS,
     status: status
 })
 
 export type SavePhotoSuccessType = {
     type: typeof SAVE_PHOTO_SUCCESS,
-    photos: any
+    photos: PhotosType
 }
 
-export const SavePhotoSuccess = (photos: any):SavePhotoSuccessType => ({
+export const SavePhotoSuccess = (photos: PhotosType): SavePhotoSuccessType => ({
     type: SAVE_PHOTO_SUCCESS,
     photos: photos
 })
 
-
 export const updateStatusThunkCreator = (status: string) =>
-    async (dispatch:any) => {
+    async (dispatch: any) => {
         let response = await profileAPI.updateStatus(status)
 
         if (response.resultCode === 0) {
@@ -181,13 +175,13 @@ export const updateStatusThunkCreator = (status: string) =>
     }
 
 export const addPostThunkCreator = (newPostText: string) =>
-    (dispatch:any) => {
+    (dispatch: any) => {
         dispatch(addPost(newPostText));
         dispatch(updateNewPostText(''))
     }
 
-export const savePhotoThunkCreator = (fileName: string) =>
-    async (dispatch:any) => {
+export const savePhotoThunkCreator = (fileName: any) =>
+    async (dispatch: any) => {
         let response = await profileAPI.savePhoto(fileName)
         if (response.resultCode === 0) {
             dispatch(SavePhotoSuccess(response.data.photos))
@@ -196,8 +190,8 @@ export const savePhotoThunkCreator = (fileName: string) =>
         }
     }
 
-export const saveProfileThunkCreator = (profile: any) =>
-    async (dispatch:any) => {
+export const saveProfileThunkCreator = (profile: ProfileType) =>
+    async (dispatch: any) => {
 
         let response = await profileAPI.saveProfile(profile)
         if (response.resultCode === 0) {
