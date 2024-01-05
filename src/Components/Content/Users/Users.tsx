@@ -2,8 +2,21 @@ import React from 'react';
 import styles from './Users.module.css'
 import Paginator from '../../../Common/Controls/Paginator/Paginator';
 import User from './User/User';
+import {UsersDataType} from 'types';
 
-const Users = (props) => {
+
+type PropsType = {
+    currentPage: number
+    onPageChanged: (pageNumber: number) => void
+    totalCount: number
+    usersCount: number //pageSize
+    usersData: Array<UsersDataType>
+    followingInProgress: Array<number>
+    onUnfollowButtonClick: () => void
+    onFollowButtonClick: () => void
+}
+
+const Users: React.FC<PropsType> = (props) => {
 
     const allUsers = props.usersData.map(usersItem => {
         return <User key={usersItem.id}
