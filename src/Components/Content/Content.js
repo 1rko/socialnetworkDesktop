@@ -22,7 +22,7 @@ const Content = (props) => {
                         <Route path=":userId" element={<ProfileContainer store={props.store}/>}/>
                         <Route path="" element={<ProfileContainer store={props.store}/>}/>
                     </Route>
-                    <Route path="/users/*" element={<UsersContainer
+                    <Route path="/users/*" element={<UsersContainer title = "Все пользователи"
                         store={props.store}/>}/>
                     <Route path="/login" element={<LoginPage/>}
                     />

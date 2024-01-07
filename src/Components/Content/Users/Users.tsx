@@ -12,8 +12,8 @@ type PropsType = {
     usersCount: number //pageSize
     usersData: Array<UsersDataType>
     followingInProgress: Array<number>
-    onUnfollowButtonClick: () => void
-    onFollowButtonClick: () => void
+    onUnfollowButtonClick: (id: number) => void
+    onFollowButtonClick: (id: number) => void
 }
 
 const Users: React.FC<PropsType> = (props) => {

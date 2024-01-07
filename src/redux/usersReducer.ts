@@ -186,7 +186,6 @@ export const onPageChangedThunkCreator = (pageNumber: number, usersCount: number
                 dispatch(setUsers(data.items));
                 dispatch(toggleIsFetching(false))
             })
-
     }
 
 export const onFollowButtonClickThunkCreator = (userId: number) =>

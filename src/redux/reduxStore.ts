@@ -1,12 +1,12 @@
 import { combineReducers, legacy_createStore, applyMiddleware, compose } from "redux";
-import dialogsReducer from "./dialogsReducer.tsx";
+import dialogsReducer from "./dialogsReducer";
 import profileReducer from "./profileReducer";
 import usersReducer from "./usersReducer";
 import authReducer from "./authReducer";
 import thunkMiddleWare from 'redux-thunk';
-import appReducer from "./appReducer.tsx";
+import appReducer from "./appReducer";
 
-let reducers = combineReducers({
+let rootReducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
@@ -14,8 +14,13 @@ let reducers = combineReducers({
     app: appReducer
 })
 
+type RootReducersType = typeof rootReducers // получаем неявно тип rootReducers
+export type AppStateType=ReturnType<RootReducersType> // AppStateType - типизация всего state
+
+
+// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = legacy_createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleWare)));
+const store = legacy_createStore(rootReducers, composeEnhancers(applyMiddleware(thunkMiddleWare)));
 
 //let store = legacy_createStore(reducers, applyMiddleware(thunkMiddleWare));
 

@@ -1,7 +1,12 @@
 import React from 'react';
 import styles from './PostItem.module.css'
 
-const PostItem = (props) => {
+type PropsType ={
+    likesCount: number
+    postText:string
+}
+
+const PostItem = (props: PropsType) => {
     return (
         <div className={styles.postItem}>
             <div className={styles.postItem_faceAndCount}>

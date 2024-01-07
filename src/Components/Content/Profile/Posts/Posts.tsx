@@ -1,26 +1,34 @@
 import React from 'react';
 import styles from './Posts.module.css'
 import PostItem from "../PostItem/PostItem";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, FormikHelpers, FormikErrors } from "formik";
 import MyTextArea from '../../../../Common/Controls/MyTextArea/MyTextArea';
+import {PostDataType} from "types";
 
-const Posts = (props) => {
+type PropsType = {
+    postData: Array<PostDataType>
+
+    addPost: (newPostText: string) => void
+    updateNewPostText: (text: string) => void
+}
+
+const Posts = (props: PropsType) => {
 
     const postText = props.postData.map(postItem => {
         return <PostItem key={postItem.id} likesCount={postItem.likesCount} postText={postItem.postText} />
     })
 
-    let newPostElement = React.createRef();
+    //let newPostElement = React.createRef();
 
-    let onAddPost = (newPostText) => {
+    let onAddPost = (newPostText:string) => {
         props.addPost(newPostText)
         props.updateNewPostText('')
     }
 
-    let onPostChange = () => {
+    /*let onPostChange = () => {
         let text = newPostElement.current.value
         props.updateNewPostText(text)
-    }
+    }*/
 
     return (
 
@@ -33,24 +41,32 @@ const Posts = (props) => {
     );
 }
 
-const PostForm = (props) => (
+type FormPropsType = {
+    funcAddPost: (newPost:string) => void
+}
+
+type ValuesType = {
+    newPost: string
+}
+
+const PostForm = (props:FormPropsType) => (
     <div>
         <Formik
             initialValues={{
                 newPost: ""
             }}
             validate={values => {
-                const errors = {};
+                const errors: FormikErrors<ValuesType> = {};
                 if (!values.newPost) {
                     errors.newPost = 'Required';
                 }
                 return errors;
             }}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values: ValuesType, { setSubmitting }: FormikHelpers<ValuesType>) => {
                 setTimeout(() => {
                     //alert(JSON.stringify(values, null, 2));
                     props.funcAddPost(values.newPost);
-                    setSubmitting(false);
+                    setSubmitting(false) ;
                 }, 400);
             }}
         >
