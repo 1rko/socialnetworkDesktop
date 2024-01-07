@@ -4,9 +4,23 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import Posts from "./Posts/Posts";
 import MyProfileInfo from "./MyProfileInfo/MyProfileInfo";
 import MyProfileInfoWithHooks from "./MyProfileInfo/MyProfileInfoWithHooks";
+import {PostDataType, ProfileType} from "types";
 
+type PropsType = {
+    postData: Array<PostDataType>
+    newPostText: string
+    status: string
+    isOwner: boolean
+    profile: ProfileType
 
-const Profile = (props) => {
+    addPost: (newPostText: string) => void
+    updateNewPostText: (text: string) => void
+    updateStatus: (newPostText: string) => void
+    savePhoto: (fileName: any) => void
+    saveProfile: (profile: ProfileType) => void
+}
+
+const Profile = (props: PropsType) => {
     return (
         <>
             <div>
@@ -24,7 +38,7 @@ const Profile = (props) => {
                 />
 
                 <Posts postData={props.postData}
-                       newPostText={props.newPostText}
+                       //newPostText={props.newPostText}
                        addPost={props.addPost}
                        updateNewPostText={props.updateNewPostText}/>
             </div>

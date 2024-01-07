@@ -1,7 +1,14 @@
 import React from 'react';
 import styles from './Profile.module.css'
+import {ProfileType} from "types";
 
-const ProfileData = ({profile, isOwner, goToEditMode}) => {
+type PropsType = {
+    profile: ProfileType
+    isOwner: boolean
+    goToEditMode: () => void
+}
+
+const ProfileData = ({profile, isOwner, goToEditMode}: PropsType) => {
     return <>
         {isOwner && <div>
             <button onClick={goToEditMode}>edit</button>
@@ -24,7 +31,8 @@ const ProfileData = ({profile, isOwner, goToEditMode}) => {
         <div>
             <b>Contacts: </b>
             {Object.keys(profile.contacts).map(key => {
-                return <div key={key} className={styles.contacts}> {key} : {profile.contacts[key]} </div>
+                //@ts-ignore
+                return <div key={key} className={styles.contacts}> {key} : {profile.contacts[key as keyof Object]} </div>
             })}
         </div>
     </>
