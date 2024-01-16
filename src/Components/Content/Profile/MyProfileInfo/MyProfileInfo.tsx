@@ -1,14 +1,25 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import styles from './MyProfileInfo.module.css'
 import defaultImgSrc from './../../../../Common/Img/AvaForAll.png'
 
-class MyProfileInfo extends React.Component {
+type PropsType ={
+    status:string
+    updateStatus: (prevStatus:string) => void
+    img: string
+}
+
+type StateType ={
+    localStatus: string
+    editMode:boolean
+}
+
+class MyProfileInfo extends React.Component<PropsType, StateType> {
     state = {
         localStatus: this.props.status,
         editMode: false
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps:PropsType, prevState:StateType) {
         if (prevProps.status !== this.props.status) {
             this.setState({localStatus: this.props.status})
         }
@@ -23,7 +34,7 @@ class MyProfileInfo extends React.Component {
         this.props.updateStatus(this.state.localStatus)
     }
 
-    onChangeInput = (e) => {
+    onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         let newStatus = e.target.value
         this.setState({localStatus: newStatus});
     }
