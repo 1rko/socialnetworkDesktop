@@ -1,5 +1,7 @@
-import {profileAPI} from "../DAL/Dal";
+import {EnumResultCodes, profileAPI} from "../DAL/Dal";
 import {PhotosType, PostDataType, ProfileType} from "../Types/types";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./reduxStore";
 
 const UPDATE_NEW_MESSAGE = 'profileReducer/UPDATE_NEW_MESSAGE'
 const ADD_PROFILE_POST = 'profileReducer/ADD-PROFILE-POST'
@@ -87,6 +89,15 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
     }
 }
 
+type ActionTypes =
+    AddPostType
+    | DeletePostType
+    | UpdateNewPostTextType
+    | SetProfileType
+    | ToggleIsFetchingType
+    | SetStatusType
+    | SavePhotoSuccessType
+
 export type AddPostType = {
     type: typeof ADD_PROFILE_POST,
     newText: string | null
@@ -162,39 +173,40 @@ export const SavePhotoSuccess = (photos: PhotosType): SavePhotoSuccessType => ({
     photos: photos
 })
 
-export const updateStatusThunkCreator = (status: string) =>
-    async (dispatch: any) => {
+type ThunkType= ThunkAction<void, AppStateType, any, ActionTypes>
+
+export const updateStatusThunkCreator = (status: string) : ThunkType =>
+    async (dispatch) => {
         let response = await profileAPI.updateStatus(status)
 
-        if (response.resultCode === 0) {
+        if (response.resultCode === EnumResultCodes.Success) {
             dispatch(setStatus(status))
         } else {
             console.log("Error : " + response.messages)
         }
-
     }
 
-export const addPostThunkCreator = (newPostText: string) =>
-    (dispatch: any) => {
+export const addPostThunkCreator = (newPostText: string) : ThunkType =>
+    (dispatch) => {
         dispatch(addPost(newPostText));
         dispatch(updateNewPostText(''))
     }
 
-export const savePhotoThunkCreator = (fileName: any) =>
-    async (dispatch: any) => {
+export const savePhotoThunkCreator = (fileName: any) : ThunkType =>
+    async (dispatch) => {
         let response = await profileAPI.savePhoto(fileName)
-        if (response.resultCode === 0) {
-            dispatch(SavePhotoSuccess(response.data.photos))
+        if (response.resultCode === EnumResultCodes.Success) {
+            dispatch(SavePhotoSuccess(response.data))
         } else {
             console.log("Error : " + response.messages)
         }
     }
 
-export const saveProfileThunkCreator = (profile: ProfileType) =>
-    async (dispatch: any) => {
+export const saveProfileThunkCreator = (profile: ProfileType) : ThunkType =>
+    async (dispatch) => {
 
         let response = await profileAPI.saveProfile(profile)
-        if (response.resultCode === 0) {
+        if (response.resultCode === EnumResultCodes.Success) {
             profileAPI.getProfile(profile.userId).then(
                 data => {
                     dispatch(setProfile(data))
