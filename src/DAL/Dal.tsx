@@ -1,7 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {PhotosType, ProfileType, UsersDataType} from "types";
 import {string} from "yup";
-import any = jasmine.any;
 
 const instance = axios.create({
         baseURL: 'https://social-network.samuraijs.com/api/1.0/',

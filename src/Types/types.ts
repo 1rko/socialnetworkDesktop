@@ -35,3 +35,11 @@ export type UsersDataType = {
     status: string | null
     followed: boolean
 }
+
+export type SetAuthUserDataPayloadType = {
+    id: number | null
+    login: string | null
+    email: string | null
+    isAuthorised: boolean
+    captchaUrl: string | null
+}

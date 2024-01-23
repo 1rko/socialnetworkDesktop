@@ -3,9 +3,14 @@ import React from 'react';
 import styles from './Header.module.css'
 import Auth from '../Auth/Auth'
 import MyClock from "../../Common/Controls/MyClock";
+import {SetAuthUserDataPayloadType} from "types";
 
+type PropsType = {
+    auth:SetAuthUserDataPayloadType,
+    logout: ()=> void
+}
 
-const Header = (props) => {
+const Header: React.FC<PropsType> = (props) => {
     return (
         <div className={styles.header_wrapper}>
             <img className={styles.header_logo}

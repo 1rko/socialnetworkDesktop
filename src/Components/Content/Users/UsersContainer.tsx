@@ -1,12 +1,5 @@
 import React from 'react'
 import {
-    onFollow,
-    setCurrentPage,
-    setTotalCount,
-    setUsers,
-    toggleIsFetching,
-    onUnFollow,
-    toggleFollowingIsFetching,
     getUsersThunkCreator,
     onPageChangedThunkCreator,
     onFollowButtonClickThunkCreator, onUnfollowButtonClickThunkCreator
@@ -38,8 +31,8 @@ type MapDispatchToPropsType = {
     onUnfollowButtonClick: (id: number) => void
     onFollowButtonClick: (id: number) => void
 
-    onFollow: (id: number) => void
-    onUnFollow: (id: number) => void
+   // onFollow: (id: number) => void
+    //onUnFollow: (id: number) => void
 }
 
 type OwnPropsType = {
@@ -96,7 +89,6 @@ const mapStateToProps = (state: AppStateType) => {
 //Ctrl+b на ф-ции connect -смотрим описание типов дженерика <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
 export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps,
     {
-        onFollow, onUnFollow, /*setUsers,setTotalCount,setCurrentPage,toggleIsFetching,toggleFollowingIsFetching,*/
         getUsers: getUsersThunkCreator, onPageChangedInsight: onPageChangedThunkCreator,
         onFollowButtonClick: onFollowButtonClickThunkCreator, onUnfollowButtonClick: onUnfollowButtonClickThunkCreator
     })(UsersAPIComponent)
