@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './Content.module.css'
-import {Routes, Route, HashRouter} from 'react-router-dom'
-//import Messages from "./Messages/Messages";
+import {Routes, Route} from 'react-router-dom'
 import ProfileContainer from "./Profile/ProfileContainer";
 import DialogsContainer from "./Dialogs/DialogsContainer";
 import UsersContainer from './Users/UsersContainer';

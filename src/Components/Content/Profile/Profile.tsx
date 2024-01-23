@@ -8,10 +8,10 @@ import {PostDataType, ProfileType} from "types";
 
 type PropsType = {
     postData: Array<PostDataType>
-    newPostText: string
+    newPostText: string | null
     status: string
     isOwner: boolean
-    profile: ProfileType
+    profile: ProfileType | null
 
     addPost: (newPostText: string) => void
     updateNewPostText: (text: string) => void
@@ -38,7 +38,7 @@ const Profile = (props: PropsType) => {
                 />
 
                 <Posts postData={props.postData}
-                       //newPostText={props.newPostText}
+                    //newPostText={props.newPostText}
                        addPost={props.addPost}
                        updateNewPostText={props.updateNewPostText}/>
             </div>

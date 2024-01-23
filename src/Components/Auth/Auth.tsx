@@ -1,8 +1,14 @@
 import React from 'react';
 import styles from './Auth.module.css'
 import {NavLink} from 'react-router-dom';
+import {SetAuthUserDataPayloadType} from "types";
 
-const Auth = (props) => {
+type PropsType = {
+    auth: SetAuthUserDataPayloadType,
+    logout: () => void
+}
+
+const Auth: React.FC<PropsType> = (props) => {
     return (
         <div className={styles.loginText_wrapper}>
             {props.auth.isAuthorised ? (

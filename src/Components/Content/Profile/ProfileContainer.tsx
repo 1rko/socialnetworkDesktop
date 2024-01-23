@@ -8,7 +8,7 @@ import {
 } from "../../../redux/profileReducer";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import React, {useEffect, useRef} from "react";
+import React, {useEffect} from "react";
 import Preloader from "../../Preloader/Preloader";
 import withAuthRedirect from "../../../HOC/withAuthRedirect";
 import {compose} from "redux";
@@ -18,31 +18,45 @@ import {
     getPostData, getNewPostText, getProfile,
     getIsFetching, getStatus
 } from "../../../redux/profileSelectors";
-import {getCaptchaUrlThunkCreator} from "../../../redux/authReducer";
+import {PostDataType, ProfileType} from "types";
+import {AppStateType} from "../../../redux/reduxStore";
+import {useParams} from "react-router-dom";
 
+type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
-let ProfileAPIContainer = (props) => {
+type RouteParams = {
+    userId: string
+}
 
-    let profileId = props.router.params.userId;
-    const prevProfileIdRef = useRef(); //Хук useRef() запоминает обект, который хранится весб жизн цикл обекта
+let ProfileAPIContainer: React.FC<PropsType> = (props) => {
+
+    let { userId }= useParams<RouteParams>();
+    let profileId: number | null
+    profileId = Number(userId);
+    const prevProfileIdRef = React.useRef<number | null>(null); //Хук useRef() запоминает обект, который хранится весь жизн цикл обекта
 
     useEffect(() => {
 
         profileId = profileId ? profileId : props.authorizedUserId
 
-        if (prevProfileIdRef.current !== profileId) { //Сравниваются предыд значение с текущим
-            prevProfileIdRef.current = profileId;// если не изменилось, то UseEffect не происходит
+        if (prevProfileIdRef.current !== profileId) { //Сравниваются предыд значение с текущим: если не изменилось, то UseEffect не происходит
+            prevProfileIdRef.current = profileId;
 
             props.toggleIsFetching(true)
-            profileAPI.getProfile(profileId).then(
+            profileAPI.getProfile(profileId as unknown as  number).then(
                 data => {
                     props.setProfile(data);
                     props.toggleIsFetching(false)
                 })
 
-            profileAPI.getStatus(props.authorizedUserId).then(
+            let userId: number = 0
+            if (props.authorizedUserId) {
+                userId = props.authorizedUserId
+            }
+
+            profileAPI.getStatus(userId).then(
                 data => {
-                    props.setStatus(data)
+                    props.setStatus(data as unknown as string)
                 })
         }
     },)
@@ -56,7 +70,7 @@ let ProfileAPIContainer = (props) => {
                      newPostText={props.newPostText}
                      addPost={props.addPost}
                      updateNewPostText={props.updateNewPostText}
-                     isOwner={!props.router.params.userId}//если нет параметра (т.е. это Я)
+                     isOwner={!profileId}//если нет параметра (т.е. это Я)
                      profile={props.profile}
                      status={props.status}
                      updateStatus={props.updateStatus}
@@ -67,7 +81,27 @@ let ProfileAPIContainer = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
+type MapStateToPropsType = {
+    postData: Array<PostDataType>,
+    newPostText: string | null,
+    profile: ProfileType | null,
+    isFetching: boolean,
+    status: string,
+    authorizedUserId: number | null
+}
+
+type MapDispatchToPropsType = {
+    updateNewPostText: (text: string | null) => void,
+    setProfile: (profile: ProfileType) => void,
+    toggleIsFetching: (isFetching: boolean) => void,
+    addPost: (newPostText: string) => void,
+    updateStatus: (status: string) => void,
+    savePhoto: (fileName: any) => void,
+    saveProfile: (profile: ProfileType) => void,
+    setStatus: (status: string) => void
+}
+
+const mapStateToProps = (state: AppStateType) => {
     return {
         postData: getPostData(state),
         newPostText: getNewPostText(state),
@@ -78,9 +112,9 @@ const mapStateToProps = (state) => {
     }
 }
 
-const ProfileContainer =
+const ProfileContainer:any =
     compose(
-        connect(mapStateToProps, {
+        connect<MapStateToPropsType, MapDispatchToPropsType, any, AppStateType>(mapStateToProps, {
             updateNewPostText,
             setProfile,
             toggleIsFetching,
