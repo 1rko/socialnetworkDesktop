@@ -1,25 +1,14 @@
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./reduxStore";
+import {DialogsDataType, MessageType} from "types";
 
 const ADD_NEW_MESSAGE = 'dialogReducer/ADD_NEW_MESSAGE'
 const UPDATE_NEW_MESSAGE = 'dialogReducer/UPDATE_NEW_MESSAGE'
 
-type DialogsDataType = {
-    id: number,
-    name: string,
-    age: number,
-    messages: string []
-}
-
-type Messages = {
-    id: number,
-    message: string
-}
-
 type InitialStateType = {
     dialogsData: Array<DialogsDataType>
     newMessageText: string
-    messages: Array<Messages>
+    messages: Array<MessageType>
 }
 
 let initialState: InitialStateType = {

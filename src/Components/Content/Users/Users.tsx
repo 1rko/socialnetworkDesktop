@@ -1,19 +1,22 @@
-import React from 'react';
+import React from 'react'
 import styles from './Users.module.css'
-import Paginator from '../../../Common/Controls/Paginator/Paginator';
-import User from './User/User';
-import {UsersDataType} from 'types';
-
+import Paginator from '../../../Common/Controls/Paginator/Paginator'
+import User from './User/User'
+import {UsersDataType} from 'types'
+import {UsersSearchForm} from "./UsersSearchForm";
+import {FilterType} from "../../../redux/usersReducer";
+//import {Formik, Form, Field, FormikHelpers} from "formik" import {UsersSearchForm} from "./UsersSearchForm";
 
 type PropsType = {
     currentPage: number
-    onPageChanged: (pageNumber: number) => void
     totalCount: number
     usersCount: number //pageSize
     usersData: Array<UsersDataType>
     followingInProgress: Array<number>
     onUnfollowButtonClick: (id: number) => void
     onFollowButtonClick: (id: number) => void
+    onFilterChanged: (filter: FilterType) => void
+    onPageChanged: (pageNumber: number) => void
 }
 
 const Users: React.FC<PropsType> = (props) => {
@@ -32,7 +35,7 @@ const Users: React.FC<PropsType> = (props) => {
 
     return (
         <div className={styles.users_wrapper}>
-
+            <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
             <Paginator totalCount={props.totalCount}
                        usersCount={props.usersCount}
                        currentPage={props.currentPage}

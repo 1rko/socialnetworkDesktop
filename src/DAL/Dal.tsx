@@ -1,6 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 import {PhotosType, ProfileType, UsersDataType} from "types";
 import {string} from "yup";
+import {FilterType} from "../redux/usersReducer";
 
 const instance = axios.create({
         baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -33,8 +34,9 @@ type FollowUnfollowType = {
 }
 
 export const usersAPI = {
-    getUsers<GetUsersType>(currentPage: number = 1, usersCount: number = 10) {                    //axios типизирован, автоматически неявно
-        return instance.get(`users?page=${currentPage} &count=${usersCount}`)               //возвращается промис
+    getUsers<GetUsersType>(currentPage: number = 1, usersCount: number = 10, filter: FilterType) {                    //axios типизирован, автоматически неявно
+        return instance.get(`users?page=${currentPage} &count=${usersCount} &term=${filter.term} ${filter.friend === null ? ''
+            : filter.friend === true ? '&friend=true' : '&friend=false'} `)               //возвращается промис
             .then(response => response.data)                                                    //в <...> - то, что возвращает промис
     },
 

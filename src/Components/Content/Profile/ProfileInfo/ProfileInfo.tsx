@@ -1,10 +1,19 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styles from './ProfileInfo.module.css'
 import defaultImgSrc from './../../../../Common/Img/AvaForAll.png'
 import ProfileDataForm from "./ProfileDataForm";
 import ProfileData from "../ProfileData";
+import {boolean} from "yup";
+import {ProfileType} from "types";
 
-const ProfileInfo = (props) => {
+type PropsType = {
+    profile: ProfileType | null,
+    isOwner: boolean,
+    savePhoto: (fileName: any) => void,
+    saveProfile: (profile: ProfileType) => void
+}
+
+const ProfileInfo = (props: PropsType) => {
 
     let [editMode, setEditMode] = useState(false)
 
@@ -13,8 +22,9 @@ const ProfileInfo = (props) => {
 
     if (profileData) {
 
-        const onMainPhotoSelected = (e) => {
-            if (e.target.files.length) {
+        const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+            if (!e.target.files) return                                 //проверка e.target.files на null (т.к. HTMLInputElement
+            if (e.target.files.length) {                                //имеет встроенное свойство files typeof FileList | null.)
                 props.savePhoto(e.target.files[0])
             }
         }

@@ -2,13 +2,13 @@ import React from 'react'
 import {
     getUsersThunkCreator,
     onPageChangedThunkCreator,
-    onFollowButtonClickThunkCreator, onUnfollowButtonClickThunkCreator
+    onFollowButtonClickThunkCreator, onUnfollowButtonClickThunkCreator, FilterType
 } from "../../../redux/usersReducer";
 import Users from "./Users";
 import {connect, MapStateToProps} from "react-redux";
 import Preloader from "../../Preloader/Preloader";
 import {
-    getCurrentPage, getFollowingInProgress,
+    getCurrentPage, getFilter, getFollowingInProgress,
     getIsFetching,
     getTotalCount,
     getUsersCount, getUsersDataSuperSelector
@@ -23,15 +23,16 @@ type MapStateToPropsType = {
     usersData: Array<UsersDataType>
     totalCount: number
     followingInProgress: Array<number>
+    filter: FilterType
 }
 
 type MapDispatchToPropsType = {
-    getUsers: (currentPage: number, usersCount: number) => void
-    onPageChangedInsight: (pageNumber: number, usersCount: number) => void
+    getUsers: (currentPage: number, usersCount: number, filter: FilterType) => void
+    onPageChangedInsight: (pageNumber: number, usersCount: number, filter: FilterType) => void
     onUnfollowButtonClick: (id: number) => void
     onFollowButtonClick: (id: number) => void
 
-   // onFollow: (id: number) => void
+    // onFollow: (id: number) => void
     //onUnFollow: (id: number) => void
 }
 
@@ -43,13 +44,18 @@ type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType
 class UsersAPIComponent extends React.Component<PropsType> {
 
     componentDidMount() {
-        const {currentPage, usersCount} = this.props
-        this.props.getUsers(currentPage, usersCount)
+        const {currentPage, usersCount, filter} = this.props
+        this.props.getUsers(currentPage, usersCount, filter)
     }
 
     onPageChanged = (pageNumber: number) => {
+        const {usersCount, filter} = this.props
+        this.props.onPageChangedInsight(pageNumber, usersCount, filter);
+    }
+
+    onFilterChanged = (filter: FilterType) => {
         const {usersCount} = this.props
-        this.props.onPageChangedInsight(pageNumber, usersCount);
+        this.props.getUsers(1, usersCount, filter)
     }
 
     render() {
@@ -61,6 +67,7 @@ class UsersAPIComponent extends React.Component<PropsType> {
                        usersCount={this.props.usersCount}
                        currentPage={this.props.currentPage}
                        onPageChanged={this.onPageChanged}
+                       onFilterChanged={this.onFilterChanged}
                     //onFollow={this.props.onFollow}
                     //onUnFollow={this.props.onUnFollow}
                     //isFetching={this.props.isFetching}
@@ -82,7 +89,8 @@ const mapStateToProps = (state: AppStateType) => {
         usersCount: getUsersCount(state),
         totalCount: getTotalCount(state),
         isFetching: getIsFetching(state),
-        followingInProgress: getFollowingInProgress(state)
+        followingInProgress: getFollowingInProgress(state),
+        filter:getFilter(state)
     }
 }
 

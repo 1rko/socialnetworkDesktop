@@ -1,5 +1,6 @@
 import React from "react";
 import styles from './Paginator.module.css'
+import {FilterType} from "../../../redux/usersReducer";
 
 type PropsType = {
     currentPage: number

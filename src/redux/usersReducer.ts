@@ -3,17 +3,24 @@ import {UsersDataType} from "../Types/types";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType, InferActionTypes} from "./reduxStore";
 import {Dispatch} from "redux";
+import {string} from "yup";
 
 let initialState = {
     usersData: [] as Array<UsersDataType>,
-    currentPage: 4 as number,
+    currentPage: 1 as number,
     usersCount: 20 as number,
     totalCount: 0 as number,
     isFetching: false as boolean,
-    followingInProgress: [] as Array<number> // array of users ids
+    followingInProgress: [] as Array<number>, // array of users ids
+    filter:{
+        term:'',
+        friend: null as boolean | null
+    }
 }
 
 type InitialStateType = typeof initialState;
+export type FilterType = typeof initialState.filter;
+
 
 const usersReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
@@ -53,6 +60,11 @@ const usersReducer = (state = initialState, action: ActionTypes): InitialStateTy
             return {
                 ...state, isFetching: action.isFetching
             }
+        case "SET_FILTER" :
+            return {
+                ...state,
+                filter: action.payload
+            }
         case "TOGGLE_FOLLOWING_IN_PROGRESS":
             return {
                 ...state,
@@ -73,6 +85,7 @@ export const actions = {
     setUsers: (users: Array<UsersDataType>) => ({type: 'SET_USERS', usersData: users} as const),
     setTotalCount: (totalCount: number) => ({type: 'SET_TOTAL_COUNT', totalCount: totalCount} as const),
     setCurrentPage: (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage: currentPage} as const),
+    setFilter: (filter: FilterType) => ({type: 'SET_FILTER', payload:filter} as const),
     toggleIsFetching: (isFetching: boolean) => ({type: 'TOGGLE_IS_FETCHING', isFetching: isFetching} as const),
     toggleFollowingIsFetching: (isFetching: boolean, userId: number) => ({
         type: 'TOGGLE_FOLLOWING_IN_PROGRESS',
@@ -84,11 +97,11 @@ type ThunkType = ThunkAction<void, AppStateType, any, ActionTypes>
 type DispatchType = Dispatch<ActionTypes>       //функция из библиотеки redux
 type GetStateType = () => AppStateType
 
-export const getUsersThunkCreator = (currentPage: number, usersCount: number): ThunkType =>
+export const getUsersThunkCreator = (currentPage: number, usersCount: number, filter: FilterType): ThunkType =>
     (dispatch) => {
-
         dispatch(actions.toggleIsFetching(true))
-        usersAPI.getUsers(currentPage, usersCount)
+        dispatch(actions.setFilter(filter))
+        usersAPI.getUsers(currentPage, usersCount, filter)
             .then(data => {
                 dispatch(actions.setUsers(data.items));
                 dispatch(actions.setTotalCount(data.totalCount))
@@ -96,11 +109,11 @@ export const getUsersThunkCreator = (currentPage: number, usersCount: number): T
             })
     }
 
-export const onPageChangedThunkCreator = (pageNumber: number, usersCount: number): ThunkType =>
+export const onPageChangedThunkCreator = (pageNumber: number, usersCount: number, filter:FilterType): ThunkType =>
     (dispatch) => {
         dispatch(actions.toggleIsFetching(true))
         dispatch(actions.setCurrentPage(pageNumber))
-        usersAPI.getUsers(pageNumber, usersCount)
+        usersAPI.getUsers(pageNumber, usersCount, filter)
             .then(data => {
                 dispatch(actions.setUsers(data.items));
                 dispatch(actions.toggleIsFetching(false))

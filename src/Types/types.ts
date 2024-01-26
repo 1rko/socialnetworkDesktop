@@ -3,6 +3,19 @@ export type PostDataType = {
     likesCount: number
     postText: string
 }
+
+export type DialogsDataType = {
+    id: number,
+    name: string,
+    age: number,
+    messages: string []
+}
+
+export type MessageType = {
+    id: number,
+    message: string
+}
+
 export type ContactsType = {
     facebook: string
     website: string

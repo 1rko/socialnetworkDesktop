@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styles from './MyProfileInfo.module.css'
 
-const MyProfileInfoWithHooks = (props) => {
+type PropsType = {
+    status: string
+    updateStatus: (prevStatus: string) => void
+}
+
+const MyProfileInfoWithHooks = (props: PropsType) => {
 
     let [status, setStatus] = useState(props.status)
     let [editMode, setEditMode] = useState(false)
@@ -15,25 +20,17 @@ const MyProfileInfoWithHooks = (props) => {
         props.updateStatus(status)
     }
 
-    const onChangeInput = (e) => {
+    const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         let newStatus = e.target.value
         setStatus(newStatus);
     }
-    /*
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.status !== this.props.status) {
-            this.setState({localStatus: this.props.status})
-        }
-    }
-    }*/
 
     return <div className={styles.MyProfileInfo}>
         {((!editMode) && <span onDoubleClick={activateEditMode}>{props.status}</span>)}
         {((editMode) && <input autoFocus={true}
-            onBlur={deActivateEditMode}
-            value={status}
-            onChange={onChangeInput}
+                               onBlur={deActivateEditMode}
+                               value={status}
+                               onChange={onChangeInput}
         />)}
 
     </div>

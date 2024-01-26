@@ -2,15 +2,15 @@ import React, {ChangeEvent} from 'react';
 import styles from './MyProfileInfo.module.css'
 import defaultImgSrc from './../../../../Common/Img/AvaForAll.png'
 
-type PropsType ={
-    status:string
-    updateStatus: (prevStatus:string) => void
+type PropsType = {
+    status: string
+    updateStatus: (prevStatus: string) => void
     img: string
 }
 
-type StateType ={
+type StateType = {
     localStatus: string
-    editMode:boolean
+    editMode: boolean
 }
 
 class MyProfileInfo extends React.Component<PropsType, StateType> {
@@ -19,7 +19,7 @@ class MyProfileInfo extends React.Component<PropsType, StateType> {
         editMode: false
     }
 
-    componentDidUpdate(prevProps:PropsType, prevState:StateType) {
+    componentDidUpdate(prevProps: PropsType, prevState: StateType) {
         if (prevProps.status !== this.props.status) {
             this.setState({localStatus: this.props.status})
         }
