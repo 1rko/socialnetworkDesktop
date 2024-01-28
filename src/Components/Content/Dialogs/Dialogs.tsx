@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import styles from './Dialogs.module.css'
 import {Navigate, NavLink} from "react-router-dom";
 import store from '../../../redux/reduxStore';
 import {Formik, Form, Field, ErrorMessage} from "formik";
 import MyTextArea from '../../../Common/Controls/MyTextArea/MyTextArea';
+import {DialogsDataType, MessageType} from "types";
 
+type PropsType = {
+    dialogsData: Array<DialogsDataType>
+    messages: Array<MessageType>
+    newMessageText: string
+    isAuth: boolean
 
-const Dialogs = ({messages, ...props}) => {
+    addMessage: (newMessageText: string) => void
+    //messageChange:(newMessageText: string) => void
+}
+
+const Dialogs = ({messages, ...props}: PropsType) => {
     const dialogsArray = props.dialogsData.map(dialogItem => {
         return (
             <div key={dialogItem.id} className={styles.item}>
@@ -26,14 +36,14 @@ const Dialogs = ({messages, ...props}) => {
         )
     })
 
-    let onAddMessage = (newMessageText) => {
+    let onAddMessage = (newMessageText: string) => {
         props.addMessage(newMessageText)
     }
 
-    let onMessageChange = (e) => {
+    /*let onMessageChange = (e: ChangeEvent<HTMLInputElement>) => {
         let text = e.target.value
         props.messageChange(text);
-    }
+    }*/
 
     return (
         <div className={styles.dialogs_wrapper}>
@@ -54,25 +64,28 @@ const Dialogs = ({messages, ...props}) => {
     );
 }
 
-const AddMessageForm = (props) => (
+type AddMessageFormPropsType = {
+    funcAddMessage: (newMessageText: string) => void
+}
+
+const AddMessageForm = (props: AddMessageFormPropsType) => (
     <div>
         <Formik
             initialValues={{
                 newMessage: ""
             }}
             validate={values => {
-                const errors = {};
+                let errors: Partial<typeof values> = {}
                 if (!values.newMessage) {
                     errors.newMessage = 'Required';
                 }
                 return errors;
             }}
             onSubmit={(values, {setSubmitting}) => {
-                setTimeout(() => {
-                    props.funcAddMessage(values.newMessage);
-                    console.log(store.getState().dialogsPage.messages)
-                    setSubmitting(false);
-                }, 400);
+                props.funcAddMessage(values.newMessage);
+                console.log(store.getState().dialogsPage.messages)
+                values.newMessage=''
+                setSubmitting(false);
             }}
         >
             {({isSubmitting}) => (

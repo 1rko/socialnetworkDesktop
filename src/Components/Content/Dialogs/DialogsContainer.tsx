@@ -16,7 +16,7 @@ type MapStateToPropsType = {
 
 type MapDispatchToPropsType = {
     addMessage: (text: string) => void,
-    messageChange: (text: string) => void
+    //messageChange: (text: string) => void
 }
 
 let mapStateToProps = (state: AppStateType) => {
@@ -33,7 +33,7 @@ const DialogsContainer:any =
     compose(
         withRouter,
         connect<MapStateToPropsType, MapDispatchToPropsType, any, AppStateType>(mapStateToProps, {
-            addMessage: addMessageThunkCreator, messageChange: updateNewMessageCreator
+            addMessage: addMessageThunkCreator//, messageChange: updateNewMessageCreator
         })
         ,
         withAuthRedirect)

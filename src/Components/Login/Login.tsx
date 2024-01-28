@@ -6,9 +6,16 @@ import {connect} from 'react-redux'
 import MyInput from "../../Common/Controls/MyInput/MyInput";
 import {Navigate} from "react-router-dom";
 import * as Yup from 'yup';
+import {AppStateType} from "../../redux/reduxStore";
 
+type LoginPropsType = {
+    captchaUrl: string | null
+    isAuthorised: boolean
+    loginFunc: (email: string, password: string, rememberMe: boolean, captcha: string) => void
+    getCaptchaUrl: () => void
+}
 
-const Login = (props) => {
+const Login = (props: LoginPropsType) => {
     if (props.isAuthorised) {
         return <Navigate to={'/profile'}/>;
     }
@@ -16,7 +23,7 @@ const Login = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <LoginForm login={props.login} getCaptchaUrl={props.getCaptchaUrl} captchaUrl={props.captchaUrl}/>
+            <LoginForm loginFunc={props.loginFunc} captchaUrl={props.captchaUrl}/>
         </div>
     )
 }
@@ -34,17 +41,19 @@ const SignupSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required')
 });
 
-const LoginForm = (props) => (
+type LoginFormPropsType = {
+    captchaUrl: string | null
+    loginFunc: (email: string, password: string, rememberMe: boolean, captcha: string) => void
+}
+
+const LoginForm = (props: LoginFormPropsType) => (
     <div className={styles.login_form}>
         <Formik
-            initialValues={{email: '', password: '', captcha: ''}}
+            initialValues={{email: '', password: '', rememberMe: false, captcha: ''}}
             validationSchema={SignupSchema}
             onSubmit={(values, {setSubmitting}) => {
-                setTimeout(() => {
-                    //alert(JSON.stringify(values, null, 2));
-                    props.login(values.email, values.password, values.rememberMe = false, values.captcha);
+                    props.loginFunc(values.email, values.password, values.rememberMe = false, values.captcha);
                     setSubmitting(false);
-                }, 400);
             }}
         >
             {({errors, isSubmitting}) => {
@@ -76,13 +85,13 @@ const LoginForm = (props) => (
     </div>
 );
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         isAuthorised: state.auth.isAuthorised,
         captchaUrl: state.auth.captchaUrl
     }
 }
 
-export default connect(mapStateToProps, {login: loginThunkCreator, getCaptchaUrl: getCaptchaUrlThunkCreator})(Login);
+export default connect(mapStateToProps, {loginFunc: loginThunkCreator, getCaptchaUrl: getCaptchaUrlThunkCreator})(Login);
 
 

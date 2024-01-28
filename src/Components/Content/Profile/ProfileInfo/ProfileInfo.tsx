@@ -3,7 +3,6 @@ import styles from './ProfileInfo.module.css'
 import defaultImgSrc from './../../../../Common/Img/AvaForAll.png'
 import ProfileDataForm from "./ProfileDataForm";
 import ProfileData from "../ProfileData";
-import {boolean} from "yup";
 import {ProfileType} from "types";
 
 type PropsType = {
@@ -36,7 +35,8 @@ const ProfileInfo = (props: PropsType) => {
                                          finishEditMode={() => setEditMode(false)}/> :
                 <ProfileData profile={profileData}
                              isOwner={props.isOwner}
-                             goToEditMode={() => setEditMode(true)}
+                             goToEditMode={() => {
+                                 setEditMode(true)}}
                 />}
         </div>
     } else profileItem = <div>Профиль не загружен</div>

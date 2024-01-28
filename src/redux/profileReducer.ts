@@ -173,7 +173,7 @@ export const SavePhotoSuccess = (photos: PhotosType): SavePhotoSuccessType => ({
     photos: photos
 })
 
-type ThunkType= ThunkAction<void, AppStateType, any, ActionTypes>
+export type ThunkType= ThunkAction<void, AppStateType, any, ActionTypes>
 
 export const updateStatusThunkCreator = (status: string) : ThunkType =>
     async (dispatch) => {

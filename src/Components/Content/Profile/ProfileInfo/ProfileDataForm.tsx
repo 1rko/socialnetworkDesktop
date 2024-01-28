@@ -4,10 +4,18 @@ import {Formik, Form, Field, ErrorMessage} from "formik";
 import MyInput from "../../../../Common/Controls/MyInput/MyInput";
 import * as Yup from "yup";
 import {getCaptchaUrlThunkCreator} from "../../../../redux/authReducer";
+import {ContactsType, ProfileType} from "types";
 
-const ProfileDataForm = ({profile, ...props}) => {
-    let contactsValidationSchema = {}                   //пробегаем map все контакты и создаем для них ValidationSchema
-    Object.keys(profile.contacts).map(key => {
+type PropsType = {
+    saveProfile: (profile: ProfileType) => void
+    finishEditMode: () => void
+    profile: ProfileType
+}
+
+const ProfileDataForm = ({profile, ...props}: PropsType) => {
+    let contactsValidationSchema = {} as any;
+    Object.keys(profile.contacts).map(key => {                  //пробегаем map все контакты и создаем для них ValidationSchema
+            //@ts-ignore
             return contactsValidationSchema[key] = Yup.string().matches(
                 /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
                 'Enter correct url!'
@@ -32,12 +40,14 @@ const ProfileDataForm = ({profile, ...props}) => {
             userId: profile.userId,
             lookingForAJob: profile.lookingForAJob,
             lookingForAJobDescription: profile.lookingForAJobDescription,
+            photos: profile.photos,
             contacts: {...profile.contacts}                             //вложеность всех контактов
         }}
 
                 validationSchema={DisplayingErrorMessagesSchema}
 
                 onSubmit={(values, {setSubmitting}) => {
+                    //@ts-ignore
                     props.saveProfile(values).then(response => {
                             if (!response)
                                 props.finishEditMode()
@@ -52,7 +62,6 @@ const ProfileDataForm = ({profile, ...props}) => {
 
                 }}>
             {({values, errors, isSubmitting}) => {
-
                 return (
                     <Form>
                         <div className={styles.editLabel}> Full name</div>
@@ -81,8 +90,7 @@ const ProfileDataForm = ({profile, ...props}) => {
                         </Field>
 
                         <div>
-                            <div> Contacts</div>
-
+                            <div>Contacts</div>
                             {Object.keys(values.contacts).map((contact) => {//перебор всех контактов
                                     return <>
                                         <div className={styles.editLabel}> {contact}</div>
