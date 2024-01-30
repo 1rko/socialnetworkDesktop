@@ -1,7 +1,9 @@
-import {authAPI, EnumResultCodes, EnumWithCaptcha, security} from "../DAL/Dal";
+import {EnumResultCodes, EnumWithCaptcha} from "../DAL/Dal";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType, InferActionTypes} from "./reduxStore";
 import {SetAuthUserDataPayloadType} from "types";
+import {authAPI} from "../DAL/AuthAPI";
+import {securityAPI} from "../DAL/SecurityAPI";
 
 let initialState = {
     id: null as number | null,
@@ -54,7 +56,7 @@ export const getAuthUserDataThunkCreator = (): ThunkType =>
         let data = await authAPI.getMe()
         if (data.resultCode === EnumResultCodes.Success) {
             let {id, login, email} = data.data
-            let payload={id, login, email, isAuthorised: true, captchaUrl: null}
+            let payload = {id, login, email, isAuthorised: true, captchaUrl: null}
             dispatch(actions.setAuthUserData(payload))
         }
     }
@@ -63,7 +65,7 @@ export const logoutThunkCreator = (): ThunkType =>
     async (dispatch) => {
         let data = await authAPI.logout()
         if (data.resultCode === EnumResultCodes.Success) {
-            let payload={id:null, login:null, email:null, isAuthorised: false, captchaUrl: null}
+            let payload = {id: null, login: null, email: null, isAuthorised: false, captchaUrl: null}
             dispatch(actions.setAuthUserData(payload))
         } else alert(data.messages)
     }
@@ -82,7 +84,7 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
 
 export const getCaptchaUrlThunkCreator = (): ThunkType =>
     async (dispatch) => {
-        let data = await security.getCaptchaUrl()
+        let data = await securityAPI.getCaptchaUrl()
         dispatch(actions.setCaptchaUrl(data.url))
     }
 

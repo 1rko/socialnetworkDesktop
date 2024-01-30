@@ -1,7 +1,8 @@
-import {EnumResultCodes, profileAPI} from "../DAL/Dal";
+import {EnumResultCodes} from "../DAL/Dal";
 import {PhotosType, PostDataType, ProfileType} from "../Types/types";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./reduxStore";
+import {profileAPI} from "../DAL/ProfileAPI";
 
 const UPDATE_NEW_MESSAGE = 'profileReducer/UPDATE_NEW_MESSAGE'
 const ADD_PROFILE_POST = 'profileReducer/ADD-PROFILE-POST'
@@ -196,7 +197,7 @@ export const savePhotoThunkCreator = (fileName: any) : ThunkType =>
     async (dispatch) => {
         let response = await profileAPI.savePhoto(fileName)
         if (response.resultCode === EnumResultCodes.Success) {
-            dispatch(SavePhotoSuccess(response.data))
+            dispatch(SavePhotoSuccess(response.data.photos))
         } else {
             console.log("Error : " + response.messages)
         }

@@ -14,7 +14,7 @@ type ActionsTypes = InferActionTypes<typeof actions>
 
 const appReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
-        case 'INICIALIZED_SUCCESS':
+        case 'SN/APP/INICIALIZED_SUCCESS':
             return {
                 ...state,
                 initialized: true
@@ -25,7 +25,7 @@ const appReducer = (state = initialState, action: ActionsTypes): InitialStateTyp
 }
 
 export const actions = {
-    initialisedSuccess: () => ({type: 'INICIALIZED_SUCCESS'} as const)
+    initialisedSuccess: () => ({type: 'SN/APP/INICIALIZED_SUCCESS'} as const)
 }
 
 export const initializeApp = (): ThunkAction<void, AppStateType, any, ActionsTypes> =>

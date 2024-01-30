@@ -1,9 +1,10 @@
-import {EnumResultCodes, usersAPI} from "../DAL/Dal";
+import {EnumResultCodes} from "../DAL/Dal";
 import {UsersDataType} from "../Types/types";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType, InferActionTypes} from "./reduxStore";
 import {Dispatch} from "redux";
 import {string} from "yup";
+import {usersAPI} from "../DAL/UsersAPI";
 
 let initialState = {
     usersData: [] as Array<UsersDataType>,

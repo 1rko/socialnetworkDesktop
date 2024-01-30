@@ -12,7 +12,6 @@ import React, {useEffect} from "react";
 import Preloader from "../../Preloader/Preloader";
 import withAuthRedirect from "../../../HOC/withAuthRedirect";
 import {compose} from "redux";
-import {profileAPI} from "../../../DAL/Dal";
 import {withRouter} from "../../../HOC/withRouter";
 import {
     getPostData, getNewPostText, getProfile,
@@ -21,6 +20,7 @@ import {
 import {PostDataType, ProfileType} from "types";
 import {AppStateType} from "../../../redux/reduxStore";
 import {useParams} from "react-router-dom";
+import {profileAPI} from "../../../DAL/ProfileAPI";
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
