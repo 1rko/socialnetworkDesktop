@@ -1,6 +1,5 @@
 import {EnumResultCodes, EnumWithCaptcha} from "../DAL/Dal";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType, InferActionTypes} from "./reduxStore";
+import {BaseThunkType, InferActionTypes} from "./reduxStore";
 import {SetAuthUserDataPayloadType} from "types";
 import {authAPI} from "../DAL/AuthAPI";
 import {securityAPI} from "../DAL/SecurityAPI";
@@ -49,9 +48,9 @@ const actions = {
     setCaptchaUrl: (captchaUrl: string) => ({type: 'SET_CAPTCHA_URL', payload: {captchaUrl}} as const)
 }
 
-type ThunkType = ThunkAction<void, AppStateType, any, ActionsTypes>
+type AuthThunkType = BaseThunkType<ActionsTypes> // мы создали дженерик в redux-store
 
-export const getAuthUserDataThunkCreator = (): ThunkType =>
+export const getAuthUserDataThunkCreator = (): AuthThunkType =>
     async (dispatch) => {
         let data = await authAPI.getMe()
         if (data.resultCode === EnumResultCodes.Success) {
@@ -61,7 +60,7 @@ export const getAuthUserDataThunkCreator = (): ThunkType =>
         }
     }
 
-export const logoutThunkCreator = (): ThunkType =>
+export const logoutThunkCreator = (): AuthThunkType =>
     async (dispatch) => {
         let data = await authAPI.logout()
         if (data.resultCode === EnumResultCodes.Success) {
@@ -70,7 +69,7 @@ export const logoutThunkCreator = (): ThunkType =>
         } else alert(data.messages)
     }
 
-export const loginThunkCreator = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType =>
+export const loginThunkCreator = (email: string, password: string, rememberMe: boolean, captcha: string): AuthThunkType =>
     async (dispatch) => {
         let data = await authAPI.login(email, password, rememberMe, captcha)
         if (data.resultCode === EnumResultCodes.Success) {
@@ -82,7 +81,7 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
         }
     }
 
-export const getCaptchaUrlThunkCreator = (): ThunkType =>
+export const getCaptchaUrlThunkCreator = (): AuthThunkType =>
     async (dispatch) => {
         let data = await securityAPI.getCaptchaUrl()
         dispatch(actions.setCaptchaUrl(data.url))

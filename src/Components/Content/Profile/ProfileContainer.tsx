@@ -1,8 +1,9 @@
 import {
+    actions,
     addPostThunkCreator,
-    setProfile, setStatus,
+    /*setProfile, setStatus,
     toggleIsFetching,
-    updateNewPostText,
+    updateNewPostText,*/
     updateStatusThunkCreator,
     savePhotoThunkCreator, saveProfileThunkCreator
 } from "../../../redux/profileReducer";
@@ -91,7 +92,7 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    updateNewPostText: (text: string | null) => void,
+    updateNewPostText: (text: string) => void,
     setProfile: (profile: ProfileType) => void,
     toggleIsFetching: (isFetching: boolean) => void,
     addPost: (newPostText: string) => void,
@@ -115,14 +116,14 @@ const mapStateToProps = (state: AppStateType) => {
 const ProfileContainer:any =
     compose(
         connect<MapStateToPropsType, MapDispatchToPropsType, any, AppStateType>(mapStateToProps, {
-            updateNewPostText,
-            setProfile,
-            toggleIsFetching,
+            updateNewPostText: actions.updateNewPostText,
+            setProfile: actions.setProfile,
+            toggleIsFetching: actions.toggleIsFetching,
             addPost: addPostThunkCreator,
             updateStatus: updateStatusThunkCreator,
             savePhoto: savePhotoThunkCreator,
             saveProfile: saveProfileThunkCreator,
-            setStatus
+            setStatus: actions.setStatus
         }),
         withRouter,
         withAuthRedirect)
