@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Profile.module.css'
-import {ProfileType} from "types";
+import {ContactsType, ProfileType} from "types";
 
 type PropsType = {
     profile: ProfileType
@@ -31,11 +31,19 @@ const ProfileData = ({profile, isOwner, goToEditMode}: PropsType) => {
         <div>
             <b>Contacts: </b>
             {Object.keys(profile.contacts).map(key => {
-                //@ts-ignore
-                return <div key={key} className={styles.contacts}> {key} : {profile.contacts[key as keyof Object]} </div>
+                return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key as keyof ContactsType]}  />
             })}
         </div>
     </>
+}
+
+type ContactPropsType = {
+    contactTitle: string
+    contactValue: string
+}
+
+const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}) =>{
+    return <div className={styles.contact}> <b>{contactTitle}</b> : {contactValue} </div>
 }
 
 export default ProfileData;

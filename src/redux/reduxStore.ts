@@ -17,8 +17,10 @@ let rootReducers = combineReducers({
 type RootReducersType = typeof rootReducers // получаем неявно тип rootReducers
 export type AppStateType=ReturnType<RootReducersType> // AppStateType - типизация всего state
 
-type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U: never
-export type InferActionTypes<T extends {[key: string]: (...args:any[]) => any}> = ReturnType<PropertiesTypes<T>>
+/*type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U: never
+export type InferActionTypes<T extends {[key: string]: (...args:any[]) => any}> = ReturnType<PropertiesTypes<T>>*/
+
+export type InferActionTypes<T> = T extends {[key: string]: (...args:any[]) =>  infer U} ? U: never //если T соответствует типу [key: string]: (...args:any[]) =>  infer U), т.е. ключ: функция - то верни тип U возвращаемого результата
 
 export type BaseThunkType<A extends Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>
 

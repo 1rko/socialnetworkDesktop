@@ -20,7 +20,7 @@ type PropsType = {
     saveProfile: (profile: ProfileType) => void
 }
 
-const Profile = (props: PropsType) => {
+const Profile: React.FC<PropsType> = (props) => {
     return (
         <>
             <div>

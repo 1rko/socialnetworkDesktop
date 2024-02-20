@@ -48,7 +48,7 @@ const ProfileDataForm = ({profile, ...props}: PropsType) => {
 
                 onSubmit={(values, {setSubmitting}) => {
                     //@ts-ignore
-                    props.saveProfile(values).then(response => {
+                    props.saveProfile(values).then(response => {        //хотя здесь тип  saveProfile: (profile: ProfileType) => Promise<any>
                             if (!response)
                                 props.finishEditMode()
                             else {
@@ -91,22 +91,24 @@ const ProfileDataForm = ({profile, ...props}: PropsType) => {
 
                         <div>
                             <div>Contacts</div>
-                            {Object.keys(values.contacts).map((contact) => {//перебор всех контактов
-                                    return <>
-                                        <div className={styles.editLabel}> {contact}</div>
-                                        <Field
-                                            component={MyInput}
-                                            key={contact}
-                                            name={'contacts.' + contact}    //имя поля - название контакта, содержание
-                                            placeholder={contact}           //синхронизируется через Input
-                                            className={styles.contacts}
-                                        >
-                                        </Field>
-                                        <ErrorMessage name={'contacts.' + contact} component="div"
-                                                      className={styles.errorMessage}/>
-                                    </>
-                                }
-                            )
+                            {Object
+                                .keys(values.contacts)
+                                .map((contact) => {                     //перебор всех контактов
+                                        return <>
+                                            <div className={styles.editLabel}> {contact}</div>
+                                            <Field
+                                                component={MyInput}
+                                                key={contact}
+                                                name={'contacts.' + contact}    //имя поля - название контакта, содержание
+                                                placeholder={contact}           //синхронизируется через Input
+                                                className={styles.contacts}
+                                            >
+                                            </Field>
+                                            <ErrorMessage name={'contacts.' + contact} component="div"
+                                                          className={styles.errorMessage}/>
+                                        </>
+                                    }
+                                )
                             }
                             {/*Object.keys(profile.contacts).map((contact, index) => {
                                 return <div>

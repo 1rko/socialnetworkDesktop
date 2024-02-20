@@ -1,17 +1,8 @@
 import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./reduxStore";
+import {AppStateType, InferActionTypes} from "./reduxStore";
 import {DialogsDataType, MessageType} from "types";
 
-const ADD_NEW_MESSAGE = 'dialogReducer/ADD_NEW_MESSAGE'
-const UPDATE_NEW_MESSAGE = 'dialogReducer/UPDATE_NEW_MESSAGE'
-
-type InitialStateType = {
-    dialogsData: Array<DialogsDataType>
-    newMessageText: string
-    messages: Array<MessageType>
-}
-
-let initialState: InitialStateType = {
+let initialState = {
     dialogsData: [
         {
             id: 1,
@@ -31,8 +22,8 @@ let initialState: InitialStateType = {
             age: 33,
             messages: ['Good morning', 'My name is Ira']
         }
-    ],
-    newMessageText: '',
+    ] as Array<DialogsDataType>,
+    newMessageText: '' as string,
     messages: [
         {
             id: 1,
@@ -42,16 +33,18 @@ let initialState: InitialStateType = {
             id: 2,
             message: "Меня зовут"
         },
-    ]
+    ] as Array<MessageType>
 }
 
-const dialogsReducer = (state = initialState, action: any) => {
+export type InitialStateType = typeof initialState // создаем тип на основе initialState
+
+const dialogsReducer = (state = initialState, action: ActionsTypes) => {
     switch (action.type) {
-        case ADD_NEW_MESSAGE: {
+        case "dialogsReduser/ADD_NEW_MESSAGE": {
             let lastItem = state.messages[state.messages.length - 1]
             let newMessage = {
                 id: lastItem.id + 1,
-                message: action.newText
+                message: action.text
             }
             return {
                 ...state,
@@ -59,7 +52,7 @@ const dialogsReducer = (state = initialState, action: any) => {
             };
         }
 
-        case UPDATE_NEW_MESSAGE:
+        case "dialogsReduser/UPDATE_NEW_MESSAGE":
             return {
                 ...state,
                 newMessageText: action.text
@@ -70,36 +63,19 @@ const dialogsReducer = (state = initialState, action: any) => {
     }
 }
 
-type ActionTypes = AddMessageCreatorActionType | UpdateNewMessageCreatorActionType
+type ActionsTypes = InferActionTypes<typeof actions>
 
-export type AddMessageCreatorActionType = {
-    type: typeof ADD_NEW_MESSAGE,
-    newText: string
+export let actions = {
+    addMessageCreator: (newText: string) => ({type: 'dialogsReduser/ADD_NEW_MESSAGE', text: newText} as const),
+    updateNewMessageCreator: (text: string) => ({type: 'dialogsReduser/UPDATE_NEW_MESSAGE', text: text} as const)
 }
 
-export const addMessageCreator = (newText: string): AddMessageCreatorActionType =>
-    ({
-        type: ADD_NEW_MESSAGE,
-        newText: newText
-    })
-
-export type UpdateNewMessageCreatorActionType = {
-    type: typeof UPDATE_NEW_MESSAGE,
-    text: string
-}
-
-export const updateNewMessageCreator = (text: string): UpdateNewMessageCreatorActionType =>
-    ({
-        type: UPDATE_NEW_MESSAGE,
-        text: text
-    })
-
-type ThunkType = ThunkAction<void, AppStateType, any, ActionTypes>
+type ThunkType = ThunkAction<void, AppStateType, any, ActionsTypes>
 
 export const addMessageThunkCreator = (newMessageText: string): ThunkType =>
     (dispatch) => {
-        dispatch(addMessageCreator(newMessageText));
-        dispatch(updateNewMessageCreator(''))
+        dispatch(actions.addMessageCreator(newMessageText));
+        dispatch(actions.updateNewMessageCreator(''))
     }
 
 export default dialogsReducer

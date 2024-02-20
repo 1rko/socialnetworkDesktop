@@ -14,7 +14,7 @@ type PropsType = {
 
 const Posts = (props: PropsType) => {
 
-    const postText = props.postData.map(postItem => {
+    const postText = [...props.postData].reverse().map(postItem => {
         return <PostItem key={postItem.id} likesCount={postItem.likesCount} postText={postItem.postText} />
     })
 
@@ -41,6 +41,8 @@ const Posts = (props: PropsType) => {
     );
 }
 
+const MyPostsMemorized = React.memo(Posts)
+
 type FormPropsType = {
     funcAddPost: (newPost:string) => void
 }
@@ -63,11 +65,8 @@ const PostForm = (props:FormPropsType) => (
                 return errors;
             }}
             onSubmit={(values: ValuesType, { setSubmitting }: FormikHelpers<ValuesType>) => {
-                setTimeout(() => {
-                    //alert(JSON.stringify(values, null, 2));
                     props.funcAddPost(values.newPost);
                     setSubmitting(false) ;
-                }, 400);
             }}
         >
             {({ isSubmitting }) => (
@@ -83,4 +82,4 @@ const PostForm = (props:FormPropsType) => (
     </div>
 );
 
-export default Posts;
+export default MyPostsMemorized;

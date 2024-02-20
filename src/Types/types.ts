@@ -26,6 +26,7 @@ export type ContactsType = {
     github: string
     mainLink: string
 }
+
 export type PhotosType = {
     small: string | null
     large: string | null

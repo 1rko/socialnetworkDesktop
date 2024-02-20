@@ -1,4 +1,4 @@
-import {addMessageThunkCreator, updateNewMessageCreator} from "../../../redux/dialogsReducer";
+import {addMessageThunkCreator} from "../../../redux/dialogsReducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {compose} from "redux";
@@ -15,8 +15,7 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    addMessage: (text: string) => void,
-    //messageChange: (text: string) => void
+    addMessage: (text: string) => void
 }
 
 let mapStateToProps = (state: AppStateType) => {
@@ -29,7 +28,7 @@ let mapStateToProps = (state: AppStateType) => {
 }
 
 // @ts-ignore
-const DialogsContainer:any =
+const DialogsContainer: React.ComponentType =
     compose(
         withRouter,
         connect<MapStateToPropsType, MapDispatchToPropsType, any, AppStateType>(mapStateToProps, {
@@ -38,6 +37,6 @@ const DialogsContainer:any =
         ,
         withAuthRedirect)
         // @ts-ignore
-    (Dialogs)
+        (Dialogs)
 
 export default DialogsContainer;

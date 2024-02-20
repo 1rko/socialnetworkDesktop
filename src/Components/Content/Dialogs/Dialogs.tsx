@@ -75,7 +75,7 @@ const AddMessageForm = (props: AddMessageFormPropsType) => (
                 newMessage: ""
             }}
             validate={values => {
-                let errors: Partial<typeof values> = {}
+                let errors: Partial<typeof values> = {}     //Partial - возвращает обект с необязательными всеми полями
                 if (!values.newMessage) {
                     errors.newMessage = 'Required';
                 }

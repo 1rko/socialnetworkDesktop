@@ -12,7 +12,7 @@ type PropsType = {
     saveProfile: (profile: ProfileType) => void
 }
 
-const ProfileInfo = (props: PropsType) => {
+const ProfileInfo: React.FC<PropsType> = (props) => {
 
     let [editMode, setEditMode] = useState(false)
 
@@ -24,7 +24,7 @@ const ProfileInfo = (props: PropsType) => {
         const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
             if (!e.target.files) return                                 //проверка e.target.files на null (т.к. HTMLInputElement
             if (e.target.files.length) {                                //имеет встроенное свойство files typeof FileList | null.)
-                props.savePhoto(e.target.files[0])
+                props.savePhoto(e.target.files[0])                      //м. еще так записать if (e.target.files?.length) props.savePhoto(e.target.files[0])
             }
         }
 
@@ -36,7 +36,8 @@ const ProfileInfo = (props: PropsType) => {
                 <ProfileData profile={profileData}
                              isOwner={props.isOwner}
                              goToEditMode={() => {
-                                 setEditMode(true)}}
+                                 setEditMode(true)
+                             }}
                 />}
         </div>
     } else profileItem = <div>Профиль не загружен</div>

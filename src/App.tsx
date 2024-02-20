@@ -3,17 +3,29 @@ import Footer from "./Components/Footer/Footer";
 import Navbar from "./Components/Navbar/Navbar";
 import Content from "./Components/Content/Content";
 import HeaderContainer from "./Components/Header/HeaderContainer"
-import {Component} from "react";
+import {Component, ComponentType} from "react";
 import {connect} from "react-redux";
 //import {getAuthUserDataThunkCreator, logoutThunkCreator, setAuthUserData, userIsAuthorised} from "./redux/authReducer";
 import {withRouter} from "./HOC/withRouter";
 import {compose} from "redux";
 import Preloader from "./Components/Preloader/Preloader";
-import {initializeApp} from './redux/appReducer.tsx';
+import {initializeApp} from './redux/appReducer';
+import {AppStateType} from "./redux/reduxStore";
 
-class App extends Component {
+type AppPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+class App extends Component<AppPropsType> {
+    catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
+        alert('Some error occured')
+    }
+
     componentDidMount() {
         this.props.initializeApp()
+        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -28,7 +40,7 @@ class App extends Component {
                     <HeaderContainer/>
                     <Navbar/>
                     <Content
-                        store={this.props.store}
+                        /*store={this.props.store}*/
                     />
                     <Footer/>
                 </div>
@@ -37,13 +49,21 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    initialized: state.app.initialized
+type MapStateToPropsType = {
+    initialized: boolean
+}
+
+const mapStateToProps = (state: AppStateType) => ({
+    initialized: state.app.initialized,
 })
 
-export default compose(
+type MapDispatchToPropsType = {
+    initializeApp: () => void
+}
+
+export default compose<ComponentType>(
     withRouter,
-    connect(
+    connect<MapStateToPropsType, MapDispatchToPropsType, any, AppStateType>(
         mapStateToProps, {initializeApp}))(App)
 
 

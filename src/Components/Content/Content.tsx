@@ -11,8 +11,10 @@ import {AppStateType} from "../../redux/reduxStore";
 
 const Messages = lazy(() => import('./Messages/Messages'));
 
+const SuspendedMessages = withSuspense(Messages)    //создаем компонент, который потом отрисуем в компоненте Content
+
 type PropsType = {
-    store: AppStateType
+
 }
 
 const Content = (props: PropsType) => {
@@ -20,11 +22,11 @@ const Content = (props: PropsType) => {
         <div className={styles.content_wrapper}>
             <Routes>
                 <Route path="/dialogs/*" element={<DialogsContainer
-                    store={props.store}/>}/>
-                <Route path="/messages/*" element={withSuspense(Messages)()}/>
+                    /*store={props.store}*//>}/>
+                <Route path="/messages/*" element={<SuspendedMessages/>}/>
                 <Route path="/profile/">
-                    <Route path=":userId" element={<ProfileContainer store={props.store}/>}/>
-                    <Route path="" element={<ProfileContainer store={props.store}/>}/>
+                    <Route path=":userId" element={<ProfileContainer /*store={props.store}*//>}/>
+                    <Route path="" element={<ProfileContainer /*store={props.store}*//>}/>
                 </Route>
                 <Route path="/users/*" element={<UsersContainer title="Все пользователи"/>}/>
                 <Route path="/login" element={<LoginPage/>}
