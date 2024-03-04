@@ -113,6 +113,8 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
+//Ctrl+b на ф-ции connect -смотрим описание типов дженерика <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
+
 const ProfileContainer: any =
     compose(
         connect<MapStateToPropsType, MapDispatchToPropsType, any, AppStateType>(mapStateToProps, {

@@ -1,45 +1,64 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styles from './Users.module.css'
 import Paginator from '../../../Common/Controls/Paginator/Paginator'
 import User from './User/User'
-import {UsersDataType} from 'types'
 import {UsersSearchForm} from "./UsersSearchForm";
-import {FilterType} from "../../../redux/usersReducer";
-//import {Formik, Form, Field, FormikHelpers} from "formik" import {UsersSearchForm} from "./UsersSearchForm";
+import {FilterType, getUsersThunkCreator, onPageChangedThunkCreator} from "../../../redux/usersReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    getCurrentPage,
+    getFilter,
+    getFollowingInProgress,
+    getTotalCount,
+    getUsersCount,
+    getUsersDataSuperSelector
+} from "../../../redux/usersSelectors";
 
-type PropsType = {
-    currentPage: number
-    totalCount: number
-    usersCount: number //pageSize
-    usersData: Array<UsersDataType>
-    followingInProgress: Array<number>
-    onUnfollowButtonClick: (id: number) => void
-    onFollowButtonClick: (id: number) => void
-    onFilterChanged: (filter: FilterType) => void
-    onPageChanged: (pageNumber: number) => void
-}
+const Users: React.FC = () => {
+    const usersData = useSelector(getUsersDataSuperSelector)
+    const followingInProgress = useSelector(getFollowingInProgress)
+    const currentPage = useSelector(getCurrentPage)
+    const totalCount = useSelector(getTotalCount)
+    const usersCount = useSelector(getUsersCount)
+    const filter = useSelector(getFilter)
 
-const Users: React.FC<PropsType> = (props) => {
+    const dispatch = useDispatch
 
-    const allUsers = props.usersData.map(usersItem => {
+    useEffect(() =>{
+        // @ts-ignore
+        dispatch(getUsersThunkCreator(currentPage, usersCount, filter))
+    },[])
+
+    const onPageChanged = (pageNumber: number) => {
+        // @ts-ignore
+        dispatch(onPageChangedThunkCreator(pageNumber, usersCount, filter));
+    }
+
+    const onFilterChanged = (filter: FilterType) => {
+        // @ts-ignore
+        dispatch(getUsersThunkCreator(1, usersCount, filter))
+    }
+
+    const allUsers = usersData.map(usersItem => {
         return <User key={usersItem.id}
                      id={usersItem.id}
                      photos={usersItem.photos}
                      name={usersItem.name}
                      status={usersItem.status}
                      followed={usersItem.followed}
-                     followingInProgress={props.followingInProgress}
-                     onUnfollowButtonClick={props.onUnfollowButtonClick}
-                     onFollowButtonClick={props.onFollowButtonClick}/>
+                     followingInProgress={followingInProgress}
+                     //onFollowButtonClick={props.onFollowButtonClick}
+                     //onUnfollowButtonClick={props.onUnfollowButtonClick}
+        />
     })
 
     return (
         <div className={styles.users_wrapper}>
-            <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
-            <Paginator totalCount={props.totalCount}
-                       usersCount={props.usersCount}
-                       currentPage={props.currentPage}
-                       onPageChanged={props.onPageChanged}
+            <UsersSearchForm onFilterChanged={onFilterChanged}/>
+            <Paginator totalCount={totalCount}
+                       usersCount={usersCount}
+                       currentPage={currentPage}
+                       onPageChanged={onPageChanged}
             />
 
             {allUsers}
