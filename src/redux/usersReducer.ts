@@ -1,4 +1,4 @@
-import {EnumResultCodes} from "../DAL/Dal";
+import {APIResponseType, EnumResultCodes} from "../DAL/Dal";
 import {UsersDataType} from "../Types/types";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType, InferActionTypes} from "./reduxStore";
@@ -13,13 +13,13 @@ let initialState = {
     totalCount: 0 as number,
     isFetching: false as boolean,
     followingInProgress: [] as Array<number>, // array of users ids
-    filter:{
-        term:'',
+    filter: {
+        term: '',
         friend: null as boolean | null
     }
 }
 
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState;
 export type FilterType = typeof initialState.filter;
 
 
@@ -87,7 +87,7 @@ export const actions = {
     setUsers: (users: Array<UsersDataType>) => ({type: 'SET_USERS', usersData: users} as const),
     setTotalCount: (totalCount: number) => ({type: 'SET_TOTAL_COUNT', totalCount: totalCount} as const),
     setCurrentPage: (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage: currentPage} as const),
-    setFilter: (filter: FilterType) => ({type: 'SET_FILTER', payload:filter} as const),
+    setFilter: (filter: FilterType) => ({type: 'SET_FILTER', payload: filter} as const),
     toggleIsFetching: (isFetching: boolean) => ({type: 'TOGGLE_IS_FETCHING', isFetching: isFetching} as const),
     toggleFollowingIsFetching: (isFetching: boolean, userId: number) => ({
         type: 'TOGGLE_FOLLOWING_IN_PROGRESS',
@@ -111,7 +111,7 @@ export const getUsersThunkCreator = (currentPage: number, usersCount: number, fi
             })
     }
 
-export const onPageChangedThunkCreator = (pageNumber: number, usersCount: number, filter:FilterType): ThunkType =>
+export const onPageChangedThunkCreator = (pageNumber: number, usersCount: number, filter: FilterType): ThunkType =>
     (dispatch) => {
         dispatch(actions.toggleIsFetching(true))
         dispatch(actions.setCurrentPage(pageNumber))
@@ -124,7 +124,10 @@ export const onPageChangedThunkCreator = (pageNumber: number, usersCount: number
 
 //type actionCreatorFolwUnfwFlow = typeof onFollow | typeof onUnFollow
 
-const _followUnfollowFlow = async (dispatch: DispatchType, userId: number, apiMethod: Function, actionCreator: (userId: number) => ActionTypes) => {
+const _followUnfollowFlow = async (dispatch: DispatchType,
+                                   userId: number,
+                                   apiMethod: (userId: number) => Promise<APIResponseType>,
+                                   actionCreator: (userId: number) => ActionTypes) => {
     dispatch(actions.toggleFollowingIsFetching(true, userId))
     let data = await apiMethod(userId)
     if (data.resultCode === EnumResultCodes.Success) {

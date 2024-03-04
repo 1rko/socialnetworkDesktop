@@ -4,7 +4,7 @@ import styles from './Navbar.module.css'
 import { NavLink } from 'react-router-dom';
 import Friends from './Friends/Friends'
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
     return (
         <div className={styles.navbar_wrapper}>
             <div className={styles.item}>

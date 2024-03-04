@@ -6,6 +6,7 @@ import {BrowserRouter, HashRouter} from "react-router-dom";
 import './index.css';
 import {Provider} from "react-redux";
 
+//@ts-ignore
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 //export let rerenderEntireTree = (state) => {
@@ -28,5 +29,6 @@ store.subscribe(() => {
     rerenderEntireTree(state)
 })*/
 
+//@ts-ignore
 window.state=store.getState() ///просто вывели в глоб переменную, чтоб смотреть state в консоли
 

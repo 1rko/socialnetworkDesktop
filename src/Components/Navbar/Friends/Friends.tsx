@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Friends.module.css'
 import { NavLink } from "react-router-dom";
 
-const Friends = () => {
+const Friends: React.FC = () => {
     return (
         <div className={styles.friendsBar_wrapper}>
             <div className={styles.friendsBar_header}>Friends</div>

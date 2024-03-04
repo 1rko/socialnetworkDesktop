@@ -31,7 +31,7 @@ type RouteParams = {
 
 let ProfileAPIContainer: React.FC<PropsType> = (props) => {
 
-    let { userId }= useParams<RouteParams>();
+    let {userId} = useParams<RouteParams>();
     let profileId: number | null
     profileId = Number(userId);
     const prevProfileIdRef = React.useRef<number | null>(null); //Хук useRef() запоминает обект, который хранится весь жизн цикл обекта
@@ -44,7 +44,7 @@ let ProfileAPIContainer: React.FC<PropsType> = (props) => {
             prevProfileIdRef.current = profileId;
 
             props.toggleIsFetching(true)
-            profileAPI.getProfile(profileId as unknown as  number).then(
+            profileAPI.getProfile(profileId as unknown as number).then(
                 data => {
                     props.setProfile(data);
                     props.toggleIsFetching(false)
@@ -71,7 +71,7 @@ let ProfileAPIContainer: React.FC<PropsType> = (props) => {
                      newPostText={props.newPostText}
                      addPost={props.addPost}
                      updateNewPostText={props.updateNewPostText}
-                     isOwner={!profileId}//если нет параметра (т.е. это Я)
+                     isOwner={!profileId||(profileId===props.authorizedUserId)}//если нет параметра или это мой Id (т.е. это Я)
                      profile={props.profile}
                      status={props.status}
                      updateStatus={props.updateStatus}
@@ -97,7 +97,7 @@ type MapDispatchToPropsType = {
     toggleIsFetching: (isFetching: boolean) => void,
     addPost: (newPostText: string) => void,
     updateStatus: (status: string) => void,
-    savePhoto: (fileName: any) => void,
+    savePhoto: (fileName: File) => void,
     saveProfile: (profile: ProfileType) => void,
     setStatus: (status: string) => void
 }
@@ -113,7 +113,7 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-const ProfileContainer:any =
+const ProfileContainer: any =
     compose(
         connect<MapStateToPropsType, MapDispatchToPropsType, any, AppStateType>(mapStateToProps, {
             updateNewPostText: actions.updateNewPostText,
