@@ -1,9 +1,10 @@
-import {Action, applyMiddleware, combineReducers, compose, legacy_createStore} from "redux";
+import {Action, applyMiddleware, combineReducers, compose, createStore, legacy_createStore} from "redux";
 import dialogsReducer from "./dialogsReducer";
 import profileReducer from "./profileReducer";
 import usersReducer from "./usersReducer";
 import authReducer from "./authReducer";
-import thunkMiddleWare, {ThunkAction} from 'redux-thunk';
+//import thunkMiddleWare, {ThunkAction} from 'redux-thunk';
+import {thunk, ThunkAction} from 'redux-thunk';
 import appReducer from "./appReducer";
 
 let rootReducers = combineReducers({
@@ -26,7 +27,11 @@ export type BaseThunkType<A extends Action, R = Promise<void>> = ThunkAction<R, 
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = legacy_createStore(rootReducers, composeEnhancers(applyMiddleware(thunkMiddleWare)));
+export const store = legacy_createStore(rootReducers, composeEnhancers(applyMiddleware(thunk)));
+
+//export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+//const store = createStore(rootReducers, applyMiddleware(thunk));
 
 //let store = legacy_createStore(reducers, applyMiddleware(thunkMiddleWare));
 

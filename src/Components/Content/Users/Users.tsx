@@ -13,29 +13,27 @@ import {
     getUsersCount,
     getUsersDataSuperSelector
 } from "../../../redux/usersSelectors";
+import {useAppDispatch, useAppSelector} from "../../../Types/hooks";
 
 const Users: React.FC = () => {
-    const usersData = useSelector(getUsersDataSuperSelector)
-    const followingInProgress = useSelector(getFollowingInProgress)
-    const currentPage = useSelector(getCurrentPage)
-    const totalCount = useSelector(getTotalCount)
-    const usersCount = useSelector(getUsersCount)
-    const filter = useSelector(getFilter)
+    const usersData = useAppSelector(getUsersDataSuperSelector)
+    const followingInProgress = useAppSelector(getFollowingInProgress)
+    const currentPage = useAppSelector(getCurrentPage)
+    const totalCount = useAppSelector(getTotalCount)
+    const usersCount = useAppSelector(getUsersCount)
+    const filter = useAppSelector(getFilter)
 
-    const dispatch = useDispatch
+    const dispatch = useAppDispatch()
 
-    useEffect(() =>{
-        // @ts-ignore
+    useEffect(() => {
         dispatch(getUsersThunkCreator(currentPage, usersCount, filter))
-    },[])
+    }, [])
 
     const onPageChanged = (pageNumber: number) => {
-        // @ts-ignore
         dispatch(onPageChangedThunkCreator(pageNumber, usersCount, filter));
     }
 
     const onFilterChanged = (filter: FilterType) => {
-        // @ts-ignore
         dispatch(getUsersThunkCreator(1, usersCount, filter))
     }
 
@@ -47,8 +45,6 @@ const Users: React.FC = () => {
                      status={usersItem.status}
                      followed={usersItem.followed}
                      followingInProgress={followingInProgress}
-                     //onFollowButtonClick={props.onFollowButtonClick}
-                     //onUnfollowButtonClick={props.onUnfollowButtonClick}
         />
     })
 

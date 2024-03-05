@@ -8,7 +8,7 @@ type UserPropsType = {
     title: string
 }
 
-export const UserP: React.FC<UserPropsType>= (props) => {
+export const User: React.FC<UserPropsType>= (props) => {
     const isFetching = useSelector(getIsFetching)
 
     return (<>

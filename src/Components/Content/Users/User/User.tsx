@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './User.module.css'
 import {NavLink} from "react-router-dom";
 import {PhotosType} from "types";
-import {useDispatch} from "react-redux";
 import {onFollowButtonClickThunkCreator, onUnfollowButtonClickThunkCreator} from "../../../../redux/usersReducer";
+import {useAppDispatch} from "./../../../../Types/hooks";
 
 type PropsType = {
     id: number
@@ -18,7 +18,7 @@ type PropsType = {
 
 const User = (props: PropsType) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     let avatarForAll = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/" +
         "2wCEAAkGBxIQERUTERAVEhIWGBIXGBgVFxYYFxcYGBUWGhYZGBsbHCkgGB0lGxgWITEhJS0rLi4uGB84ODMtNygtLysBCgoKDg0OGxAQGy8mICUtLS0vKy0tLy0tLS8tLS0tLS0vLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAcAAEAAQUBAQAAAAAAAAAAAAAABgEDBAUHCAL/xABHEAABBAECAwUDBwoEAwkAAAABAAIDEQQSIQUGMQcTIkFRYXGRFDJCVYGToRUWI1JUkqLR0tMXU7HBQ2KUJTNERXKj1OHw/8QAGQEBAAMBAQAAAAAAAAAAAAAAAAECAwQF/8QAOREAAgEDAQYDBQYEBwAAAAAAAAECAxEhMQQSQVFhcSKBkRMyobHhBRTB0fDxI0JSkhUzcqLC0+L/2gAMAwEAAhEDEQA/AO4FEKIAiIgCIiAIiIAiIgCIiAIiIAisvyGN6uaLIbuQNzVD37jb2r6ila8BzXBzT0IIIPuIQFxERAEREAREQBERAEREAREQBERACiFEAREQBERAEREAREQBFamlawFziAACST0AHUlQjnPtDx8NjgyQOksssDUGu+z0Ad9oHqpUW9DSnTlUdl68F1b5Em4vx3HxBeRII21dkEig4Nd09C4X6A30Brj3N3avOyYxQWAGu8THM6yOa5nVjg7THQHqXEn0UB5i5ryM57nSuoE7AWNgHAA70dnuv1taBbKKRo504K0Fd4y0sappJ8HjXljpusjmjMkeXvyHOcWPZZ+iHkGQtr5rnVRcN6PuqVcE7Xc3GaGOZE+NrQyNjWhjWAAhtULNeEDyAB2JNjniI1cydWbd278c5+dz0Jy12jQMx++4hnR98+iIIgXGNn0QQLLpD85x6C6AbSnvBOKx5kLZ4dXdPssLmlhcP1gHb0fIkC+vSl4+U95D7SJuHud8odkZcZaxrIzN4GBt7gPBryADaG297VSUORVu7uelkWj5S5jj4ljMyImPYHDcPB2cDRAPR1HzC3izICIiAIiIAiIgCIiAIiIAUQogCIiAIiIAiIgCoSqrU8ZyozFkRCRpkETrYHDU0PDmsJHUAm6J22KFoR3pJc2cw7U+0ANHc4xOuqvoaezruOgdbSPPcHbY8WlldK+3Eue4jr1J2A/2C2HNTrzJjZO+1+4X/" +
@@ -39,13 +39,11 @@ const User = (props: PropsType) => {
             {
                 props.followed ?
                     <button disabled={props.followingInProgress.includes(props.id)} onClick={() => {
-                        // @ts-ignore
                         dispatch(onUnfollowButtonClickThunkCreator(props.id))
                         //props.onUnfollowButtonClick(props.id)
                     }}> 'Unfollow' </button> :
 
                     <button disabled={props.followingInProgress.some(id => id === props.id)} onClick={() => {
-                        // @ts-ignore
                         dispatch(onFollowButtonClickThunkCreator(props.id))
                         //props.onFollowButtonClick(props.id)
                     }}>'Follow' </button>

@@ -3,8 +3,8 @@ import styles from './Content.module.css'
 import {Route, Routes} from 'react-router-dom'
 import ProfileContainer from "./Profile/ProfileContainer";
 import DialogsContainer from "./Dialogs/DialogsContainer";
-import {UserP} from './Users/UsersContainer';
-import LoginPage from "../Login/Login";
+import {User} from './Users/UsersContainer';
+import {Login} from "../Login/Login";
 import {withSuspense} from "../../HOC/withSuspense";
 
 const Messages = lazy(() => import('./Messages/Messages'));
@@ -26,8 +26,8 @@ const Content = (props: PropsType) => {
                     <Route path=":userId" element={<ProfileContainer /*store={props.store}*//>}/>
                     <Route path="" element={<ProfileContainer /*store={props.store}*//>}/>
                 </Route>
-                <Route path="/users/*" element={<UserP title="Все пользователи"/>}/>
-                <Route path="/login" element={<LoginPage/>}
+                <Route path="/users/*" element={<User title="Все пользователи"/>}/>
+                <Route path="/login" element={<Login/>}
                 />
             </Routes>
         </div>

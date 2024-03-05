@@ -1,5 +1,5 @@
 import {EnumResultCodes, EnumWithCaptcha} from "../DAL/Dal";
-import {BaseThunkType, InferActionTypes} from "./reduxStore";
+import {BaseThunkType, InferActionTypes, store} from "./reduxStore";
 import {SetAuthUserDataPayloadType} from "types";
 import {authAPI} from "../DAL/AuthAPI";
 import {securityAPI} from "../DAL/SecurityAPI";
@@ -29,6 +29,7 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
             };
 
         case 'SET_CAPTCHA_URL':
+            debugger
             return {
                 ...state,
                 captchaUrl: action.captchaUrl
@@ -45,7 +46,7 @@ const actions = {
     setAuthUserData: (setAuthUserDataPayload: SetAuthUserDataPayloadType) =>
         ({type: 'SET_AUTH_USER_DATA', payload: setAuthUserDataPayload} as const),
     userIsAuthorised: (isAuthorised: boolean) => ({type: 'USER_IS_AUTHORISED', isAuthorised: isAuthorised} as const),
-    setCaptchaUrl: (captchaUrl: string) => ({type: 'SET_CAPTCHA_URL', payload: {captchaUrl}} as const)
+    setCaptchaUrl: (captchaUrl: string) => ({type: 'SET_CAPTCHA_URL', captchaUrl: captchaUrl} as const)
 }
 
 type AuthThunkType = BaseThunkType<ActionsTypes> // мы создали дженерик в redux-store

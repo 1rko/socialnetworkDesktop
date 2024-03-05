@@ -7,23 +7,27 @@ import MyInput from "../../Common/Controls/MyInput/MyInput";
 import {Navigate} from "react-router-dom";
 import * as Yup from 'yup';
 import {AppStateType} from "../../redux/reduxStore";
+import {useAppDispatch, useAppSelector} from "../../Types/hooks";
 
-type LoginPropsType = {
+/*type LoginPropsType = {
     captchaUrl: string | null
     isAuthorised: boolean
     loginFunc: (email: string, password: string, rememberMe: boolean, captcha: string) => void
     getCaptchaUrl: () => void
-}
+}*/
 
-const Login = (props: LoginPropsType) => {
-    if (props.isAuthorised) {
+export const Login = () => {
+    const isAuthorised = useAppSelector((state:AppStateType)=> state.auth.isAuthorised)
+    const captchaUrl = useAppSelector((state:AppStateType)=> state.auth.captchaUrl)
+
+    if (isAuthorised) {
         return <Navigate to={'/profile'}/>;
     }
 
     return (
         <div>
             <h1>Login</h1>
-            <LoginForm loginFunc={props.loginFunc} captchaUrl={props.captchaUrl}/>
+            <LoginForm loginFunc={loginThunkCreator} captchaUrl={captchaUrl}/>
         </div>
     )
 }
@@ -46,13 +50,16 @@ type LoginFormPropsType = {
     loginFunc: (email: string, password: string, rememberMe: boolean, captcha: string) => void
 }
 
-const LoginForm = (props: LoginFormPropsType) => (
-    <div className={styles.login_form}>
+const LoginForm = (props: LoginFormPropsType) =>{
+
+    const dispatch= useAppDispatch()
+
+    return (<div className={styles.login_form}>
         <Formik
             initialValues={{email: '', password: '', rememberMe: false, captcha: ''}}
             validationSchema={SignupSchema}
             onSubmit={(values, {setSubmitting}) => {
-                    props.loginFunc(values.email, values.password, values.rememberMe = false, values.captcha);
+                    dispatch(props.loginFunc(values.email, values.password, values.rememberMe = false, values.captcha));
                     setSubmitting(false);
             }}
         >
@@ -84,14 +91,15 @@ const LoginForm = (props: LoginFormPropsType) => (
         </Formik>
     </div>
 );
+}
 
-const mapStateToProps = (state: AppStateType) => {
+/*const mapStateToProps = (state: AppStateType) => {
     return {
         isAuthorised: state.auth.isAuthorised,
         captchaUrl: state.auth.captchaUrl
     }
 }
 
-export default connect(mapStateToProps, {loginFunc: loginThunkCreator, getCaptchaUrl: getCaptchaUrlThunkCreator})(Login);
+export connect(mapStateToProps, {loginFunc: loginThunkCreator, getCaptchaUrl: getCaptchaUrlThunkCreator})(Login);*/
 
 
