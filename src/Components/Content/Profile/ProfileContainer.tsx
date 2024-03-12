@@ -1,11 +1,9 @@
 import {
     actions,
     addPostThunkCreator,
-    /*setProfile, setStatus,
-    toggleIsFetching,
-    updateNewPostText,*/
-    updateStatusThunkCreator,
-    savePhotoThunkCreator, saveProfileThunkCreator
+    savePhotoThunkCreator,
+    saveProfileThunkCreator,
+    updateStatusThunkCreator
 } from "../../../redux/profileReducer";
 import Profile from "./Profile";
 import {connect} from "react-redux";
@@ -14,14 +12,12 @@ import Preloader from "../../Preloader/Preloader";
 import withAuthRedirect from "../../../HOC/withAuthRedirect";
 import {compose} from "redux";
 import {withRouter} from "../../../HOC/withRouter";
-import {
-    getPostData, getNewPostText, getProfile,
-    getIsFetching, getStatus
-} from "../../../redux/profileSelectors";
+import {getIsFetching, getNewPostText, getPostData, getProfile, getStatus} from "../../../redux/profileSelectors";
 import {PostDataType, ProfileType} from "types";
 import {AppStateType} from "../../../redux/reduxStore";
 import {useParams} from "react-router-dom";
 import {profileAPI} from "../../../DAL/ProfileAPI";
+import {useAppDispatch, useAppSelector} from "./../../../Types/hooks";
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -31,6 +27,15 @@ type RouteParams = {
 
 let ProfileAPIContainer: React.FC<PropsType> = (props) => {
 
+    const postData = useAppSelector(getPostData)
+    const newPostText = useAppSelector(getNewPostText)
+    const profile = useAppSelector(getProfile)
+    const isFetching = useAppSelector(getIsFetching)
+    const status = useAppSelector(getStatus)
+    const authorizedUserId = useAppSelector((state:AppStateType) => state.auth.id)
+
+    const dispatch=useAppDispatch()
+
     let {userId} = useParams<RouteParams>();
     let profileId: number | null
     profileId = Number(userId);
@@ -38,26 +43,26 @@ let ProfileAPIContainer: React.FC<PropsType> = (props) => {
 
     useEffect(() => {
 
-        profileId = profileId ? profileId : props.authorizedUserId
+        profileId = profileId ? profileId : authorizedUserId
 
         if (prevProfileIdRef.current !== profileId) { //Сравниваются предыд значение с текущим: если не изменилось, то UseEffect не происходит
             prevProfileIdRef.current = profileId;
 
-            props.toggleIsFetching(true)
+            dispatch(actions.toggleIsFetching(true))
             profileAPI.getProfile(profileId as unknown as number).then(
                 data => {
-                    props.setProfile(data);
-                    props.toggleIsFetching(false)
+                    dispatch(actions.setProfile(data));
+                    dispatch(actions.toggleIsFetching(false))
                 })
 
             let userId: number = 0
-            if (props.authorizedUserId) {
-                userId = props.authorizedUserId
+            if (authorizedUserId) {
+                userId = authorizedUserId
             }
 
             profileAPI.getStatus(userId).then(
                 data => {
-                    props.setStatus(data as unknown as string)
+                    dispatch(actions.setStatus(data as unknown as string))
                 })
         }
     },)
@@ -66,14 +71,14 @@ let ProfileAPIContainer: React.FC<PropsType> = (props) => {
         <>
             <h1>Profile</h1>
 
-            {props.isFetching ? <Preloader/> : null}
-            <Profile postData={props.postData}
-                     newPostText={props.newPostText}
+            {isFetching ? <Preloader/> : null}
+            <Profile postData={postData}
+                     newPostText={newPostText}
                      addPost={props.addPost}
                      updateNewPostText={props.updateNewPostText}
-                     isOwner={!profileId||(profileId===props.authorizedUserId)}//если нет параметра или это мой Id (т.е. это Я)
-                     profile={props.profile}
-                     status={props.status}
+                     isOwner={!profileId||(profileId===authorizedUserId)}//если нет параметра или это мой Id (т.е. это Я)
+                     profile={profile}
+                     status={status}
                      updateStatus={props.updateStatus}
                      savePhoto={props.savePhoto}
                      saveProfile={props.saveProfile}
@@ -83,33 +88,33 @@ let ProfileAPIContainer: React.FC<PropsType> = (props) => {
 }
 
 type MapStateToPropsType = {
-    postData: Array<PostDataType>,
+    /*postData: Array<PostDataType>,
     newPostText: string | null,
     profile: ProfileType | null,
     isFetching: boolean,
     status: string,
-    authorizedUserId: number | null
+    authorizedUserId: number | null*/
 }
 
 type MapDispatchToPropsType = {
     updateNewPostText: (text: string) => void,
-    setProfile: (profile: ProfileType) => void,
-    toggleIsFetching: (isFetching: boolean) => void,
+    //setProfile: (profile: ProfileType) => void,
+    //toggleIsFetching: (isFetching: boolean) => void,
     addPost: (newPostText: string) => void,
     updateStatus: (status: string) => void,
     savePhoto: (fileName: File) => void,
     saveProfile: (profile: ProfileType) => void,
-    setStatus: (status: string) => void
+    //setStatus: (status: string) => void
 }
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        postData: getPostData(state),
+       /* postData: getPostData(state),
         newPostText: getNewPostText(state),
         profile: getProfile(state),
         isFetching: getIsFetching(state),
         status: getStatus(state),
-        authorizedUserId: state.auth.id
+        authorizedUserId: state.auth.id*/
     }
 }
 
@@ -119,13 +124,13 @@ const ProfileContainer: any =
     compose(
         connect<MapStateToPropsType, MapDispatchToPropsType, any, AppStateType>(mapStateToProps, {
             updateNewPostText: actions.updateNewPostText,
-            setProfile: actions.setProfile,
-            toggleIsFetching: actions.toggleIsFetching,
+            //setProfile: actions.setProfile,
+            //toggleIsFetching: actions.toggleIsFetching,
             addPost: addPostThunkCreator,
             updateStatus: updateStatusThunkCreator,
             savePhoto: savePhotoThunkCreator,
             saveProfile: saveProfileThunkCreator,
-            setStatus: actions.setStatus
+            //setStatus: actions.setStatus
         }),
         withRouter,
         withAuthRedirect)
