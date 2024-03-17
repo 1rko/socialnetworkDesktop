@@ -96,7 +96,7 @@ const items3 = [
         //path:'/chatPage/',
         key: 'chatPage',
     }
-]
+]                       //Menu Items
 
 const AntLayout: React.FC = () => {
     const {
@@ -160,7 +160,7 @@ const AntLayout: React.FC = () => {
                 </Layout>
             </Content>
             <Footer style={{textAlign: 'center'}}>
-                Ant Design ©{new Date().getFullYear()} Created by Ant UED
+                SocialNetwork ©{new Date().getFullYear()} Created by Irko
             </Footer>
         </Layout>
     );

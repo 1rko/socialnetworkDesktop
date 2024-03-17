@@ -4,7 +4,7 @@ import Paginator from '../../../Common/Controls/Paginator/Paginator'
 import {Pagination} from 'antd';
 import User from './User/User'
 import {UsersSearchForm} from "./UsersSearchForm";
-import {FilterType, getUsersThunkCreator, onPageChangedThunkCreator} from "../../../redux/usersReducer";
+import {actions, FilterType, getUsersThunkCreator, onPageChangedThunkCreator} from "../../../redux/usersReducer";
 import {
     getCurrentPage,
     getFilter,
@@ -81,6 +81,7 @@ const Users: React.FC = () => {
 
     const onFilterChanged = (filter: FilterType) => {
         dispatch(getUsersThunkCreator(1, usersCount, filter))
+        dispatch(actions.setCurrentPage(1))                             //сбрасываем в state текущую страницу на 1
     }
 
     const allUsers = usersData.map((usersItem) => {
@@ -95,13 +96,13 @@ const Users: React.FC = () => {
     })
 
     return (
-        <div className={styles.users_wrapper}>
+        <div>
             <UsersSearchForm onFilterChanged={onFilterChanged}/>
-            <Paginator totalCount={totalCount}
+            {/*<Paginator totalCount={totalCount}           //Мой Paginator, работает плохо
                        usersCount={usersCount}
                        currentPage={currentPage}
                        onPageChanged={onPageChanged}
-            />
+            />*/}
 
             <Pagination  /*defaultCurrent={1}*/ total={totalCount}
                                                 current={currentPage}

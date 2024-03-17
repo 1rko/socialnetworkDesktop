@@ -1,11 +1,9 @@
 import React from 'react';
-import styles from './Auth.module.css'
 import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "./../../Types/hooks";
 import {logoutThunkCreator} from "../../redux/authReducer";
-import {Button} from 'antd';
-import {Col, Row} from 'antd';
-import {selectAuthUserDataPayloadType} from "../../redux/authSelectors";
+import {Button, Col, Row} from 'antd';
+import {AppStateType} from "../../redux/reduxStore";
 
 type PropsType = {
     //auth: SetAuthUserDataPayloadType,
@@ -14,7 +12,7 @@ type PropsType = {
 
 const Auth: React.FC<PropsType> = (props) => {
 
-    const auth = useAppSelector(selectAuthUserDataPayloadType)
+    const auth = useAppSelector((state: AppStateType) => state.auth)
 
     const dispatch = useAppDispatch()
 
