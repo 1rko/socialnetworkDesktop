@@ -1,25 +1,47 @@
 import React from 'react';
 import styles from './Auth.module.css'
-import {NavLink} from 'react-router-dom';
-import {SetAuthUserDataPayloadType} from "types";
+import {Link} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from "./../../Types/hooks";
+import {logoutThunkCreator} from "../../redux/authReducer";
+import {Button} from 'antd';
+import {Col, Row} from 'antd';
+import {selectAuthUserDataPayloadType} from "../../redux/authSelectors";
 
 type PropsType = {
-    auth: SetAuthUserDataPayloadType,
-    logout: () => void
+    //auth: SetAuthUserDataPayloadType,
+    //logout: () => void
 }
 
 const Auth: React.FC<PropsType> = (props) => {
+
+    const auth = useAppSelector(selectAuthUserDataPayloadType)
+
+    const dispatch = useAppDispatch()
+
+    const logoutCallback = () => {
+        dispatch(logoutThunkCreator())
+    }
+
     return (
-        <div className={styles.loginText_wrapper}>
-            {props.auth.isAuthorised ? (
+        <>
+            {auth.isAuthorised ? (
                     <>
-                        <div className={styles.AuthText}> ID: {props.auth.id} Login: {props.auth.login}</div>
-                        <div className={styles.AuthText}> Login: {props.auth.email} </div>
-                        <button onClick={props.logout}>Logout</button>
+                        <Row>
+                            <Col span={16}>
+                                <div> ID: {auth.id} Login: {auth.login}</div>
+                            </Col>
+                            <Col span={8}>
+                                <Button onClick={logoutCallback}>Logout</Button>
+                            </Col>
+                        </Row>
                     </>) :
-                <NavLink to="/login"> Login </NavLink>
+                <Row>
+                    <Col span={24}>
+                        <Button onClick={logoutCallback}><Link to="/login"> Login </Link></Button>
+                    </Col>
+                </Row>
             }
-        </div>
+        </>
     );
 }
 

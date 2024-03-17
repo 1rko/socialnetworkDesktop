@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import styles from './Users.module.css'
 import Paginator from '../../../Common/Controls/Paginator/Paginator'
+import {Pagination} from 'antd';
 import User from './User/User'
 import {UsersSearchForm} from "./UsersSearchForm";
 import {FilterType, getUsersThunkCreator, onPageChangedThunkCreator} from "../../../redux/usersReducer";
@@ -33,7 +34,20 @@ const Users: React.FC = () => {
     const dispatch = useAppDispatch()
 
     const location = useLocation()
-    const navigate= useNavigate()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        let query: QueryParamsType = {}                              //создаем обект, который поместим в search параметры строки поиска
+
+        if (filter.term) query.term = filter.term
+        if (filter.friend !== null) query.friend = String(filter.friend)
+        if (currentPage !== 1) query.page = String(currentPage)
+
+        navigate({
+            //pathname:'users',
+            search: queryString.stringify(query)                     //переводим этот обект в строковый вид
+        })
+    }, [filter, currentPage])                                   //этот useEffect сработаект, только если изменится filter или currentPage
 
     useEffect(() => {
         const parsed = queryString.parse(location.search)       //читаем search-параметры из строки с URL параметрами в обект parsed
@@ -60,18 +74,6 @@ const Users: React.FC = () => {
         dispatch(getUsersThunkCreator(actualPage, usersCount, actualFilter))
     }, [])
 
-    useEffect(() => {
-        let query: QueryParamsType ={}                              //создаем обект, который поместим в search параметры строки поиска
-
-        if (filter.term) query.term = filter.term
-        if (filter.friend!==null) query.friend = String(filter.friend)
-        if (currentPage!==1) query.page = String(currentPage)
-
-        navigate({
-            pathname:'users',
-            search:queryString.stringify(query)                     //переводим этот обект в строковый вид
-        })
-    }, [filter, currentPage])                                   //этот useEffect сработаект, только если изменится filter или currentPage
 
     const onPageChanged = (pageNumber: number) => {
         dispatch(onPageChangedThunkCreator(pageNumber, usersCount, filter));
@@ -100,6 +102,12 @@ const Users: React.FC = () => {
                        currentPage={currentPage}
                        onPageChanged={onPageChanged}
             />
+
+            <Pagination  /*defaultCurrent={1}*/ total={totalCount}
+                                                current={currentPage}
+                                                defaultPageSize={usersCount}
+                                                showSizeChanger={false}
+                                                onChange={onPageChanged}/>
 
             {allUsers}
         </div>

@@ -11,6 +11,7 @@ import {compose} from "redux";
 import Preloader from "./Components/Preloader/Preloader";
 import {initializeApp} from './redux/appReducer';
 import {AppStateType} from "./redux/reduxStore";
+import AntLayout from "./Components/AntLayout";
 
 type AppPropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -36,14 +37,15 @@ class App extends Component<AppPropsType> {
 
         return (
             <div className="App">
-                <div className="app_wrapper">
+                <AntLayout/>
+               {/* <div className="app_wrapper">
                     <HeaderContainer/>
                     <Navbar/>
                     <Content
-                        /*store={this.props.store}*/
+
                     />
-                    <Footer/>
-                </div>
+                <Footer/>
+                </div>*/}
             </div>
         );
     }

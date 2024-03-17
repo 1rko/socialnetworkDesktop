@@ -31,6 +31,12 @@ const Navbar: React.FC = () => {
                 </NavLink>
             </div>
 
+            <div className={styles.item}>
+                <NavLink to="antLayout" className={navData => navData.isActive ? styles.active : styles.unactive}>
+                    AntLayout
+                </NavLink>
+            </div>
+
             <Friends />
 
         </div>

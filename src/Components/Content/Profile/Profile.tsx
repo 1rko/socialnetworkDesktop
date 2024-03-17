@@ -30,7 +30,7 @@ const Profile: React.FC<PropsType> = (props) => {
                 <MyProfileInfoWithHooks status={props.status} updateStatus={props.updateStatus}/>
             </div>
 
-            <div className={styles.profile_wrapper}>
+            <div>
                 <ProfileInfo profile={props.profile}
                              isOwner={props.isOwner}
                              savePhoto={props.savePhoto}
