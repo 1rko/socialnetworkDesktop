@@ -6,13 +6,15 @@ import authReducer from "./authReducer";
 //import thunkMiddleWare, {ThunkAction} from 'redux-thunk';
 import {thunk, ThunkAction} from 'redux-thunk';
 import appReducer from "./appReducer";
+import chatReducer from "./chatReducer";
 
 let rootReducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     auth: authReducer,
-    app: appReducer
+    app: appReducer,
+    chat:chatReducer
 })
 
 type RootReducersType = typeof rootReducers // получаем неявно тип rootReducers
