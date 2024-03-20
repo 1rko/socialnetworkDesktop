@@ -15,15 +15,22 @@ const chatReducer = (state = initialState, action: any): InitialStateType => {
                 ...state,
                 messages: [...state.messages, ...action.payload.messages]
             }
+        case 'SN/chat/CLEAN_MESSAGES_IN_STATE':
+            return {
+                ...state,
+                messages: []
+            };
 
         default:
             return state;
     }
 }
 
-const actions = {
+export const actions = {
     messagesRecieved: (messages: ChatMessageType[]) =>
-        ({type: 'SN/chat/MESSAGES_RECIEVED', payload: {messages}}as const),
+        ({type: 'SN/chat/MESSAGES_RECIEVED', payload: {messages}} as const),
+    cleanMessagesInSTate: () =>
+        ({type: 'SN/chat/CLEAN_MESSAGES_IN_STATE'} as const),
 }
 
 let _newMessageHandler: ((messages: ChatMessageType[]) => void) | null = null
@@ -48,7 +55,7 @@ export const StopMessagesListening = (): AuthThunkType =>
         ChatAPI.stop()
     }
 
-export const SendMessage = (message:string): AuthThunkType =>
+export const SendMessage = (message: string): AuthThunkType =>
     async (dispatch) => {
         ChatAPI.sendMessage(message)
     }
