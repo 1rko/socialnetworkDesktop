@@ -1,6 +1,9 @@
 import {BaseThunkType, InferActionTypes} from "./reduxStore";
-import {ChatMessageType, ChatAPI, StatusType} from "../DAL/ChatAPI";
+import {ChatMessageAPIType, ChatAPI, StatusType} from "../DAL/ChatAPI";
 import {Dispatch} from "redux";
+import {v1} from "uuid"
+
+export type ChatMessageType = ChatMessageAPIType & { id: string }
 
 let initialState = {
     messages: [] as ChatMessageType[],
@@ -14,7 +17,11 @@ const chatReducer = (state = initialState, action: any): InitialStateType => {
         case 'SN/chat/MESSAGES_RECEIVED':
             return {
                 ...state,
-                messages: [...state.messages, ...action.payload.messages]
+
+                messages: [...state.messages, ...action.payload.messages.map( (m: any) => ({...m, id: v1()}))]      //добавлена библиотека uuid (в функции v1() генерирует рандомный id
+                    .filter((m, index, array) =>
+                        index >= (array.length - 50)                //фильтруем последние 50 сообщений для вывода, чтобы не перегружать рендер
+                    )
             }
         case 'SN/chat/STATUS_CHANGED':
             return {
@@ -32,7 +39,7 @@ const chatReducer = (state = initialState, action: any): InitialStateType => {
 }
 
 export const actions = {
-    messagesReceived: (messages: ChatMessageType[]) =>
+    messagesReceived: (messages: ChatMessageAPIType[]) =>
         ({type: 'SN/chat/MESSAGES_RECEIVED', payload: {messages}} as const),
     statusChanged: (status: StatusType) =>
         ({type: 'SN/chat/STATUS_CHANGED', payload: {status}} as const),
@@ -40,7 +47,7 @@ export const actions = {
         ({type: 'SN/chat/CLEAN_MESSAGES_IN_STATE'} as const),
 }
 
-let _newMessageHandler: ((messages: ChatMessageType[]) => void) | null = null
+let _newMessageHandler: ((messages: ChatMessageAPIType[]) => void) | null = null
 let newMessageHandlerCreator = (dispatch: Dispatch) => {
     if (_newMessageHandler === null) {
         _newMessageHandler = (messages) => {

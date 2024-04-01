@@ -78,12 +78,12 @@ export const ChatAPI = {
     }
 }
 
-type MessagesRecievedSubscriberType = (messages: ChatMessageType[]) => void
+type MessagesRecievedSubscriberType = (messages: ChatMessageAPIType[]) => void
 type StatusChangedSubscriberType = (status: StatusType) => void
 
 type EventNameType = 'message-received' | 'status-changed'
 
-export type ChatMessageType = {
+export type ChatMessageAPIType = {
     message: string
     photo: string
     userId: number
