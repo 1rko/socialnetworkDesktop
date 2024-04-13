@@ -1,0 +1,26 @@
+.container{
+    border: 1px solid red;
+}
+
+.selected {
+    background-color: grey;
+}
+
+.usersContainer{
+    display: flex;
+}
+
+.usersList{
+width: 30%;
+}
+
+.usersDetails{
+
+}
+
+.avatar{
+    width: 50%;
+    padding: 10px;
+}
+
+

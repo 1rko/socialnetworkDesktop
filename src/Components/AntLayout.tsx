@@ -11,6 +11,9 @@ import ProfileContainer from './Content/Profile/ProfileContainer';
 import {User} from './Content/Users/UsersContainer';
 import {Login} from "./Login/Login";
 import Auth from "./Auth/Auth";
+import GithubUsers from "./GithubUsers/GithubUsers";
+import YandexMap from './YandexMap/YandexMap';
+import Gsap from "./Gsap/Gsap";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -95,6 +98,27 @@ const items3 = [
         </Link>,
         //path:'/chatPage/',
         key: 'chatPage',
+    },
+    {
+        label: <Link to="githubUsers">
+            GithubUsers
+        </Link>,
+        //path:'/chatPage/',
+        key: 'githubUsers',
+    },
+    {
+        label: <Link to="yandexMap">
+            YandexMap
+        </Link>,
+        //path:'/chatPage/',
+        key: 'yandexMap',
+    },
+    {
+        label: <Link to="gsap">
+            Gsap
+        </Link>,
+        //path:'/chatPage/',
+        key: 'gsap',
     }
 ]                       //Menu Items
 
@@ -117,13 +141,19 @@ const AntLayout: React.FC = () => {
                         />
 
                     </Col>
-                    <Col span={8} style={{display: 'flex', justifyContent: 'right', height: '30px', color:'whitesmoke', alignItems: "baseline"}}>
+                    <Col span={8} style={{
+                        display: 'flex',
+                        justifyContent: 'right',
+                        height: '30px',
+                        color: 'whitesmoke',
+                        alignItems: "baseline"
+                    }}>
                         <Auth/>
                     </Col>
                 </Row>
             </Header>
             <Content style={{padding: '0 48px'}}>
-               {/* <Breadcrumb style={{margin: '16px 0'}}>
+                {/* <Breadcrumb style={{margin: '16px 0'}}>
                     <Breadcrumb.Item>Home</Breadcrumb.Item>
                     <Breadcrumb.Item>List</Breadcrumb.Item>
                     <Breadcrumb.Item>App</Breadcrumb.Item>
@@ -140,7 +170,7 @@ const AntLayout: React.FC = () => {
                             items={items3}
                         />
                     </Sider>
-                    <Content style={{padding: '0 24px', minHeight: 280}}>
+                    <Content style={{padding: '0 24px', minHeight: '77vh'}}>
                         <Routes>
                             <Route path="/dialogs/*" element={<DialogsContainer
                                 /*store={props.store}*//>}/>
@@ -153,6 +183,9 @@ const AntLayout: React.FC = () => {
                             <Route path="/login" element={<Login/>}/>
                             <Route path="/antLayout" element={<AntLayout/>}/>
                             <Route path="/chatPage" element={<SuspendedChatPage/>}/>
+                            <Route path="/githubUsers" element={<GithubUsers/>}/>
+                            <Route path="/yandexMap" element={<YandexMap/>}/>
+                            <Route path="/gsap" element={<Gsap/>}/>
 
                             <Route path="*" element={<div>404 Not Found</div>}/>
                         </Routes>
