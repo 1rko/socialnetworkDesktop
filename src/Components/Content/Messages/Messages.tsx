@@ -5,7 +5,7 @@ import MySwiper from "../../../Common/MySwiper/MySwiper";
 const Messages: React.FC = () => {
   return (
     <div className={styles.messages_wrapper}>
-      Message
+      Message - Тестовая страница для фото
         <MySwiper/>
     </div>
   );

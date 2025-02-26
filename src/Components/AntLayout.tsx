@@ -5,7 +5,7 @@ import {Breadcrumb, Layout, Menu, theme} from 'antd';
 
 // @ts-ignore
 import {withSuspense} from 'src/HOC/withSuspense';
-import {Link, Route, Routes} from 'react-router-dom';
+import {Link, Navigate, Route, Routes} from 'react-router-dom';
 import DialogsContainer from "./Content/Dialogs/DialogsContainer";
 import ProfileContainer from './Content/Profile/ProfileContainer';
 import {User} from './Content/Users/UsersContainer';
@@ -13,7 +13,6 @@ import {Login} from "./Login/Login";
 import Auth from "./Auth/Auth";
 import GithubUsers from "./GithubUsers/GithubUsers";
 import YandexMap from './YandexMap/YandexMap';
-import Gsap from "./Gsap/Gsap";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -73,7 +72,7 @@ const items3 = [
     },
     {
         label: <Link to="messages">
-            Messages
+            Messages - тестовая страница для фото
         </Link>,
         //path:'/messages/',
         key: 'messages',
@@ -112,13 +111,6 @@ const items3 = [
         </Link>,
         //path:'/chatPage/',
         key: 'yandexMap',
-    },
-    {
-        label: <Link to="gsap">
-            Gsap
-        </Link>,
-        //path:'/chatPage/',
-        key: 'gsap',
     }
 ]                       //Menu Items
 
@@ -172,12 +164,11 @@ const AntLayout: React.FC = () => {
                     </Sider>
                     <Content style={{padding: '0 24px', minHeight: '77vh'}}>
                         <Routes>
-                            <Route path="/dialogs/*" element={<DialogsContainer
-                                /*store={props.store}*//>}/>
+                            <Route path="/dialogs/*" element={<DialogsContainer/>}/>
                             <Route path="/messages/*" element={<SuspendedMessages/>}/>
                             <Route path="/profile/">
-                                <Route path=":userId" element={<ProfileContainer /*store={props.store}*//>}/>
-                                <Route path="" element={<ProfileContainer /*store={props.store}*//>}/>
+                                <Route path=":userId" element={<ProfileContainer/>}/>
+                                <Route path="" element={<ProfileContainer/>}/>
                             </Route>
                             <Route path="/users/*" element={<User title="Все пользователи"/>}/>
                             <Route path="/login" element={<Login/>}/>
@@ -185,9 +176,8 @@ const AntLayout: React.FC = () => {
                             <Route path="/chatPage" element={<SuspendedChatPage/>}/>
                             <Route path="/githubUsers" element={<GithubUsers/>}/>
                             <Route path="/yandexMap" element={<YandexMap/>}/>
-                            <Route path="/gsap" element={<Gsap/>}/>
 
-                            <Route path="*" element={<div>404 Not Found</div>}/>
+                            <Route path="*" element={<Navigate to="/users"/>}/>
                         </Routes>
                     </Content>
                 </Layout>
